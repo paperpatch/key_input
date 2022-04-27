@@ -8,6 +8,10 @@ import './App.css';
 // import components
 import Display from './components/Display';
 import useKeyPress from './hooks/useKeyPress';
+import generate from './utils/letters';
+
+const initialLetter = generate();
+console.log(initialLetter);
 
 function App() {
   useKeyPress(key => {
