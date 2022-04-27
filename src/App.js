@@ -6,18 +6,14 @@ import React from 'react';
 import './App.css';
 
 // import components
-
+import Display from './components/Display';
 
 function App() {
   return (
     <div>
-
-      <main>
-        <>
-
-        </>
-      </main>
-
+      <>
+        <Display />
+      </>
     </div>
   );
 }
