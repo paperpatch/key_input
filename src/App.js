@@ -7,8 +7,13 @@ import './App.css';
 
 // import components
 import Display from './components/Display';
+import useKeyPress from './hooks/useKeyPress';
 
 function App() {
+  useKeyPress(key => {
+    console.log(key);
+  })
+  
   return (
     <div>
       <>
