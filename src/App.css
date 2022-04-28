@@ -15,7 +15,7 @@ body {
 }
 
 .container {
-  background-color: yellow;
+  background-color: grey;
   padding: 1rem;
   border-radius: .5rem;
   width: 700px;
