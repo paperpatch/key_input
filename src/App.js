@@ -8,9 +8,9 @@ import './App.css';
 // import components
 import Display from './components/Display';
 import useKeyPress from './hooks/useKeyPress';
-import generate from './utils/letters';
+import render from './utils/letters';
 
-const initialLetter = generate();
+const initialLetter = render();
 console.log(initialLetter);
 
 function App() {
