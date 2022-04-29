@@ -1,58 +1,47 @@
-import React from 'react';
-
-// import components
-import Preview from '../Preview';
-import Speed from '../Speed';
+import React, { useState } from 'react';
 
 // import utils
 import useKeyPress from '../../utils/useKeyPress';
 import renderWord from '../../utils/render';
 
+const set = renderWord().split('');
+console.log(set);
+
 function Display() {
 
-  const set = renderWord();
-  console.log(set);
+  const [userInput, setUserInput] = useState('');
+  const [count, setCount] = useState(0);
 
-  useKeyPress(key => {
-    console.log(key);
+  const [activeLetterIndex, setActiveLetterIndex] = useState(0);
+
+  useKeyPress(value => {
+    if (value === set[count]) {
+      setActiveLetterIndex(index => index + 1)
+    } else {
+      setActiveLetterIndex(index => index = 0)
+    }
+    console.log(value);
   })
 
-  const initialState = {
-    text: 'Test',
-    userInput: ''
-  }
-
-  const state = initialState;
-
-  const onRestart = () => {
-    setState(initialState)
-  }
-
-  const onUserInputChange = (e) => {
-    const value = e.target.value;
-    setState({
-      useInput: value
-    })
-  }
-
   return (
+    <>
     <div className="container mb-5 mb-5">
-      <div className="row">
-        <div className="col-md-6 offset-md-3 setDisplay">
-          <Preview />
-          <textarea
-            value={state.userInput}
-            onChange={onUserInputChange}
-            className="form-control mb-3"
-            placeholder="Start typing..."
-          ></textarea>
-          <Speed />
-          <div className="text-right">
-            <button className="btn btn-light" onClick={onRestart}>Restart</button>
-          </div>
-        </div>
-      </div>
+      <h1>Key Input</h1>
+      <h4>{set.map((letter, index) => {
+        if (index === activeLetterIndex) {
+          return <b>{letter}</b>
+        }
+
+        return <span>{letter}</span>
+      })}</h4>
+      <input
+        type="text"
+        value={userInput}
+        onChange={(e) => processInput(e.target.value)}
+      />
+      
     </div>
+    </>
   )
 }
 

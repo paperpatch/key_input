@@ -1,4 +1,6 @@
 import React from 'react';
+
+// import components
 import Display from './components/Display';
 
 // import css in order

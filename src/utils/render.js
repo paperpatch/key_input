@@ -10,13 +10,13 @@ function generateWord() {
   return result;
 }
 
-async function renderWord() {
+function renderWord() {
   const set = generateWord();
   
-  set.split('').forEach(word => {
-    const wordSpan = document.createElement('span')
-    wordSpan.innerText = word
-  })
+  // set.split('').forEach(word => {
+  //   const wordSpan = document.createElement('span')
+  //   wordSpan.innerText = word
+  // })
 
   return set;
 }
