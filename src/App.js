@@ -1,7 +1,5 @@
 import {
   AppBar,
-  Box,
-  Button,
   Slide,
   TextField,
   Toolbar,
@@ -47,23 +45,8 @@ function App() {
         >
           <Toolbar sx={{ gap: 4 }}>
             <Typography variant="h5" noWrap>
-              Lost Ark Typing Practice
+              Key Input
             </Typography>
-            <Button
-              variant="contained"
-              sx={{
-                background: easyMode ? 'crimson' : 'green',
-                '&:hover': {
-                  background: easyMode ? 'crimson' : 'green',
-                },
-                '&:active': {
-                  background: easyMode ? 'crimson' : 'green',
-                },
-              }}
-              onClick={() => setEasyMode((prev) => !prev)}
-            >
-              {easyMode ? 'Toggle hard mode' : 'Toggle easy mode'}
-            </Button>
             <TextField
               label="Allowed keys pool"
               InputLabelProps={{
@@ -91,22 +74,6 @@ function App() {
         </AppBar>
       </Slide>
       <Keyboard allowedKeys={allowedKeys} />
-      {!easyMode && (
-        <Box position="absolute" bottom="5%" right="6%">
-          <Typography variant="h6" color="white">
-            Vykas Fanart by
-            <br />
-            <a
-              style={{ color: 'rgba(100, 100, 250, 1)' }}
-              target="_blank"
-              rel="noreferrer"
-              href="https://www.pixiv.net/en/users/14279898"
-            >
-              Test | Test
-            </a>
-          </Typography>
-        </Box>
-      )}
     </BrowserRouter>
   )
 };
