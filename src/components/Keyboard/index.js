@@ -7,7 +7,7 @@ import renderWord from '../../utils/render';
 const set = renderWord().split('');
 console.log(set);
 
-function Display() {
+function Keyboard() {
 
   const [userInput, setUserInput] = useState('');
   const [count, setCount] = useState(0);
@@ -45,4 +45,4 @@ function Display() {
   )
 }
 
-export default Display
+export default Keyboard
