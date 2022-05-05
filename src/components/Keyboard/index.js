@@ -8,8 +8,10 @@ import renderWord from '../../utils/render';
 // import failSound from '../assets/failSound.mp3';
 // import successSound from '../assets/successSound.mp3';
 // import star from '../assets/star.png';
-// import css from './Keyboard.module.scss';
+import css from '../Keyboard.module.scss';
+import classNames from 'classnames'
 
+const classes = classNames.bind(css);
 
 const set = renderWord().split('');
 console.log(set);
