@@ -14,7 +14,14 @@ import classNames from 'classnames'
 const classes = classNames.bind(css);
 
 const set = renderWord().split('');
-console.log(set);
+console.log('set', set);
+
+// let allowedKeys = [];
+// for (let o in input) {
+//   allowedKeys.push(input[o]);
+// }
+
+// console.log('allowedKeys', allowedKeys)
 
 function Keyboard(allowedKeys) {
 
@@ -27,7 +34,7 @@ function Keyboard(allowedKeys) {
 
   useEffect(() => {
     if (scores.length > 10) {
-      setScore((prev) => {
+      setScores((prev) => {
         const newScores = [...prev];
         newScores.shift();
         return newScores;
