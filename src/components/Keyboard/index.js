@@ -13,17 +13,18 @@ import classNames from 'classnames'
 
 const classes = classNames.bind(css);
 
-const set = renderWord().split('');
-console.log('set', set);
-
-// let allowedKeys = [];
-// for (let o in input) {
-//   allowedKeys.push(input[o]);
-// }
+// const set = renderWord().split('');
+// console.log('set', set);
 
 // console.log('allowedKeys', allowedKeys)
 
-function Keyboard(allowedKeys) {
+function Keyboard(set) {
+
+  let allowedKeys = '';
+  for (let o in set) {
+    allowedKeys += set[o];
+  }
+  console.log('set', allowedKeys);
 
   const [currentKeyIndex, setCurrentKeyIndex] = useState(0);
   const [showSuccessText, setShowSuccessText] = useState(false);
