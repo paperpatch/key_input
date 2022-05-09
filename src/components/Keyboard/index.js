@@ -3,13 +3,14 @@ import { Box, Typography } from '@mui/material';
 
 // import utils
 import useKeyPress from '../../utils/useKeyPress';
-import renderWord from '../../utils/render';
+// import renderWord from '../../utils/render';
 // import keySound from '../assets/keySound.mp3';
 // import failSound from '../assets/failSound.mp3';
 // import successSound from '../assets/successSound.mp3';
 // import star from '../assets/star.png';
 import css from '../Keyboard.module.scss';
 import classNames from 'classnames'
+import { current } from '@reduxjs/toolkit';
 
 const classes = classNames.bind(css);
 
@@ -18,13 +19,20 @@ const classes = classNames.bind(css);
 
 // console.log('allowedKeys', allowedKeys)
 
+  // useKeyPress(value => {
+  //   console.log(value);
+  //   if (!allowedKeys.split('').includes(value.key.toLowerCase())) {
+  //     return;
+  //   }
+  // })
+
 function Keyboard(set) {
 
   let allowedKeys = '';
   for (let o in set) {
     allowedKeys += set[o];
   }
-  console.log('set', allowedKeys);
+  // console.log('set', allowedKeys);
 
   const [currentKeyIndex, setCurrentKeyIndex] = useState(0);
   const [showSuccessText, setShowSuccessText] = useState(false);
@@ -32,6 +40,7 @@ function Keyboard(set) {
   const [timer, setTimer] = useState(Date.now());
   const [scores, setScores] = useState([]);
   const [failedKeys, setFailedKeys] = useState([]);
+  const [keyPressed, setKeyPressed ] = useState();
 
   useEffect(() => {
     if (scores.length > 10) {
@@ -62,18 +71,65 @@ function Keyboard(set) {
   }, [allowedKeys, reset]);
 
   useEffect(() => {
+    const useKeyPress = (e) => {
+      if (!allowedKeys.split('').includes(e.key.toLowerCase())) {
+        return;
+      }
+      if (typeof e === 'string') return;
+      if (currentKeyIndex > keys.length - 1) return;
+      if (failedKeys.length > 0) return;
+      if (e.key.toLowerCase() === keys[currentKeyIndex].toLowerCase()) {
+        setCurrentKeyIndex((prev) => prev + 1);
+        if (currentKeyIndex < keys.length - 1) {
+          const keySoundFx = new Audio(keySound);
+          keySoundFx.playbackRate = 2;
+          keySoundFx.play();
+        } else {
+          const windSoundFx = new Audio(successSound);
+          successSoundFx.playbackRate = 1.1;
+          successSoundFx.play();
+          setShowSuccessText(true);
+          setTimeout(() => setShowSuccessText(false), 1000);
+        }
+      } else {
+        const failSoundFx = new Audio(failSound);
+        failSoundFx.playbackRate = 1;
+        failSoundFx.play();
+        setFailedKeys([...failedKeys, currentKeyIndex]);
+        setScores((prev) => {
+          return [
+            ...prev,
+            {
+              time: Date.now() - timer,
+              success: false
+            },
+          ];
+        });
+        setTimeout(() => {
+          reset();
+        }, 1500);
+        return;
+      }
 
+      if (currentKeyIndex === keys.length - 1) {
+        setScores((prev) => {
+          return [
+            ...prev,
+            {
+              time: Date.now() - timer,
+              success: true,
+            },
+          ];
+        });
+        setTimeout(() => {
+          reset();
+        }, 1500);
+      }
+    };
 
     window.addEventListener('keydown', useKeyPress);
     return() => window.removeEventListener('keydown', useKeyPress);
   }, [currentKeyIndex, failedKeys, keys, timer, allowedKeys, reset]);
-
-  useKeyPress(value => {
-    console.log(value);
-    if (!allowedKeys.split('').includes(value.key.toLowerCase())) {
-      return;
-    }
-  })
 
   return (
     <>
