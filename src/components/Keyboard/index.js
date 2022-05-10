@@ -4,13 +4,12 @@ import { Box, Typography } from '@mui/material';
 // import utils
 import useKeyPress from '../../utils/useKeyPress';
 // import renderWord from '../../utils/render';
-// import keySound from '../assets/keySound.mp3';
-// import failSound from '../assets/failSound.mp3';
-// import successSound from '../assets/successSound.mp3';
-// import star from '../assets/star.png';
+import keySound from '../../assets/keySound.mp3';
+import failSound from '../../assets/failSound.mp3';
+import successSound from '../../assets/successSound.mp3';
+import star from '../../assets/star.png';
 import css from '../Keyboard.module.scss';
 import classNames from 'classnames'
-import { current } from '@reduxjs/toolkit';
 
 const classes = classNames.bind(css);
 
@@ -40,7 +39,7 @@ function Keyboard(set) {
   const [timer, setTimer] = useState(Date.now());
   const [scores, setScores] = useState([]);
   const [failedKeys, setFailedKeys] = useState([]);
-  const [keyPressed, setKeyPressed ] = useState();
+  // const [keyPressed, setKeyPressed ] = useState();
 
   useEffect(() => {
     if (scores.length > 10) {
@@ -77,7 +76,9 @@ function Keyboard(set) {
 
   const useKeyPress = (e) => {
     console.log(e);
-    if (!allowedKeys.split('').includes(e.key.toLowerCase())) {
+    console.log(allowedKeys);
+    if (!allowedKeys.split('').includes(e.key.toUpperCase())) {
+      console.log('!allowedKeys');
       return;
     }
     if (typeof e === 'string') {
@@ -92,14 +93,14 @@ function Keyboard(set) {
       console.log('failedKeys.length > 0')
       return
     };
-    if (e.key.toLowerCase() === keys[currentKeyIndex].toLowerCase()) {
+    if (e.key.toUpperCase() === keys[currentKeyIndex].toUpperCase()) {
       setCurrentKeyIndex((prev) => prev + 1);
       if (currentKeyIndex < keys.length - 1) {
         const keySoundFx = new Audio(keySound);
         keySoundFx.playbackRate = 2;
         keySoundFx.play();
       } else {
-        const windSoundFx = new Audio(successSound);
+        const successSoundFx = new Audio(successSound);
         successSoundFx.playbackRate = 1.1;
         successSoundFx.play();
         setShowSuccessText(true);
@@ -209,7 +210,7 @@ function Keyboard(set) {
                       top: '-2px',
                     }}
                   >
-                    <img src={Star} width="100%" />
+                    <img src={star} width="100%" />
                   </Box>
                 )}
               </Box>
