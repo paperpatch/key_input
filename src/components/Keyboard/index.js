@@ -71,65 +71,75 @@ function Keyboard(set) {
   }, [allowedKeys, reset]);
 
   useEffect(() => {
-    const useKeyPress = (e) => {
-      if (!allowedKeys.split('').includes(e.key.toLowerCase())) {
-        return;
-      }
-      if (typeof e === 'string') return;
-      if (currentKeyIndex > keys.length - 1) return;
-      if (failedKeys.length > 0) return;
-      if (e.key.toLowerCase() === keys[currentKeyIndex].toLowerCase()) {
-        setCurrentKeyIndex((prev) => prev + 1);
-        if (currentKeyIndex < keys.length - 1) {
-          const keySoundFx = new Audio(keySound);
-          keySoundFx.playbackRate = 2;
-          keySoundFx.play();
-        } else {
-          const windSoundFx = new Audio(successSound);
-          successSoundFx.playbackRate = 1.1;
-          successSoundFx.play();
-          setShowSuccessText(true);
-          setTimeout(() => setShowSuccessText(false), 1000);
-        }
-      } else {
-        const failSoundFx = new Audio(failSound);
-        failSoundFx.playbackRate = 1;
-        failSoundFx.play();
-        setFailedKeys([...failedKeys, currentKeyIndex]);
-        setScores((prev) => {
-          return [
-            ...prev,
-            {
-              time: Date.now() - timer,
-              success: false
-            },
-          ];
-        });
-        setTimeout(() => {
-          reset();
-        }, 1500);
-        return;
-      }
-
-      if (currentKeyIndex === keys.length - 1) {
-        setScores((prev) => {
-          return [
-            ...prev,
-            {
-              time: Date.now() - timer,
-              success: true,
-            },
-          ];
-        });
-        setTimeout(() => {
-          reset();
-        }, 1500);
-      }
-    };
-
     window.addEventListener('keydown', useKeyPress);
     return() => window.removeEventListener('keydown', useKeyPress);
   }, [currentKeyIndex, failedKeys, keys, timer, allowedKeys, reset]);
+
+  const useKeyPress = (e) => {
+    console.log(e);
+    if (!allowedKeys.split('').includes(e.key.toLowerCase())) {
+      return;
+    }
+    if (typeof e === 'string') {
+      console.log('string');
+      return;
+    }
+    if (currentKeyIndex > keys.length - 1) {
+      console.log('currentkeyIndex > keys.length - 1')
+      return
+    };
+    if (failedKeys.length > 0) {
+      console.log('failedKeys.length > 0')
+      return
+    };
+    if (e.key.toLowerCase() === keys[currentKeyIndex].toLowerCase()) {
+      setCurrentKeyIndex((prev) => prev + 1);
+      if (currentKeyIndex < keys.length - 1) {
+        const keySoundFx = new Audio(keySound);
+        keySoundFx.playbackRate = 2;
+        keySoundFx.play();
+      } else {
+        const windSoundFx = new Audio(successSound);
+        successSoundFx.playbackRate = 1.1;
+        successSoundFx.play();
+        setShowSuccessText(true);
+        setTimeout(() => setShowSuccessText(false), 1000);
+      }
+    } else {
+      const failSoundFx = new Audio(failSound);
+      failSoundFx.playbackRate = 1;
+      failSoundFx.play();
+      setFailedKeys([...failedKeys, currentKeyIndex]);
+      setScores((prev) => {
+        return [
+          ...prev,
+          {
+            time: Date.now() - timer,
+            success: false
+          },
+        ];
+      });
+      setTimeout(() => {
+        reset();
+      }, 1500);
+      return;
+    }
+
+    if (currentKeyIndex === keys.length - 1) {
+      setScores((prev) => {
+        return [
+          ...prev,
+          {
+            time: Date.now() - timer,
+            success: true,
+          },
+        ];
+      });
+      setTimeout(() => {
+        reset();
+      }, 1500);
+    }
+  };
 
   return (
     <>
