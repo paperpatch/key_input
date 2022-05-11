@@ -104,7 +104,7 @@ function Keyboard(set) {
         successSoundFx.playbackRate = 1.1;
         successSoundFx.play();
         setShowSuccessText(true);
-        setTimeout(() => setShowSuccessText(false), 1000);
+        setTimeout(() => setShowSuccessText(false), 800);
       }
     } else {
       const failSoundFx = new Audio(failSound);
@@ -122,7 +122,7 @@ function Keyboard(set) {
       });
       setTimeout(() => {
         reset();
-      }, 1500);
+      }, 700);
       return;
     }
 
@@ -138,7 +138,7 @@ function Keyboard(set) {
       });
       setTimeout(() => {
         reset();
-      }, 1500);
+      }, 800);
     }
   };
 
@@ -248,7 +248,7 @@ function Keyboard(set) {
           <Typography variant="h6">
             {scores.length > 0 &&
               `Average time: ${(
-                setScores
+                scores
                   .filter((s) => s.success)
                   .reduce(
                     (acc, cur, ix, arr) => cur.time / arr.length + acc,
