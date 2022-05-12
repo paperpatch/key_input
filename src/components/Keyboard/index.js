@@ -2,8 +2,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 
 // import utils
-import useKeyPress from '../../utils/useKeyPress';
-// import renderWord from '../../utils/render';
 import keySound from '../../assets/keySound.mp3';
 import failSound from '../../assets/failSound.mp3';
 import successSound from '../../assets/successSound.mp3';
@@ -13,25 +11,12 @@ import classNames from 'classnames'
 
 const classes = classNames.bind(css);
 
-// const set = renderWord().split('');
-// console.log('set', set);
-
-// console.log('allowedKeys', allowedKeys)
-
-  // useKeyPress(value => {
-  //   console.log(value);
-  //   if (!allowedKeys.split('').includes(value.key.toLowerCase())) {
-  //     return;
-  //   }
-  // })
-
 function Keyboard(set) {
 
   let allowedKeys = '';
   for (let o in set) {
     allowedKeys += set[o];
   }
-  // console.log('set', allowedKeys);
 
   const [currentKeyIndex, setCurrentKeyIndex] = useState(0);
   const [showSuccessText, setShowSuccessText] = useState(false);
@@ -39,7 +24,6 @@ function Keyboard(set) {
   const [timer, setTimer] = useState(Date.now());
   const [scores, setScores] = useState([]);
   const [failedKeys, setFailedKeys] = useState([]);
-  // const [keyPressed, setKeyPressed ] = useState();
 
   useEffect(() => {
     if (scores.length > 10) {
