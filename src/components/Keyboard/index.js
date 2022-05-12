@@ -191,7 +191,7 @@ function Keyboard(set) {
                     className={classes(css.starAnimation)}
                     sx={{
                       position: 'absolute',
-                      top: '-2px',
+                      top: '-1.5rem',
                     }}
                   >
                     <img src={star} width="100%" />
