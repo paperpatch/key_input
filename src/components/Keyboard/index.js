@@ -9,6 +9,18 @@ import star from '../../assets/star.png';
 import css from '../Keyboard.module.scss';
 import classNames from 'classnames'
 
+const colors = {
+  white: 'white',
+  red: '#ff3232',
+  green: 'green',
+  lighterGrey: '#C8C8C8',
+  lightGrey: '#979797',
+  dimGrey: '#696969',
+  darkGrey: '#3F3F3F',
+  gold: '#B9A954',
+  black: 'black',
+}
+
 const classes = classNames.bind(css);
 
 function Keyboard(set) {
@@ -39,7 +51,7 @@ function Keyboard(set) {
     if(!allowedKeys || allowedKeys.length === 0) return;
     let newKeys = '';
 
-    for (let i=0; i < 7; i++) {
+    for (let i=0; i < 8; i++) {
       newKeys += allowedKeys[Math.floor(Math.random() * allowedKeys.length)];
     }
 
@@ -59,22 +71,16 @@ function Keyboard(set) {
   }, [currentKeyIndex, failedKeys, keys, timer, allowedKeys, reset]);
 
   const useKeyPress = (e) => {
-    console.log(e);
-    console.log(allowedKeys);
     if (!allowedKeys.split('').includes(e.key.toUpperCase())) {
-      console.log('!allowedKeys');
       return;
     }
     if (typeof e === 'string') {
-      console.log('string');
       return;
     }
     if (currentKeyIndex > keys.length - 1) {
-      console.log('currentkeyIndex > keys.length - 1')
       return
     };
     if (failedKeys.length > 0) {
-      console.log('failedKeys.length > 0')
       return
     };
     if (e.key.toUpperCase() === keys[currentKeyIndex].toUpperCase()) {
@@ -152,16 +158,16 @@ function Keyboard(set) {
                     width: '45px',
                     height: '45px',
                     backgroundColor: failedKeys.includes(ix)
-                      ? 'rgba(225, 15, 15, 1)'
-                      : 'rgba(170, 170, 170, 1)',
-                    opacity: currentKeyIndex <= ix ? 1 : 0.5,
-                    borderRadius: '6px',
+                      ? colors.red
+                      : colors.lightGrey,
+                    opacity: currentKeyIndex <= ix ? 1 : 0.9,
+                    borderRadius: '5px',
                     boxShadow:
                       currentKeyIndex === ix && !failedKeys.includes(ix)
-                        ? '-1px 4px 25px -3px #e1dbb6'
-                        : '-1px 4px 15px -3px rgba(0,0,0,0.43)',
+                        ? '-1px 4px 25px -3px colors.gold'
+                        : '-1px 4px 15px -3px colors.black',
                     transform:
-                      currentKeyIndex === ix ? 'translateY(-8px)' : undefined,
+                      currentKeyIndex === ix ? 'translateY(-13px)' : undefined,
                   }}
                 >
                   <Box
@@ -171,10 +177,15 @@ function Keyboard(set) {
                       width: '45px',
                       height: '45px',
                       backgroundColor: failedKeys.includes(ix)
-                        ? 'rgba(255, 50, 50, 1)'
+                        ? colors.red
                         : currentKeyIndex === ix
-                        ? '#e1dbb6'
-                        : 'rgba(200, 200, 200, 1)',
+                        ? colors.gold
+                        : colors.lightGrey,
+                      // color: failedKeys.includes(ix)
+                      //   ? colors.white
+                      //   : currentKeyIndex === ix
+                      //   ? colors.black
+                      //   : colors.black,
                       borderRadius: '6px',
                       display: 'flex',
                       alignItems: 'center',
@@ -208,13 +219,14 @@ function Keyboard(set) {
             sx={{
               textAlign: 'center',
               position: 'absolute',
-              top: '-135px',
+              top: '-50px',
               left: '-100px',
               right: '-100px',
               fontSize: '78px',
               fontWeight: 'bold',
               WebkitTextStroke: '2px rgba(111, 209, 255, 0.7)',
               WebkitTextFillColor: '#FFFFFF',
+              backgroundColor: 'white',
               textShadow:
                 '0 0 7px rgba(111, 209, 255, 0.7), 0 0 10px rgba(111, 209, 255, 0.7),0 0 21px rgba(111, 209, 255, 0.7),0 0 42px rgba(111, 209, 255, 0.7),0 0 82px rgba(111, 209, 255, 0.7),0 0 92px rgba(111, 209, 255, 0.7),0 0 102px rgba(111, 209, 255, 0.7),0 0 151px rgba(111, 209, 255, 0.7)',
             }}
