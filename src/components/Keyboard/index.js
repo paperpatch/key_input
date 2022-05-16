@@ -72,19 +72,24 @@ function Keyboard(set) {
   }, [currentKeyIndex, failedKeys, keys, timer, allowedKeys, reset]);
 
   const useKeyPress = (e) => {
-    if (!allowedKeys.split('').includes(e.key.toUpperCase())) {
-      return;
-    }
+    // if (!allowedKeys.split('').includes(e.key.toUpperCase())) {
+    //   console.log('!allowedKeys');
+    //   return;
+    // }
     if (typeof e === 'string') {
+      console.log('typeof e === string');
       return;
     }
     if (currentKeyIndex > keys.length - 1) {
+      console.log('currentKeyIndex > keys.length -1');
       return
     };
     if (failedKeys.length > 0) {
+      console.log('failedKeys.length > 0');
       return
     };
     if (e.key.toUpperCase() === keys[currentKeyIndex].toUpperCase()) {
+      console.log('e.key.toUpperCase()');
       setCurrentKeyIndex((prev) => prev + 1);
       if (currentKeyIndex < keys.length - 1) {
         const keySoundFx = new Audio(keySound);
@@ -184,12 +189,12 @@ function Keyboard(set) {
                       //   ? colors.white // current key
                       //   : colors.white, // all other key
                       color: failedKeys.includes(ix)
-                        ? colors.black
+                        ? colors.red
                         : currentKeyIndex === ix
                         ? colors.gold
                         : colors.black,
                       boxShadow: failedKeys.includes(ix)
-                        ? '0px 0px 2px 3px #B9A954' // failed keys
+                        ? '0px 0px 2px 3px red' // failed keys
                         : currentKeyIndex === ix
                         ? '0px 0px 2px 3px #B9A954' // current keys
                         : '0px 0px 2px 3px black', // forthcoming keys
