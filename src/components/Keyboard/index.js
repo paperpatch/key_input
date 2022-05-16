@@ -19,6 +19,7 @@ const colors = {
   darkGrey: '#3F3F3F',
   gold: '#B9A954',
   black: 'black',
+  skyBlue: 'rgb(37, 150, 190)',
 }
 
 const classes = classNames.bind(css);
@@ -157,10 +158,11 @@ function Keyboard(set) {
                     position: 'relative',
                     width: '45px',
                     height: '45px',
-                    backgroundColor: failedKeys.includes(ix)
-                      ? colors.red
-                      : colors.lightGrey,
-                    opacity: currentKeyIndex <= ix ? 1 : 0.9,
+                    // backgroundColor: failedKeys.includes(ix)
+                    //   ? colors.red
+                    //   : colors.gold,
+                    backgroundColor: currentKeyIndex <= ix ? colors.white : colors.dimGrey,
+                    // opacity: currentKeyIndex <= ix ? 1 : 0.5,
                     borderRadius: '5px',
                     boxShadow:
                       currentKeyIndex === ix && !failedKeys.includes(ix)
@@ -173,19 +175,24 @@ function Keyboard(set) {
                   <Box
                     sx={{
                       position: 'absolute',
-                      top: '-3px',
+                      // top: '-3px',
                       width: '45px',
                       height: '45px',
-                      backgroundColor: failedKeys.includes(ix)
-                        ? colors.red
+                      // backgroundColor: failedKeys.includes(ix)
+                      //   ? colors.red
+                      //   : currentKeyIndex === ix
+                      //   ? colors.white // current key
+                      //   : colors.white, // all other key
+                      color: failedKeys.includes(ix)
+                        ? colors.black
                         : currentKeyIndex === ix
                         ? colors.gold
-                        : colors.lightGrey,
-                      // color: failedKeys.includes(ix)
-                      //   ? colors.white
-                      //   : currentKeyIndex === ix
-                      //   ? colors.black
-                      //   : colors.black,
+                        : colors.black,
+                      boxShadow: failedKeys.includes(ix)
+                        ? '0px 0px 2px 3px #B9A954' // failed keys
+                        : currentKeyIndex === ix
+                        ? '0px 0px 2px 3px #B9A954' // current keys
+                        : '0px 0px 2px 3px black', // forthcoming keys
                       borderRadius: '6px',
                       display: 'flex',
                       alignItems: 'center',
@@ -238,7 +245,7 @@ function Keyboard(set) {
         <Box
           textAlign="center"
           marginTop={10}
-          sx={{ background: 'rgba(255,255,255,0.5)', borderRadius: '10px' }}
+          sx={{ background: colors.white, borderRadius: '10px' }}
         >
           <Typography variant="h6">Last 10 scores</Typography>
           <Typography variant="h6">
