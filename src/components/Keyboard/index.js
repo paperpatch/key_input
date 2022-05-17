@@ -52,7 +52,7 @@ function Keyboard(set) {
     if(!allowedKeys || allowedKeys.length === 0) return;
     let newKeys = '';
 
-    for (let i=0; i < 8; i++) {
+    for (let i=0; i < 1; i++) {
       newKeys += allowedKeys[Math.floor(Math.random() * allowedKeys.length)];
     }
 
@@ -148,6 +148,7 @@ function Keyboard(set) {
           gap: '6ffpx',
         }}
       >
+        {!showSuccessText && (
         <Box sx={{ display: 'flex', flexDirection: 'row', gap: '6px' }}>
           {keys.split('').map((key, ix) => {
             return (
@@ -224,27 +225,50 @@ function Keyboard(set) {
             );
           })}
         </Box>
+        )}
         {showSuccessText && (
+          <>
           <Typography
             variant="h6"
             className={classes(css.successAnimation)}
             sx={{
               textAlign: 'center',
               position: 'absolute',
-              top: '-50px',
+              top: '-35px',
               left: '-100px',
               right: '-100px',
-              fontSize: '78px',
+              fontSize: '50px',
               fontWeight: 'bold',
               WebkitTextStroke: '2px rgba(111, 209, 255, 0.7)',
               WebkitTextFillColor: '#FFFFFF',
-              backgroundColor: 'white',
-              textShadow:
-                '0 0 7px rgba(111, 209, 255, 0.7), 0 0 10px rgba(111, 209, 255, 0.7),0 0 21px rgba(111, 209, 255, 0.7),0 0 42px rgba(111, 209, 255, 0.7),0 0 82px rgba(111, 209, 255, 0.7),0 0 92px rgba(111, 209, 255, 0.7),0 0 102px rgba(111, 209, 255, 0.7),0 0 151px rgba(111, 209, 255, 0.7)',
+              zIndex: 'tooltip',
+              // boxShadow: '0px 0px 50px 20px rgba(111, 209, 255, 0.7)'
+              // textShadow:
+              //   '0 0 15px rgba(111, 209, 255, 0.7), 0 0 10px rgba(111, 209, 255, 0.7),0 0 21px rgba(111, 209, 255, 0.7),0 0 42px rgba(111, 209, 255, 0.7),0 0 82px rgba(111, 209, 255, 0.7),0 0 92px rgba(111, 209, 255, 0.7),0 0 102px rgba(111, 209, 255, 0.7),0 0 151px rgba(111, 209, 255, 0.7)',
             }}
           >
-            Success
+            SUCCESS
           </Typography>
+          <Box // Long Blur
+            sx={{
+              position:'absolute',
+              top: '10px',
+              left: '-15rem',
+              right: '-15rem',
+              boxShadow: '0px 0px 50px 15px rgba(111, 209, 255, 0.7)',
+            }}
+          ></Box>
+          <Box // Center Blur
+            sx={{
+              position:'absolute',
+              top: '10px',
+              left: '50px',
+              right: '50px',
+              borderRadius: 8,
+              boxShadow: '0px 0px 50px 50px rgba(111, 209, 255, 0.7)',
+            }}
+          ></Box>
+          </>
         )}
 
         <Box
