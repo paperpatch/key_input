@@ -52,7 +52,7 @@ function Keyboard(set) {
     if(!allowedKeys || allowedKeys.length === 0) return;
     let newKeys = '';
 
-    for (let i=0; i < 1; i++) {
+    for (let i=0; i < 7; i++) {
       newKeys += allowedKeys[Math.floor(Math.random() * allowedKeys.length)];
     }
 
@@ -152,33 +152,27 @@ function Keyboard(set) {
         <Box sx={{ display: 'flex', flexDirection: 'row', gap: '6px' }}>
           {keys.split('').map((key, ix) => {
             return (
-              <Box
+              <Box // Key Background
                 key={ix}
                 className={classes({
                   [css.shakeAnimation]: failedKeys.includes(ix),
                 })}
-                sx={{ position: 'relative' }}
+                sx={{
+                  position: 'relative',
+                }}
               >
                 <div
                   style={{
                     position: 'relative',
                     width: '45px',
                     height: '45px',
-                    // backgroundColor: failedKeys.includes(ix)
-                    //   ? colors.red
-                    //   : colors.gold,
                     backgroundColor: currentKeyIndex <= ix ? colors.white : colors.dimGrey,
-                    // opacity: currentKeyIndex <= ix ? 1 : 0.5,
                     borderRadius: '5px',
-                    boxShadow:
-                      currentKeyIndex === ix && !failedKeys.includes(ix)
-                        ? '-1px 4px 25px -3px colors.gold'
-                        : '-1px 4px 15px -3px colors.black',
                     transform:
                       currentKeyIndex === ix ? 'translateY(-13px)' : undefined,
                   }}
                 >
-                  <Box
+                  <Box // Key Input
                     sx={{
                       position: 'absolute',
                       // top: '-3px',
@@ -209,9 +203,60 @@ function Keyboard(set) {
                   >
                     {key.toUpperCase()}
                   </Box>
+                  <Box // Line and blur below current key input
+                    sx={{
+                      width: '100px',
+                      height: '0px',
+                      top: '5rem',
+                      left: '-25px',
+                      color: 'gold',
+                      position: 'absolute',
+                      zIndex: 'tooltip',
+                      boxShadow: failedKeys.includes(ix)
+                        ? '0px 0px 0px 0px black' // failed keys
+                        : currentKeyIndex === ix
+                        ? '0px 0px 0.5px 0.5px #B9A954, 0px -9px 15px 3px #B9A954' // current keys
+                        : '0px 0px 0px 0px black', // forthcoming keys
+                    }}
+                  >
+                  </Box>
+                  <Box // Box (arrow) below current key input
+                    sx={{
+                      width: '20px',
+                      height: '20px',
+                      top: '4.4rem',
+                      left: '13px',
+                      transform: 'rotate(45deg)',
+                      position: 'absolute',
+                      zIndex: 'modal',
+                      backgroundColor: failedKeys.includes(ix)
+                        ? colors.red
+                        : currentKeyIndex === ix
+                        ? colors.gold
+                        : colors.none,
+                    }}
+                  >
+                  </Box>
+                  <Box // White background to block half of box (arrow)
+                    sx={{
+                      width: '150px',
+                      height: '50px',
+                      top: '5rem',
+                      left: '-50px',
+                      backgroundColor: 'white',
+                      position: 'absolute',
+                      zIndex: 'tooltip',
+                      // boxShadow: failedKeys.includes(ix)
+                      // ? '0px 0px 0px 0px black' // failed keys
+                      // : currentKeyIndex === ix
+                      // ? '0px 0px 1px 1px #B9A954' // current keys
+                      // : '0px 0px 0px 0px black', // forthcoming keys
+                    }}
+                  >
+                  </Box>
                 </div>
                 {ix < currentKeyIndex && (
-                  <Box
+                  <Box // Star animation
                     className={classes(css.starAnimation)}
                     sx={{
                       position: 'absolute',
