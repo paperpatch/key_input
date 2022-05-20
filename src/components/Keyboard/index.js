@@ -18,6 +18,7 @@ const colors = {
   dimGrey: '#696969',
   darkGrey: '#3F3F3F',
   gold: '#B9A954',
+  yellow: '#FFEF00',
   black: 'black',
   skyBlue: 'rgb(37, 150, 190)',
 }
@@ -191,7 +192,7 @@ function Keyboard(set) {
                       boxShadow: failedKeys.includes(ix)
                         ? '0px 0px 2px 3px red' // failed keys
                         : currentKeyIndex === ix
-                        ? '0px 0px 2px 3px #B9A954' // current keys
+                        ? '0px 0px 2px 3px #DEC20B' // current keys
                         : '0px 0px 2px 3px black', // forthcoming keys
                       borderRadius: '6px',
                       display: 'flex',
@@ -215,7 +216,7 @@ function Keyboard(set) {
                       boxShadow: failedKeys.includes(ix)
                         ? '0px 0px 0px 0px black' // failed keys
                         : currentKeyIndex === ix
-                        ? '0px 0px 0.5px 0.5px #B9A954, 0px -9px 15px 3px #B9A954' // current keys
+                        ? '0px 0px 0.5px 0.5px #B9A954, 0px -9px 25px 4px #B9A954, 0px -25px 25px 1px #B9A954, -60px -9px 25px 2px #B9A954, 60px -9px 25px 2px #B9A954' // current keys
                         : '0px 0px 0px 0px black', // forthcoming keys
                     }}
                   >
@@ -232,17 +233,39 @@ function Keyboard(set) {
                       backgroundColor: failedKeys.includes(ix)
                         ? colors.red
                         : currentKeyIndex === ix
-                        ? colors.gold
+                        ? colors.yellow
                         : colors.none,
+                      boxShadow: failedKeys.includes(ix)
+                        ? '0px 0px 0px 0px black' // failed keys
+                        : currentKeyIndex === ix
+                        ? '0px 0px 15px 1px #B58B00' // current keys
+                        : '0px 0px 0px 0px black', // forthcoming keys
+                    }}
+                  >
+                  </Box>
+                  <Box // secondary Box (arrow) below current key input
+                    sx={{
+                      width: '10px',
+                      height: '10px',
+                      top: '4.8rem',
+                      left: '18px',
+                      transform: 'rotate(45deg)',
+                      position: 'absolute',
+                      zIndex: 'modal',
+                      boxShadow: failedKeys.includes(ix)
+                        ? '0px 0px 0px 0px black' // failed keys
+                        : currentKeyIndex === ix
+                        ? '0px 0px 1px 2px #B58B00' // current keys
+                        : '0px 0px 0px 0px black', // forthcoming keys
                     }}
                   >
                   </Box>
                   <Box // White background to block half of box (arrow)
                     sx={{
-                      width: '150px',
+                      width: '25rem',
                       height: '50px',
                       top: '5rem',
-                      left: '-50px',
+                      left: '-15rem',
                       backgroundColor: 'white',
                       position: 'absolute',
                       zIndex: 'tooltip',
