@@ -11,7 +11,7 @@ import classNames from 'classnames'
 
 const colors = {
   white: 'white',
-  red: '#ff3232',
+  red: '#7F1919',
   green: 'green',
   lighterGrey: '#C8C8C8',
   lightGrey: '#979797',
@@ -34,6 +34,7 @@ function Keyboard(set) {
 
   const [currentKeyIndex, setCurrentKeyIndex] = useState(0);
   const [showSuccessText, setShowSuccessText] = useState(false);
+  const [showFailureText, setShowFailureText] = useState(false);
   const [keys, setKeys] = useState('');
   const [timer, setTimer] = useState(Date.now());
   const [scores, setScores] = useState([]);
@@ -117,7 +118,9 @@ function Keyboard(set) {
           },
         ];
       });
+      setShowFailureText(true);
       setTimeout(() => {
+        setShowFailureText(false);
         reset();
       }, 700);
       return;
@@ -334,6 +337,50 @@ function Keyboard(set) {
               right: '50px',
               borderRadius: 8,
               boxShadow: '0px 0px 50px 50px rgba(111, 209, 255, 0.7)',
+            }}
+          ></Box>
+          </>
+        )}
+        {showFailureText && (
+          <>
+          <Typography
+            variant="h6"
+            className={classes(css.successAnimation)}
+            sx={{
+              textAlign: 'center',
+              position: 'absolute',
+              top: '-18px',
+              left: '-50px',
+              right: '-50px',
+              fontSize: '30px',
+              fontWeight: 'bold',
+              WebkitTextStroke: '2px rgba(127, 25, 25, 0.7)',
+              WebkitTextFillColor: '#FFFFFF',
+              zIndex: 'tooltip',
+              // boxShadow: '0px 0px 50px 20px rgba(111, 209, 255, 0.7)'
+              // textShadow:
+              //   '0 0 15px rgba(111, 209, 255, 0.7), 0 0 10px rgba(111, 209, 255, 0.7),0 0 21px rgba(111, 209, 255, 0.7),0 0 42px rgba(111, 209, 255, 0.7),0 0 82px rgba(111, 209, 255, 0.7),0 0 92px rgba(111, 209, 255, 0.7),0 0 102px rgba(111, 209, 255, 0.7),0 0 151px rgba(111, 209, 255, 0.7)',
+            }}
+          >
+            Failure
+          </Typography>
+          <Box // Long Blur
+            sx={{
+              position:'absolute',
+              top: '10px',
+              left: '-10rem',
+              right: '-10rem',
+              boxShadow: '0px 0px 10px 50px rgba(0, 0, 0, 0.5)',
+            }}
+          ></Box>
+          <Box // Center Blur
+            sx={{
+              position:'absolute',
+              top: '5px',
+              left: '50px',
+              right: '50px',
+              borderRadius: 8,
+              boxShadow: '0px 0px 30px 10px rgba(127, 25,	25, 0.7), 0px 0px 30px 20px rgba(0, 0, 0, 1)',
             }}
           ></Box>
           </>
