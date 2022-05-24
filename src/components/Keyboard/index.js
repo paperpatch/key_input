@@ -149,10 +149,10 @@ function Keyboard(set) {
           display: 'flex',
           position: 'relative',
           flexDirection: 'column',
-          gap: '6ffpx',
+          gap: 1,
         }}
       >
-        {!showSuccessText && (
+        {!showSuccessText && !showFailureText && (
         <Box sx={{ display: 'flex', flexDirection: 'row', gap: '6px' }}>
           {keys.split('').map((key, ix) => {
             return (
@@ -163,6 +163,7 @@ function Keyboard(set) {
                 })}
                 sx={{
                   position: 'relative',
+                  m: 0.3,
                 }}
               >
                 <div
