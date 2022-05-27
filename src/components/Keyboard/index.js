@@ -54,7 +54,7 @@ function Keyboard(set) {
     if(!allowedKeys || allowedKeys.length === 0) return;
     let newKeys = '';
 
-    for (let i=0; i < 7; i++) {
+    for (let i=0; i < 1; i++) {
       newKeys += allowedKeys[Math.floor(Math.random() * allowedKeys.length)];
     }
 
@@ -322,14 +322,34 @@ function Keyboard(set) {
             SUCCESS
           </Typography>
 
-          <Box // Semi-Long Blur
+          <Box // Long-Horizontal Blur
+            sx={{
+              position:'absolute',
+              top: '10px',
+              left: '-10rem',
+              right: '-10rem',
+              borderRadius: 8,
+              boxShadow: '0px 0px 40px 30px rgba(111, 209, 255, 0.1), 0px 0px 30px 30px rgba(111, 209, 255, 0.1)',
+            }}
+          ></Box>
+          <Box // Mid-Horizontal Blur
             sx={{
               position:'absolute',
               top: '10px',
               left: '-5rem',
               right: '-5rem',
               borderRadius: 8,
-              boxShadow: '0px 0px 40px 30px rgba(111, 209, 255, 0.7), 0px 0px 30px 30px rgba(111, 209, 255, 0.7)',
+              boxShadow: '0px 0px 40px 30px rgba(111, 209, 255, 0.2), 0px 0px 30px 30px rgba(111, 209, 255, 0.2)',
+            }}
+          ></Box>
+          <Box // Short-Horizontal Blur
+            sx={{
+              position:'absolute',
+              top: '10px',
+              left: '-1rem',
+              right: '-1rem',
+              borderRadius: 8,
+              boxShadow: '0px 0px 40px 30px rgba(111, 209, 255, 0.2), 0px 0px 30px 30px rgba(111, 209, 255, 0.2)',
             }}
           ></Box>
           <Box // Center Blur
@@ -339,10 +359,10 @@ function Keyboard(set) {
               left: '70px',
               right: '70px',
               borderRadius: 8,
-              boxShadow: '0px 0px 20px 15px rgba(255, 255, 255, 0.7), 0px 0px 30px 30px #97deff, 0px 0px 50px 50px rgba(111, 209, 255, 0.7), 0px 0px 70px 70px rgba(111, 209, 255, 0.9)',
+              boxShadow: '0px 0px 20px 15px rgba(255, 255, 255, 0.7), 0px 0px 20px 20px #97deff, 0px 0px 50px 50px rgba(111, 209, 255, 0.7)',
             }}
           ></Box>
-          <Box // Long Blur
+          <Box // Peak-Horizontal Blur
             sx={{
               position:'absolute',
               top: '10px',
