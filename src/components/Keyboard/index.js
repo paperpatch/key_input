@@ -41,7 +41,7 @@ function Keyboard(set) {
   const [failedKeys, setFailedKeys] = useState([]);
 
   useEffect(() => {
-    if (scores.length > 10) {
+    if (scores.length > 5) {
       setScores((prev) => {
         const newScores = [...prev];
         newScores.shift();
@@ -196,8 +196,8 @@ function Keyboard(set) {
                       boxShadow: failedKeys.includes(ix)
                         ? '0px 0px 2px 3px red' // failed keys
                         : currentKeyIndex === ix
-                        ? '0px 0px 2px 3px #DEC20B' // current keys
-                        : '0px 0px 2px 3px black', // forthcoming keys
+                        ? '0px 0px 2px 3px #DEC20B, 0px 0px 30px 3px #DEC20B' // current keys
+                        : '0px 0px 2px 3px black, 0px 0px 30px 3px black', // forthcoming keys
                       borderRadius: '6px',
                       display: 'flex',
                       alignItems: 'center',
@@ -266,10 +266,10 @@ function Keyboard(set) {
                   </Box>
                   <Box // White background to block half of box (arrow)
                     sx={{
-                      width: '25rem',
+                      width: '50rem',
                       height: '50px',
                       top: '5rem',
-                      left: '-15rem',
+                      left: '-30rem',
                       backgroundColor: 'white',
                       position: 'absolute',
                       zIndex: 'tooltip',
@@ -321,23 +321,34 @@ function Keyboard(set) {
           >
             SUCCESS
           </Typography>
-          <Box // Long Blur
+
+          <Box // Semi-Long Blur
             sx={{
               position:'absolute',
               top: '10px',
-              left: '-15rem',
-              right: '-15rem',
-              boxShadow: '0px 0px 50px 15px rgba(111, 209, 255, 0.7)',
+              left: '-5rem',
+              right: '-5rem',
+              borderRadius: 8,
+              boxShadow: '0px 0px 40px 30px rgba(111, 209, 255, 0.7), 0px 0px 30px 30px rgba(111, 209, 255, 0.7)',
             }}
           ></Box>
           <Box // Center Blur
             sx={{
               position:'absolute',
               top: '10px',
-              left: '50px',
-              right: '50px',
+              left: '70px',
+              right: '70px',
               borderRadius: 8,
-              boxShadow: '0px 0px 50px 50px rgba(111, 209, 255, 0.7)',
+              boxShadow: '0px 0px 20px 15px rgba(255, 255, 255, 0.7), 0px 0px 30px 30px #97deff, 0px 0px 50px 50px rgba(111, 209, 255, 0.7), 0px 0px 70px 70px rgba(111, 209, 255, 0.9)',
+            }}
+          ></Box>
+          <Box // Long Blur
+            sx={{
+              position:'absolute',
+              top: '10px',
+              left: '-15rem',
+              right: '-15rem',
+              boxShadow: '0px 0px 5px 0.7px white, 0px 0px 30px 15px rgba(111, 209, 255, 0.7)',
             }}
           ></Box>
           </>
@@ -346,7 +357,6 @@ function Keyboard(set) {
           <>
           <Typography
             variant="h6"
-            className={classes(css.successAnimation)}
             sx={{
               textAlign: 'center',
               position: 'absolute',
@@ -392,7 +402,7 @@ function Keyboard(set) {
           marginTop={10}
           sx={{ background: colors.white, borderRadius: '10px' }}
         >
-          <Typography variant="h6">Last 10 scores</Typography>
+          <Typography variant="h6">Last 5 scores</Typography>
           <Typography variant="h6">
             {scores.length > 0 &&
               `Average time: ${(
@@ -404,13 +414,13 @@ function Keyboard(set) {
                   ) / 1000
               ).toFixed(2)}s`}
           </Typography>
-          <Typography variant="h6">
+          {/* <Typography variant="h6">
             {scores.length > 0 &&
               `Fail rate: ${(
                 (scores.filter((s) => !s.success).length / scores.length) *
                 100
               ).toFixed(1)}%`}
-          </Typography>
+          </Typography> */}
           {scores.map((scores, ix) => {
             return (
               <Typography
