@@ -54,7 +54,7 @@ function Keyboard(set) {
     if(!allowedKeys || allowedKeys.length === 0) return;
     let newKeys = '';
 
-    for (let i=0; i < 1; i++) {
+    for (let i=0; i < 7; i++) {
       newKeys += allowedKeys[Math.floor(Math.random() * allowedKeys.length)];
     }
 
