@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 
 // import utils
 import keySound from '../../assets/keySound.mp3';
-import failSound from '../../assets/failSound.mp3';
+import failSound from '../../assets/tile_break.wav';
 import successSound from '../../assets/successSound.mp3';
 import star from '../../assets/star.png';
 import css from '../Keyboard.module.scss';
@@ -106,7 +106,8 @@ function Keyboard(set) {
       }
     } else {
       const failSoundFx = new Audio(failSound);
-      failSoundFx.playbackRate = 1;
+      failSoundFx.playbackRate = 1.5;
+      failSoundFx.volume = 0.2;
       failSoundFx.play();
       setFailedKeys([...failedKeys, currentKeyIndex]);
       setScores((prev) => {
