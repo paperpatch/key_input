@@ -36,6 +36,7 @@ function Keyboard(set) {
   const [showSuccessText, setShowSuccessText] = useState(false);
   const [showFailureText, setShowFailureText] = useState(false);
   const [keys, setKeys] = useState('');
+  const [countdown, setCountdown] = useState(6);
   const [timer, setTimer] = useState(Date.now());
   const [scores, setScores] = useState([]);
   const [failedKeys, setFailedKeys] = useState([]);
