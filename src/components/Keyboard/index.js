@@ -8,6 +8,7 @@ import successSound from '../../assets/successSound.mp3';
 import star from '../../assets/star.png';
 import css from '../Keyboard.module.scss';
 import classNames from 'classnames'
+import Countdown from 'react-countdown';
 
 const colors = {
   white: 'white',
@@ -32,11 +33,13 @@ function Keyboard(set) {
     allowedKeys += set[o];
   }
 
+  const time = 5.5;
+  time.toFixed(1);
   const [currentKeyIndex, setCurrentKeyIndex] = useState(0);
   const [showSuccessText, setShowSuccessText] = useState(false);
   const [showFailureText, setShowFailureText] = useState(false);
   const [keys, setKeys] = useState('');
-  const [countdown, setCountdown] = useState(6);
+  const [countdown, setCountdown] = useState(time);
   const [timer, setTimer] = useState(Date.now());
   const [scores, setScores] = useState([]);
   const [failedKeys, setFailedKeys] = useState([]);
@@ -63,11 +66,28 @@ function Keyboard(set) {
     setKeys(newKeys);
     setTimer(Date.now());
     setFailedKeys([]);
-  }, [setCurrentKeyIndex, setKeys, setTimer, setFailedKeys, allowedKeys]);
+    setCountdown(time);
+  }, [setCurrentKeyIndex, setKeys, setTimer, setFailedKeys, setCountdown, allowedKeys]);
 
   useEffect(() => {
     reset();
   }, [allowedKeys, reset]);
+
+  useEffect(() => {
+    if (countdown <= 0) {
+      console.log('zero countdown failure')
+      setCountdown(Infinity);
+      failure()
+    };
+
+    const intervalId = setInterval(() => {
+      setCountdown((countdown - .1).toFixed(1));
+    }, 100);
+
+    // clear interval on re-render to avoid memory leaks
+    return () => clearInterval(intervalId);
+    // add countdown as a dependency to rerun the effect when updated
+  }, [countdown])
 
   useEffect(() => {
     window.addEventListener('keydown', useKeyPress);
@@ -88,7 +108,7 @@ function Keyboard(set) {
       return
     };
     if (failedKeys.length > 0) {
-      console.log('failedKeys.length > 0');
+      // console.log('failedKeys.length > 0');
       return
     };
     if (e.key.toUpperCase() === keys[currentKeyIndex].toUpperCase()) {
@@ -99,6 +119,7 @@ function Keyboard(set) {
         keySoundFx.playbackRate = 2;
         keySoundFx.play();
       } else {
+        setCountdown(Infinity);
         const successSoundFx = new Audio(successSound);
         successSoundFx.playbackRate = 1.1;
         successSoundFx.play();
@@ -106,7 +127,27 @@ function Keyboard(set) {
         setTimeout(() => setShowSuccessText(false), 800);
       }
     } else {
-      const failSoundFx = new Audio(failSound);
+      failure();
+    }
+
+    if (currentKeyIndex === keys.length - 1) {
+      setScores((prev) => {
+        return [
+          ...prev,
+          {
+            time: Date.now() - timer,
+            success: true,
+          },
+        ];
+      });
+      setTimeout(() => {
+        reset();
+      }, 800);
+    }
+  };
+
+  function failure() {
+    const failSoundFx = new Audio(failSound);
       failSoundFx.playbackRate = 1.5;
       failSoundFx.volume = 0.2;
       failSoundFx.play();
@@ -126,23 +167,7 @@ function Keyboard(set) {
         reset();
       }, 700);
       return;
-    }
-
-    if (currentKeyIndex === keys.length - 1) {
-      setScores((prev) => {
-        return [
-          ...prev,
-          {
-            time: Date.now() - timer,
-            success: true,
-          },
-        ];
-      });
-      setTimeout(() => {
-        reset();
-      }, 800);
-    }
-  };
+  }
 
   return (
     <>
@@ -155,6 +180,7 @@ function Keyboard(set) {
         }}
       >
         {!showSuccessText && !showFailureText && (
+        <>
         <Box sx={{ display: 'flex', flexDirection: 'row', gap: '6px' }}>
           {keys.split('').map((key, ix) => {
             return (
@@ -299,6 +325,26 @@ function Keyboard(set) {
             );
           })}
         </Box>
+        <Box
+        sx={{
+          top: '20px',
+          mx: 'auto',
+          display: 'flex',
+          position: 'relative',
+          flexDirection: 'column',
+          gap: 1,
+          zIndex: 'tooltip',
+        }}>
+        {/* <Countdown
+          date={Date.now() + countdown*1000}
+          intervalDelay={0}
+          precision={1}
+          renderer={props => <div>{props.total / 1000}</div>}
+        >
+        </Countdown> */}
+        {countdown}
+      </Box>
+      </>
         )}
         {showSuccessText && (
           <>
