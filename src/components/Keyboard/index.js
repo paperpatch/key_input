@@ -8,7 +8,6 @@ import successSound from '../../assets/successSound.mp3';
 import star from '../../assets/star.png';
 import css from '../Keyboard.module.scss';
 import classNames from 'classnames'
-import Countdown from 'react-countdown';
 
 const colors = {
   white: 'white',
@@ -335,13 +334,6 @@ function Keyboard(set) {
           gap: 1,
           zIndex: 'tooltip',
         }}>
-        {/* <Countdown
-          date={Date.now() + countdown*1000}
-          intervalDelay={0}
-          precision={1}
-          renderer={props => <div>{props.total / 1000}</div>}
-        >
-        </Countdown> */}
         {countdown}
       </Box>
       </>
