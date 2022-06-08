@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Button,
   Slide,
   TextField,
   Toolbar,
@@ -16,6 +17,7 @@ import './App.css';
 function App() {
   const [showAppBar, setShowAppBar] = useState(true);
   const [allowedKeys, setAllowedKeys] = useState('WASDQE');
+  const [timerMode, setTimerMode] = useState(true);
 
   const handleScroll = useCallback(() => {
     if (window.scrollY >= 25) {
@@ -70,10 +72,25 @@ function App() {
                 setAllowedKeys(e.target.value);
               }}
             />
+            <Button
+              variant="contained"
+              sx={{
+                background: timerMode ? 'blue' : 'black',
+                '&:hover': {
+                  background: timerMode ? 'blue' : 'black',
+                },
+                '&:active': {
+                  background: timerMode ? 'blue' : 'black',
+                },
+              }}
+              onClick={() => setTimerMode((prev) => !prev)}
+            >
+              {timerMode ? 'Timer on' : 'Timer off'}
+            </Button>
           </Toolbar>
         </AppBar>
       </Slide>
-      <Keyboard allowedKeys={allowedKeys} />
+      <Keyboard allowedKeys={allowedKeys} timerMode={timerMode}/>
     </BrowserRouter>
   )
 };

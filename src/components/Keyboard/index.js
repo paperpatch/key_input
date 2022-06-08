@@ -26,10 +26,12 @@ const colors = {
 const classes = classNames.bind(css);
 
 function Keyboard(set) {
+  const allowed = set.allowedKeys;
+  const timerMode = set.timerMode;
 
   let allowedKeys = '';
-  for (let o in set) {
-    allowedKeys += set[o];
+  for (let o in allowed) {
+    allowedKeys += allowed[o];
   }
 
   const time = 5.5;
@@ -74,13 +76,14 @@ function Keyboard(set) {
 
   useEffect(() => {
     if (countdown <= 0) {
-      console.log('zero countdown failure')
       setCountdown(Infinity);
       failure()
     };
 
     const intervalId = setInterval(() => {
-      setCountdown((countdown - .1).toFixed(1));
+      if (timerMode) {
+        setCountdown((countdown - .1).toFixed(1));
+      }
     }, 100);
 
     // clear interval on re-render to avoid memory leaks
@@ -111,14 +114,14 @@ function Keyboard(set) {
       return
     };
     if (e.key.toUpperCase() === keys[currentKeyIndex].toUpperCase()) {
-      console.log('e.key.toUpperCase()');
+      // console.log('e.key.toUpperCase()');
       setCurrentKeyIndex((prev) => prev + 1);
       if (currentKeyIndex < keys.length - 1) {
         const keySoundFx = new Audio(keySound);
         keySoundFx.playbackRate = 2;
         keySoundFx.play();
       } else {
-        setCountdown(Infinity);
+        setCountdown(10);
         const successSoundFx = new Audio(successSound);
         successSoundFx.playbackRate = 1.1;
         successSoundFx.play();
@@ -334,7 +337,11 @@ function Keyboard(set) {
           gap: 1,
           zIndex: 'tooltip',
         }}>
-        {countdown}
+        {timerMode && (
+          <>
+          {countdown}
+          </>
+        )}
       </Box>
       </>
         )}
