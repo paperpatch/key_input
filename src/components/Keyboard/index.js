@@ -77,8 +77,7 @@ function Keyboard(set) {
 
   useEffect(() => {
     if (countdown <= 0) {
-      setCountdown(Infinity);
-      failure()
+      return failure();
     };
 
     const intervalId = setInterval(() => {
@@ -103,11 +102,11 @@ function Keyboard(set) {
     //   return;
     // }
     if (typeof e === 'string') {
-      console.log('typeof e === string');
+      // console.log('typeof e === string');
       return;
     }
     if (currentKeyIndex > keys.length - 1) {
-      console.log('currentKeyIndex > keys.length -1');
+      // console.log('currentKeyIndex > keys.length -1');
       return
     };
     if (failedKeys.length > 0) {
@@ -122,12 +121,7 @@ function Keyboard(set) {
         keySoundFx.playbackRate = 2;
         keySoundFx.play();
       } else {
-        setCountdown(10);
-        const successSoundFx = new Audio(successSound);
-        successSoundFx.playbackRate = 1.1;
-        successSoundFx.play();
-        setShowSuccessText(true);
-        setTimeout(() => setShowSuccessText(false), 800);
+        success();
       }
     } else {
       failure();
@@ -149,27 +143,43 @@ function Keyboard(set) {
     }
   };
 
+  function success() {
+    setCountdown(10);
+
+    const successSoundFx = new Audio(successSound);
+    successSoundFx.playbackRate = 1.1;
+    successSoundFx.play();
+
+    setShowSuccessText(true);
+    setTimeout(() => setShowSuccessText(false), 800);
+
+    return;
+  }
+
   function failure() {
     const failSoundFx = new Audio(failSound);
-      failSoundFx.playbackRate = 1.5;
-      failSoundFx.volume = 0.2;
-      failSoundFx.play();
-      setFailedKeys([...failedKeys, currentKeyIndex]);
-      setScores((prev) => {
-        return [
-          ...prev,
-          {
-            time: Date.now() - timer,
-            success: false
-          },
-        ];
-      });
-      setShowFailureText(true);
-      setTimeout(() => {
-        setShowFailureText(false);
-        reset();
-      }, 700);
-      return;
+
+    failSoundFx.playbackRate = 1.5;
+    failSoundFx.volume = 0.2;
+    failSoundFx.play();
+
+    setFailedKeys([...failedKeys, currentKeyIndex]);
+    setScores((prev) => {
+      return [
+        ...prev,
+        {
+          time: Date.now() - timer,
+          success: false
+        },
+      ];
+    });
+    setShowFailureText(true);
+    setTimeout(() => {
+      setShowFailureText(false);
+      reset();
+    }, 700);
+
+    return;
   }
 
   return (
