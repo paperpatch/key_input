@@ -18,6 +18,7 @@ function App() {
   const [showAppBar, setShowAppBar] = useState(true);
   const [allowedKeys, setAllowedKeys] = useState('WASDQE');
   const [timerMode, setTimerMode] = useState(true);
+  const [averageMode, setAverageMode] = useState(true);
 
   const handleScroll = useCallback(() => {
     if (window.scrollY >= 25) {
@@ -87,10 +88,25 @@ function App() {
             >
               {timerMode ? 'Timer on' : 'Timer off'}
             </Button>
+            <Button
+              variant="contained"
+              sx={{
+                background: averageMode ? 'blue' : 'black',
+                '&:hover': {
+                  background: averageMode ? 'blue' : 'black',
+                },
+                '&:active': {
+                  background: averageMode ? 'blue' : 'black',
+                },
+              }}
+              onClick={() => setAverageMode((prev) => !prev)}
+            >
+              {averageMode ? 'Average on' : 'Average off'}
+            </Button>
           </Toolbar>
         </AppBar>
       </Slide>
-      <Keyboard allowedKeys={allowedKeys} timerMode={timerMode}/>
+      <Keyboard allowedKeys={allowedKeys} timerMode={timerMode} averageMode={averageMode}/>
     </BrowserRouter>
   )
 };

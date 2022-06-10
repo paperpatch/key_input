@@ -28,6 +28,7 @@ const classes = classNames.bind(css);
 function Keyboard(set) {
   const allowed = set.allowedKeys;
   const timerMode = set.timerMode;
+  const averageMode = set.averageMode;
 
   let allowedKeys = '';
   for (let o in allowed) {
@@ -464,41 +465,43 @@ function Keyboard(set) {
           </>
         )}
 
-        <Box
-          textAlign="center"
-          marginTop={10}
-          sx={{ background: colors.white, borderRadius: '10px' }}
-        >
-          <Typography variant="h6">Last 5 scores</Typography>
-          <Typography variant="h6">
-            {scores.length > 0 &&
-              `Average time: ${(
-                scores
-                  .filter((s) => s.success)
-                  .reduce(
-                    (acc, cur, ix, arr) => cur.time / arr.length + acc,
-                    0,
-                  ) / 1000
-              ).toFixed(2)}s`}
-          </Typography>
-          {/* <Typography variant="h6">
-            {scores.length > 0 &&
-              `Fail rate: ${(
-                (scores.filter((s) => !s.success).length / scores.length) *
-                100
-              ).toFixed(1)}%`}
-          </Typography> */}
-          {scores.map((scores, ix) => {
-            return (
-              <Typography
-                key={ix}
-                sx={{ color: scores.success ? 'green' : 'red' }}
-              >
-                {(scores.time / 1000).toFixed(2)}s
-              </Typography>
-            );
-          })}
-        </Box>
+        {averageMode && (
+          <Box
+            textAlign="center"
+            marginTop={10}
+            sx={{ background: colors.white, borderRadius: '10px' }}
+          >
+            <Typography variant="h6">Last 5 scores</Typography>
+            <Typography variant="h6">
+              {scores.length > 0 &&
+                `Average time: ${(
+                  scores
+                    .filter((s) => s.success)
+                    .reduce(
+                      (acc, cur, ix, arr) => cur.time / arr.length + acc,
+                      0,
+                    ) / 1000
+                ).toFixed(2)}s`}
+            </Typography>
+            {/* <Typography variant="h6">
+              {scores.length > 0 &&
+                `Fail rate: ${(
+                  (scores.filter((s) => !s.success).length / scores.length) *
+                  100
+                ).toFixed(1)}%`}
+            </Typography> */}
+            {scores.map((scores, ix) => {
+              return (
+                <Typography
+                  key={ix}
+                  sx={{ color: scores.success ? 'green' : 'red' }}
+                >
+                  {(scores.time / 1000).toFixed(2)}s
+                </Typography>
+              );
+            })}
+          </Box>
+        )}
       </Box>
     </>
   )
