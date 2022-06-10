@@ -36,7 +36,6 @@ function Keyboard(set) {
   }
 
   const time = 5.5;
-  time.toFixed(1);
   const [currentKeyIndex, setCurrentKeyIndex] = useState(0);
   const [showSuccessText, setShowSuccessText] = useState(false);
   const [showFailureText, setShowFailureText] = useState(false);
@@ -65,95 +64,35 @@ function Keyboard(set) {
     }
 
     setCurrentKeyIndex(0);
+    setShowSuccessText(false)
+    setShowFailureText(false);
     setKeys(newKeys);
     setTimer(Date.now());
     setFailedKeys([]);
     setCountdown(time);
   }, [setCurrentKeyIndex, setKeys, setTimer, setFailedKeys, setCountdown, allowedKeys]);
 
-  useEffect(() => {
-    reset();
-  }, [allowedKeys, reset]);
-
-  useEffect(() => {
-    if (countdown <= 0) {
-      return failure();
-    };
-
-    const intervalId = setInterval(() => {
-      if (timerMode) {
-        setCountdown((countdown - .1).toFixed(1));
-      }
-    }, 100);
-
-    // clear interval on re-render to avoid memory leaks
-    return () => clearInterval(intervalId);
-    // add countdown as a dependency to rerun the effect when updated
-  }, [countdown])
-
-  useEffect(() => {
-    window.addEventListener('keydown', useKeyPress);
-    return() => window.removeEventListener('keydown', useKeyPress);
-  }, [currentKeyIndex, failedKeys, keys, timer, allowedKeys, reset]);
-
-  const useKeyPress = (e) => {
-    // if (!allowedKeys.split('').includes(e.key.toUpperCase())) {
-    //   console.log('!allowedKeys');
-    //   return;
-    // }
-    if (typeof e === 'string') {
-      // console.log('typeof e === string');
-      return;
-    }
-    if (currentKeyIndex > keys.length - 1) {
-      // console.log('currentKeyIndex > keys.length -1');
-      return
-    };
-    if (failedKeys.length > 0) {
-      // console.log('failedKeys.length > 0');
-      return
-    };
-    if (e.key.toUpperCase() === keys[currentKeyIndex].toUpperCase()) {
-      // console.log('e.key.toUpperCase()');
-      setCurrentKeyIndex((prev) => prev + 1);
-      if (currentKeyIndex < keys.length - 1) {
-        const keySoundFx = new Audio(keySound);
-        keySoundFx.playbackRate = 2;
-        keySoundFx.play();
-      } else {
-        success();
-      }
-    } else {
-      failure();
-    }
-
-    if (currentKeyIndex === keys.length - 1) {
-      setScores((prev) => {
-        return [
-          ...prev,
-          {
-            time: Date.now() - timer,
-            success: true,
-          },
-        ];
-      });
-      setTimeout(() => {
-        reset();
-      }, 800);
-    }
-  };
-
   function success() {
-    setCountdown(10);
+    setCountdown(5);
 
     const successSoundFx = new Audio(successSound);
     successSoundFx.playbackRate = 1.1;
     successSoundFx.play();
 
-    setShowSuccessText(true);
-    setTimeout(() => setShowSuccessText(false), 800);
+    setScores((prev) => {
+      return [
+        ...prev,
+        {
+          time: Date.now() - timer,
+          success: true,
+        },
+      ];
+    });
 
-    return;
+    setShowSuccessText(true);
+    setTimeout(() => {
+      reset(); 
+    }, 800);
   }
 
   function failure() {
@@ -173,14 +112,78 @@ function Keyboard(set) {
         },
       ];
     });
+
     setShowFailureText(true);
     setTimeout(() => {
-      setShowFailureText(false);
       reset();
-    }, 700);
-
-    return;
+    }, 800);
   }
+
+  // Initial reset to start the game
+  useEffect(() => {
+    reset();
+  }, [allowedKeys, reset]);
+
+  useEffect(() => {
+    if (countdown <= 0) {
+      return failure();
+    };
+
+    const intervalId = setInterval(() => {
+      if (timerMode) {
+        setCountdown((countdown - .1).toFixed(1));
+      } else {
+        setCountdown(time);
+      }
+    }, 100);
+
+    // clear interval on re-render to avoid memory leaks
+    return () => clearInterval(intervalId);
+    // add countdown as a dependency to rerun the effect when updated
+  }, [countdown])
+
+  useEffect(() => {
+    window.addEventListener('keydown', useKeyPress);
+    return() => window.removeEventListener('keydown', useKeyPress);
+  }, [allowedKeys, currentKeyIndex, showSuccessText, showFailureText, keys, countdown, timer, scores, failedKeys, reset]);
+
+  const useKeyPress = (e) => {
+    // if (!allowedKeys.split('').includes(e.key.toUpperCase())) {
+    //   console.log('!allowedKeys');
+    //   return;
+    // }
+    if (typeof e === 'string') {
+      console.log('typeof e === string');
+      return;
+    }
+    if (currentKeyIndex > keys.length - 1) {
+      console.log('currentKeyIndex > keys.length -1');
+      return
+    };
+    if (failedKeys.length > 0) {
+      // prevents further inputs when failure is true
+      return
+    };
+    if (e.key.toUpperCase() === keys[currentKeyIndex].toUpperCase()) {
+      setCurrentKeyIndex((prev) => prev + 1);
+      if (currentKeyIndex < keys.length - 1) {
+        const keySoundFx = new Audio(keySound);
+        keySoundFx.playbackRate = 2;
+        keySoundFx.play();
+      } else {
+        success();
+      }
+    } else {
+      return failure();
+    }
+
+    if (currentKeyIndex === keys.length - 1) {
+
+      setTimeout(() => {
+        reset();
+      }, 800);
+    }
+  };
 
   return (
     <>
