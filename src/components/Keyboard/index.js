@@ -29,31 +29,21 @@ function Keyboard(set) {
   const allowed = set.allowedKeys;
   const timerMode = set.timerMode;
   const averageMode = set.averageMode;
+  const countdownTime = set.timer;
 
   let allowedKeys = '';
   for (let o in allowed) {
     allowedKeys += allowed[o];
   }
 
-  const time = 5.5;
   const [currentKeyIndex, setCurrentKeyIndex] = useState(0);
   const [showSuccessText, setShowSuccessText] = useState(false);
   const [showFailureText, setShowFailureText] = useState(false);
   const [keys, setKeys] = useState('');
-  const [countdown, setCountdown] = useState(time);
+  const [countdown, setCountdown] = useState(countdownTime);
   const [timer, setTimer] = useState(Date.now());
   const [scores, setScores] = useState([]);
   const [failedKeys, setFailedKeys] = useState([]);
-
-  useEffect(() => {
-    if (scores.length > 5) {
-      setScores((prev) => {
-        const newScores = [...prev];
-        newScores.shift();
-        return newScores;
-      })
-    }
-  }, [scores]);
 
   const reset = useCallback(() => {
     if(!allowedKeys || allowedKeys.length === 0) return;
@@ -69,11 +59,11 @@ function Keyboard(set) {
     setKeys(newKeys);
     setTimer(Date.now());
     setFailedKeys([]);
-    setCountdown(time);
+    setCountdown(countdownTime);
   }, [setCurrentKeyIndex, setKeys, setTimer, setFailedKeys, setCountdown, allowedKeys]);
 
   function success() {
-    setCountdown(5);
+    setCountdown(10);
 
     const successSoundFx = new Audio(successSound);
     successSoundFx.playbackRate = 1.1;
@@ -119,29 +109,47 @@ function Keyboard(set) {
     }, 800);
   }
 
-  // Initial reset to start the game
+  // Initial Reset to Start the Game
   useEffect(() => {
     reset();
   }, [allowedKeys, reset]);
 
+  // Update Scores
+  useEffect(() => {
+    if (scores.length > 5) {
+      setScores((prev) => {
+        const newScores = [...prev];
+        newScores.shift();
+        return newScores;
+      })
+    }
+  }, [scores]);
+
+  // Update Countdown
   useEffect(() => {
     if (countdown <= 0) {
       return failure();
     };
 
-    const intervalId = setInterval(() => {
-      if (timerMode) {
-        setCountdown((countdown - .1).toFixed(1));
-      } else {
-        setCountdown(time);
+    const timerId = setInterval(() => {
+      try {
+        if (timerMode && countdown > 0) {
+          setCountdown((countdown - .1).toFixed(1));
+        } else {
+          setCountdown(countdownTime);
+        }
+      }
+      catch(err) {
+        console.log(err);
       }
     }, 100);
 
     // clear interval on re-render to avoid memory leaks
-    return () => clearInterval(intervalId);
+    return () => clearInterval(timerId);
     // add countdown as a dependency to rerun the effect when updated
   }, [countdown])
 
+  // 'Keydown' Listener
   useEffect(() => {
     window.addEventListener('keydown', useKeyPress);
     return() => window.removeEventListener('keydown', useKeyPress);

@@ -17,6 +17,7 @@ import './App.css';
 function App() {
   const [showAppBar, setShowAppBar] = useState(true);
   const [allowedKeys, setAllowedKeys] = useState('WASDQE');
+  const [timer, setTimer] = useState(5.5);
   const [timerMode, setTimerMode] = useState(true);
   const [averageMode, setAverageMode] = useState(true);
 
@@ -73,6 +74,29 @@ function App() {
                 setAllowedKeys(e.target.value);
               }}
             />
+            <TextField
+              label="Set Timer (seconds)"
+              InputLabelProps={{
+                sx: {
+                  color: 'white',
+                  '&.Mui-focused': {
+                    color: 'white',
+                  },
+                },
+              }}
+              inputProps={{
+                sx: {
+                  color: 'white',
+                  background: 'rgba(255,255,255,0.5)',
+                  padding: '5px',
+                },
+              }}
+              type="number"
+              value={timer}
+              onChange={(e) => {
+                setTimer(e.target.value);
+              }}
+            />
             <Button
               variant="contained"
               sx={{
@@ -106,7 +130,7 @@ function App() {
           </Toolbar>
         </AppBar>
       </Slide>
-      <Keyboard allowedKeys={allowedKeys} timerMode={timerMode} averageMode={averageMode}/>
+      <Keyboard allowedKeys={allowedKeys} timer={timer} timerMode={timerMode} averageMode={averageMode}/>
     </BrowserRouter>
   )
 };
