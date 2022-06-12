@@ -63,7 +63,7 @@ function Keyboard(set) {
   }, [setCurrentKeyIndex, setKeys, setTimer, setFailedKeys, setCountdown, countdownTime, allowedKeys]);
 
   function success() {
-    setCountdown(10);
+    setCountdown(10); // to prevent repeating countdown messages
 
     const successSoundFx = new Audio(successSound);
     successSoundFx.playbackRate = 1.1;
@@ -86,8 +86,9 @@ function Keyboard(set) {
   }
 
   function failure() {
-    const failSoundFx = new Audio(failSound);
+    setCountdown(10); // to start countdown again when timerMode is turned off and on
 
+    const failSoundFx = new Audio(failSound);
     failSoundFx.playbackRate = 1.5;
     failSoundFx.volume = 0.2;
     failSoundFx.play();
