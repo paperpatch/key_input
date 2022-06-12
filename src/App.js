@@ -91,7 +91,7 @@ function App() {
                   padding: '5px',
                 },
               }}
-              type="number"
+              type="text"
               value={timer}
               onChange={(e) => {
                 setTimer(e.target.value);

@@ -29,7 +29,7 @@ function Keyboard(set) {
   const allowed = set.allowedKeys;
   const timerMode = set.timerMode;
   const averageMode = set.averageMode;
-  const countdownTime = set.timer;
+  const countdownTime = Number(set.timer);
 
   let allowedKeys = '';
   for (let o in allowed) {
@@ -60,7 +60,7 @@ function Keyboard(set) {
     setTimer(Date.now());
     setFailedKeys([]);
     setCountdown(countdownTime);
-  }, [setCurrentKeyIndex, setKeys, setTimer, setFailedKeys, setCountdown, allowedKeys]);
+  }, [setCurrentKeyIndex, setKeys, setTimer, setFailedKeys, setCountdown, countdownTime, allowedKeys]);
 
   function success() {
     setCountdown(10);
@@ -112,7 +112,7 @@ function Keyboard(set) {
   // Initial Reset to Start the Game
   useEffect(() => {
     reset();
-  }, [allowedKeys, reset]);
+  }, [allowedKeys, countdownTime, setCountdown, reset]);
 
   // Update Scores
   useEffect(() => {
@@ -153,7 +153,7 @@ function Keyboard(set) {
   useEffect(() => {
     window.addEventListener('keydown', useKeyPress);
     return() => window.removeEventListener('keydown', useKeyPress);
-  }, [allowedKeys, currentKeyIndex, showSuccessText, showFailureText, keys, countdown, timer, scores, failedKeys, reset]);
+  }, [allowedKeys, currentKeyIndex, showSuccessText, showFailureText, keys, countdown, countdownTime, timer, scores, failedKeys, reset]);
 
   const useKeyPress = (e) => {
     // if (!allowedKeys.split('').includes(e.key.toUpperCase())) {
@@ -162,6 +162,10 @@ function Keyboard(set) {
     // }
     if (typeof e === 'string') {
       console.log('typeof e === string');
+      return;
+    }
+    if (!isNaN(e.key)) {
+      // console.log('typeof e === number');
       return;
     }
     if (currentKeyIndex > keys.length - 1) {
