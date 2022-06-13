@@ -33,7 +33,10 @@ function Keyboard(set) {
 
   let allowedKeys = '';
   for (let o in allowed) {
-    allowedKeys += allowed[o];
+    const regex = /^[A-Za-z]+$/;
+    if (regex.test(allowed[o])) {
+      allowedKeys += allowed[o];
+    };
   }
 
   const [currentKeyIndex, setCurrentKeyIndex] = useState(0);
