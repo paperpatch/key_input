@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
+import ProgressBar from '../ProgressBar';
 
 // import utils
 import keySound from '../../assets/keySound.mp3';
@@ -21,6 +22,8 @@ const colors = {
   yellow: '#FFEF00',
   black: 'black',
   skyBlue: 'rgb(37, 150, 190)',
+  whiteSmoke: 'whitesmoke',
+  blackSmoke: '#626262'
 }
 
 const classes = classNames.bind(css);
@@ -367,11 +370,12 @@ function Keyboard(set) {
           gap: 1,
           zIndex: 'tooltip',
         }}>
-        {timerMode && (
+        <ProgressBar bgcolor={colors.skyBlue} countdown={countdown} countdownTime={countdownTime} height={30} blackSmoke={colors.blackSmoke}/>
+        {/* {timerMode && (
           <>
           {countdown}
           </>
-        )}
+        )} */}
       </Box>
       </>
         )}
