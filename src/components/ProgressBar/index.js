@@ -23,7 +23,7 @@ const ProgressBar = ({bgcolor, countdown, countdownTime, height, blackSmoke}) =>
     color: 'gold',
     fontWeight: 500,
     padding: '0px',
-    paddingLeft: '130px',
+    paddingLeft: '125px',
     position: 'absolute',
   }
 

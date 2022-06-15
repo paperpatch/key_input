@@ -370,12 +370,13 @@ function Keyboard(set) {
           gap: 1,
           zIndex: 'tooltip',
         }}>
-        <ProgressBar bgcolor={colors.skyBlue} countdown={countdown} countdownTime={countdownTime} height={30} blackSmoke={colors.blackSmoke}/>
-        {/* {timerMode && (
-          <>
-          {countdown}
-          </>
-        )} */}
+        <ProgressBar
+          bgcolor={colors.skyBlue}
+          countdown={countdown}
+          countdownTime={countdownTime}
+          height={30}
+          blackSmoke={colors.blackSmoke}
+        />
       </Box>
       </>
         )}
@@ -403,7 +404,7 @@ function Keyboard(set) {
             SUCCESS
           </Typography>
 
-          <Box // Long-Horizontal Blur
+          <Box // Success Long-Horizontal Fade
             sx={{
               position:'absolute',
               top: '10px',
@@ -413,7 +414,7 @@ function Keyboard(set) {
               boxShadow: '0px 0px 40px 30px rgba(111, 209, 255, 0.1), 0px 0px 30px 30px rgba(111, 209, 255, 0.1)',
             }}
           ></Box>
-          <Box // Mid-Horizontal Blur
+          <Box // Success Mid-Horizontal Fade
             sx={{
               position:'absolute',
               top: '10px',
@@ -423,7 +424,7 @@ function Keyboard(set) {
               boxShadow: '0px 0px 40px 30px rgba(111, 209, 255, 0.2), 0px 0px 30px 30px rgba(111, 209, 255, 0.2)',
             }}
           ></Box>
-          <Box // Short-Horizontal Blur
+          <Box // Sucess Short-Horizontal Fade
             sx={{
               position:'absolute',
               top: '10px',
@@ -433,7 +434,7 @@ function Keyboard(set) {
               boxShadow: '0px 0px 40px 30px rgba(111, 209, 255, 0.2), 0px 0px 30px 30px rgba(111, 209, 255, 0.2)',
             }}
           ></Box>
-          <Box // Center Blur
+          <Box // Sucess Center Fade
             sx={{
               position:'absolute',
               top: '10px',
@@ -443,7 +444,7 @@ function Keyboard(set) {
               boxShadow: '0px 0px 20px 15px rgba(255, 255, 255, 0.7), 0px 0px 20px 20px #97deff, 0px 0px 50px 50px rgba(111, 209, 255, 0.7)',
             }}
           ></Box>
-          <Box // Peak-Horizontal Blur
+          <Box // Success Peak-Horizontal Fdae
             sx={{
               position:'absolute',
               top: '10px',
@@ -476,7 +477,7 @@ function Keyboard(set) {
           >
             Failure
           </Typography>
-          <Box // Long Blur
+          <Box // Failure Long Fade
             sx={{
               position:'absolute',
               top: '10px',
@@ -485,7 +486,7 @@ function Keyboard(set) {
               boxShadow: '0px 0px 10px 50px rgba(0, 0, 0, 0.5)',
             }}
           ></Box>
-          <Box // Center Blur
+          <Box // Failure Center Fade
             sx={{
               position:'absolute',
               top: '5px',
