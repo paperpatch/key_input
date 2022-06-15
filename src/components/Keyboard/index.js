@@ -1,13 +1,22 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import ProgressBar from '../ProgressBar';
+import {
+  SuccessLongHorizontal,
+  SuccessMidHorizontal, 
+  SuccessShortHorizontal,
+  SuccessCenter,
+  SuccessPeakHorizontal,
+  FailureLong,
+  FailureCenter}
+from '../Fade'
 
 // import utils
-import keySound from '../../assets/keySound.mp3';
-import failSound from '../../assets/tile_break.wav';
-import successSound from '../../assets/successSound.mp3';
-import star from '../../assets/star.png';
-import css from '../Keyboard.module.scss';
+import keySound from '../../assets/sound/keySound.mp3';
+import failSound from '../../assets/sound/tile_break.wav';
+import successSound from '../../assets/sound/successSound.mp3';
+import star from '../../assets/pic/star.png';
+import css from '../../assets/scss/Keyboard.module.scss';
 import classNames from 'classnames'
 
 const colors = {
@@ -404,55 +413,13 @@ function Keyboard(set) {
             SUCCESS
           </Typography>
 
-          <Box // Success Long-Horizontal Fade
-            sx={{
-              position:'absolute',
-              top: '10px',
-              left: '-10rem',
-              right: '-10rem',
-              borderRadius: 8,
-              boxShadow: '0px 0px 40px 30px rgba(111, 209, 255, 0.1), 0px 0px 30px 30px rgba(111, 209, 255, 0.1)',
-            }}
-          ></Box>
-          <Box // Success Mid-Horizontal Fade
-            sx={{
-              position:'absolute',
-              top: '10px',
-              left: '-5rem',
-              right: '-5rem',
-              borderRadius: 8,
-              boxShadow: '0px 0px 40px 30px rgba(111, 209, 255, 0.2), 0px 0px 30px 30px rgba(111, 209, 255, 0.2)',
-            }}
-          ></Box>
-          <Box // Sucess Short-Horizontal Fade
-            sx={{
-              position:'absolute',
-              top: '10px',
-              left: '-1rem',
-              right: '-1rem',
-              borderRadius: 8,
-              boxShadow: '0px 0px 40px 30px rgba(111, 209, 255, 0.2), 0px 0px 30px 30px rgba(111, 209, 255, 0.2)',
-            }}
-          ></Box>
-          <Box // Sucess Center Fade
-            sx={{
-              position:'absolute',
-              top: '10px',
-              left: '70px',
-              right: '70px',
-              borderRadius: 8,
-              boxShadow: '0px 0px 20px 15px rgba(255, 255, 255, 0.7), 0px 0px 20px 20px #97deff, 0px 0px 50px 50px rgba(111, 209, 255, 0.7)',
-            }}
-          ></Box>
-          <Box // Success Peak-Horizontal Fdae
-            sx={{
-              position:'absolute',
-              top: '10px',
-              left: '-15rem',
-              right: '-15rem',
-              boxShadow: '0px 0px 5px 0.7px white, 0px 0px 30px 15px rgba(111, 209, 255, 0.7)',
-            }}
-          ></Box>
+          {/* CSS Fades */}
+          <SuccessLongHorizontal />
+          <SuccessMidHorizontal />
+          <SuccessShortHorizontal />
+          <SuccessCenter />
+          <SuccessPeakHorizontal />
+
           </>
         )}
         {showFailureText && (
@@ -477,25 +444,8 @@ function Keyboard(set) {
           >
             Failure
           </Typography>
-          <Box // Failure Long Fade
-            sx={{
-              position:'absolute',
-              top: '10px',
-              left: '-10rem',
-              right: '-10rem',
-              boxShadow: '0px 0px 10px 50px rgba(0, 0, 0, 0.5)',
-            }}
-          ></Box>
-          <Box // Failure Center Fade
-            sx={{
-              position:'absolute',
-              top: '5px',
-              left: '50px',
-              right: '50px',
-              borderRadius: 8,
-              boxShadow: '0px 0px 30px 10px rgba(127, 25,	25, 0.7), 0px 0px 30px 20px rgba(0, 0, 0, 1)',
-            }}
-          ></Box>
+          <FailureLong />
+          <FailureCenter />
           </>
         )}
 

@@ -4,7 +4,7 @@ Mini-game inspired by Lost Ark. A simple key input where typing the correct sequ
 
 [Play the game here](https://paperpatch.github.io/key_input/)
 
-![Screenshot](./src/assets/key_input_screenshot.png)
+![Screenshot](./src/assets/pic/key_input_screenshot.png)
 
 ## Table of Contents
 
