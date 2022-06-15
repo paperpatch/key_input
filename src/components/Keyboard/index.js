@@ -1,15 +1,11 @@
+// import packages
 import { useCallback, useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
+
+// import components
 import ProgressBar from '../ProgressBar';
-import {
-  SuccessLongHorizontal,
-  SuccessMidHorizontal, 
-  SuccessShortHorizontal,
-  SuccessCenter,
-  SuccessPeakHorizontal,
-  FailureLong,
-  FailureCenter}
-from '../Fade'
+import { SuccessText, FailureText } from '../Typography'
+import { SuccessLongHorizontal, SuccessMidHorizontal, SuccessShortHorizontal, SuccessCenter, SuccessPeakHorizontal, FailureLong, FailureCenter } from '../Fade'
 
 // import utils
 import keySound from '../../assets/sound/keySound.mp3';
@@ -369,16 +365,6 @@ function Keyboard(set) {
             );
           })}
         </Box>
-        <Box
-        sx={{
-          top: '20px',
-          mx: 'auto',
-          display: 'flex',
-          position: 'relative',
-          flexDirection: 'column',
-          gap: 1,
-          zIndex: 'tooltip',
-        }}>
         <ProgressBar
           bgcolor={colors.skyBlue}
           countdown={countdown}
@@ -386,32 +372,12 @@ function Keyboard(set) {
           height={30}
           blackSmoke={colors.blackSmoke}
         />
-      </Box>
       </>
         )}
         {showSuccessText && (
           <>
-          <Typography
-            variant="h6"
-            className={classes(css.successAnimation)}
-            sx={{
-              textAlign: 'center',
-              position: 'absolute',
-              top: '-35px',
-              left: '-100px',
-              right: '-100px',
-              fontSize: '50px',
-              fontWeight: 'bold',
-              WebkitTextStroke: '2px rgba(111, 209, 255, 0.7)',
-              WebkitTextFillColor: '#FFFFFF',
-              zIndex: 'tooltip',
-              // boxShadow: '0px 0px 50px 20px rgba(111, 209, 255, 0.7)'
-              // textShadow:
-              //   '0 0 15px rgba(111, 209, 255, 0.7), 0 0 10px rgba(111, 209, 255, 0.7),0 0 21px rgba(111, 209, 255, 0.7),0 0 42px rgba(111, 209, 255, 0.7),0 0 82px rgba(111, 209, 255, 0.7),0 0 92px rgba(111, 209, 255, 0.7),0 0 102px rgba(111, 209, 255, 0.7),0 0 151px rgba(111, 209, 255, 0.7)',
-            }}
-          >
-            SUCCESS
-          </Typography>
+          {/* Typography */}
+          <SuccessText />
 
           {/* CSS Fades */}
           <SuccessLongHorizontal />
@@ -424,26 +390,10 @@ function Keyboard(set) {
         )}
         {showFailureText && (
           <>
-          <Typography
-            variant="h6"
-            sx={{
-              textAlign: 'center',
-              position: 'absolute',
-              top: '-18px',
-              left: '-50px',
-              right: '-50px',
-              fontSize: '30px',
-              fontWeight: 'bold',
-              WebkitTextStroke: '2px rgba(127, 25, 25, 0.7)',
-              WebkitTextFillColor: '#FFFFFF',
-              zIndex: 'tooltip',
-              // boxShadow: '0px 0px 50px 20px rgba(111, 209, 255, 0.7)'
-              // textShadow:
-              //   '0 0 15px rgba(111, 209, 255, 0.7), 0 0 10px rgba(111, 209, 255, 0.7),0 0 21px rgba(111, 209, 255, 0.7),0 0 42px rgba(111, 209, 255, 0.7),0 0 82px rgba(111, 209, 255, 0.7),0 0 92px rgba(111, 209, 255, 0.7),0 0 102px rgba(111, 209, 255, 0.7),0 0 151px rgba(111, 209, 255, 0.7)',
-            }}
-          >
-            Failure
-          </Typography>
+          {/* Typography */}
+          <FailureText />
+
+          {/* CSS Fades */}
           <FailureLong />
           <FailureCenter />
           </>

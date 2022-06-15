@@ -1,4 +1,5 @@
 import React from 'react'
+import { Box } from '@mui/material';
 
 const width = '275px';
 
@@ -28,11 +29,22 @@ const ProgressBar = ({bgcolor, countdown, countdownTime, height, blackSmoke}) =>
   }
 
   return (
-    <div style={Parentdiv}>
-      <div style={Childdiv}>
-        <span style={progressText}>{`${countdown}s`}</span>
+    <Box
+      sx={{
+      top: '20px',
+      mx: 'auto',
+      display: 'flex',
+      position: 'relative',
+      flexDirection: 'column',
+      gap: 1,
+      zIndex: 'tooltip',
+    }}>
+      <div style={Parentdiv}>
+        <div style={Childdiv}>
+          <span style={progressText}>{`${countdown}s`}</span>
+        </div>
       </div>
-    </div>
+    </Box>
   )
 }
 
