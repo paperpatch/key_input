@@ -40,7 +40,6 @@ function Keyboard(set) {
   const timerMode = set.timerMode;
   const averageMode = set.averageMode;
   const countdownTime = Number(set.timer);
-  const resetMode = set.reset;
 
   let allowedKeys = '';
   for (let o in allowed) {
@@ -75,7 +74,7 @@ function Keyboard(set) {
     setTimer(Date.now());
     setFailedKeys([]);
     setCountdown(countdownTime);
-  }, [setCurrentKeyIndex, setKeys, setTimer, setFailedKeys, setCountdown, countdownTime, allowedKeys]);
+  }, [setCurrentKeyIndex, setKeys, setTimer, setFailedKeys, setCountdown, countdownTime, amountKeys, allowedKeys]);
 
   function success() {
     setCountdown(10); // to prevent repeating countdown messages
@@ -177,7 +176,7 @@ function Keyboard(set) {
   useEffect(() => {
     window.addEventListener('keydown', useKeyPress);
     return() => window.removeEventListener('keydown', useKeyPress);
-  }, [allowedKeys, currentKeyIndex, showSuccessText, showFailureText, keys, countdown, countdownTime, timer, scores, failedKeys, reset]);
+  }, [allowedKeys, currentKeyIndex, showSuccessText, showFailureText, keys, amountKeys, countdown, countdownTime, timer, scores, failedKeys, reset]);
 
   const useKeyPress = (e) => {
     // if (!allowedKeys.split('').includes(e.key.toUpperCase())) {
