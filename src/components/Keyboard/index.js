@@ -1,6 +1,6 @@
 // import packages
 import { useCallback, useEffect, useState } from 'react';
-import { Box } from '@mui/material';
+import { Button, Box } from '@mui/material';
 
 // import components
 import ProgressBar from '../ProgressBar';
@@ -36,9 +36,11 @@ const classes = classNames.bind(css);
 
 function Keyboard(set) {
   const allowed = set.allowedKeys;
+  const amountKeys = set.amountKeys;
   const timerMode = set.timerMode;
   const averageMode = set.averageMode;
   const countdownTime = Number(set.timer);
+  const resetMode = set.reset;
 
   let allowedKeys = '';
   for (let o in allowed) {
@@ -48,6 +50,7 @@ function Keyboard(set) {
     };
   }
 
+  const [callReset, setCallReset] = useState(false);
   const [currentKeyIndex, setCurrentKeyIndex] = useState(0);
   const [showSuccessText, setShowSuccessText] = useState(false);
   const [showFailureText, setShowFailureText] = useState(false);
@@ -61,7 +64,7 @@ function Keyboard(set) {
     if(!allowedKeys || allowedKeys.length === 0) return;
     let newKeys = '';
 
-    for (let i=0; i < 7; i++) {
+    for (let i=0; i < amountKeys; i++) {
       newKeys += allowedKeys[Math.floor(Math.random() * allowedKeys.length)];
     }
 
@@ -126,6 +129,14 @@ function Keyboard(set) {
   useEffect(() => {
     reset();
   }, [allowedKeys, countdownTime, setCountdown, reset]);
+
+  // Initial Reset to Start the Game
+  useEffect(() => {
+    if (callReset) {
+      reset();
+    }
+    setCallReset(false);
+  }, [allowedKeys, countdownTime, setCountdown, callReset, reset]);
 
   // Update Scores
   useEffect(() => {
@@ -373,6 +384,20 @@ function Keyboard(set) {
           height={30}
           blackSmoke={colors.blackSmoke}
         />
+        <Button
+          variant="contained"
+          sx={{
+            background: 'black',
+            '&:hover': { background: 'blue'},
+            '&:active': { background: 'blue'},
+            width: '90px',
+            margin: '0 auto',
+            marginTop: '50px',
+          }}
+          onClick={() => setCallReset(true)}
+        >
+          Reset
+        </Button>
       </>
         )}
         {showSuccessText && (
