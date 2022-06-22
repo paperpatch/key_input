@@ -36,7 +36,7 @@ const classes = classNames.bind(css);
 
 function Keyboard(set) {
   const allowed = set.allowedKeys;
-  const amountKeys = set.amountKeys;
+  const amount = set.amountKeys;
   const timerMode = set.timerMode;
   const averageMode = set.averageMode;
   const countdownTime = Number(set.timer);
@@ -54,6 +54,7 @@ function Keyboard(set) {
   const [showSuccessText, setShowSuccessText] = useState(false);
   const [showFailureText, setShowFailureText] = useState(false);
   const [keys, setKeys] = useState('');
+  const [amountKeys, setAmountKeys] = useState(amount);
   const [countdown, setCountdown] = useState(countdownTime);
   const [timer, setTimer] = useState(Date.now());
   const [scores, setScores] = useState([]);
@@ -63,6 +64,10 @@ function Keyboard(set) {
     if(!allowedKeys || allowedKeys.length === 0) return;
     let newKeys = '';
 
+    if (amountKeys > 15) {
+      setAmountKeys(15);;
+    }
+
     for (let i=0; i < amountKeys; i++) {
       newKeys += allowedKeys[Math.floor(Math.random() * allowedKeys.length)];
     }
@@ -71,10 +76,11 @@ function Keyboard(set) {
     setShowSuccessText(false)
     setShowFailureText(false);
     setKeys(newKeys);
+    setAmountKeys(amount);
     setTimer(Date.now());
     setFailedKeys([]);
     setCountdown(countdownTime);
-  }, [setCurrentKeyIndex, setKeys, setTimer, setFailedKeys, setCountdown, countdownTime, amountKeys, allowedKeys]);
+  }, [setCurrentKeyIndex, setKeys, setTimer, setFailedKeys, setCountdown, countdownTime, amount, amountKeys, allowedKeys]);
 
   function success() {
     setCountdown(10); // to prevent repeating countdown messages
