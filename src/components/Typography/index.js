@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import css from '../../assets/scss/Keyboard.module.scss';
+import css from '../../assets/scss/animation.scss';
 import classNames from "classnames";
 
 const classes = classNames.bind(css);

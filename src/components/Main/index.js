@@ -6,14 +6,14 @@ import { Button, Box } from '@mui/material';
 import ProgressBar from '../ProgressBar';
 import { Average } from '../Average';
 import { SuccessText, FailureText } from '../Typography'
-import { SuccessLongHorizontal, SuccessMidHorizontal, SuccessShortHorizontal, SuccessCenter, SuccessPeakHorizontal, FailureLong, FailureCenter } from '../Fade'
+import { SuccessLongHorizontal, SuccessMidHorizontal, SuccessShortHorizontal, SuccessCenter, SuccessPeakHorizontal, FailureLong, FailureCenter } from '../FadeStyle'
 
 // import utils
 import keySound from '../../assets/sound/keySound.mp3';
 import failSound from '../../assets/sound/tile_break.wav';
 import successSound from '../../assets/sound/successSound.mp3';
 import star from '../../assets/pic/star.png';
-import css from '../../assets/scss/Keyboard.module.scss';
+import css from '../../assets/scss/animation.scss';
 import classNames from 'classnames'
 
 const colors = {
@@ -34,14 +34,12 @@ const colors = {
 
 const classes = classNames.bind(css);
 
-function Keyboard(set) {
+function Main(set) {
   const allowed = set.allowedKeys;
   const amount = set.amountKeys;
   const timerMode = set.timerMode;
   const averageMode = set.averageMode;
   const countdownTime = Number(set.timer);
-
-  console.log("original timerMode state", timerMode)
 
   let allowedKeys = '';
   for (let o in allowed) {
@@ -442,4 +440,4 @@ function Keyboard(set) {
   )
 }
 
-export default Keyboard
+export default Main

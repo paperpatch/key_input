@@ -9,7 +9,7 @@ import {
 import { useCallback, useState } from 'react';
 import { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import Keyboard from './components/Keyboard';
+import Main from './components/Main';
 
 // import css in order
 import './App.css';
@@ -154,7 +154,7 @@ function App() {
           </Toolbar>
         </AppBar>
       </Slide>
-      <Keyboard allowedKeys={allowedKeys} amountKeys={amountKeys} timer={timer} timerMode={timerMode} averageMode={averageMode}/>
+      <Main allowedKeys={allowedKeys} amountKeys={amountKeys} timer={timer} timerMode={timerMode} averageMode={averageMode}/>
     </BrowserRouter>
   )
 };
