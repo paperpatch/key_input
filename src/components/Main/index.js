@@ -13,7 +13,7 @@ import keySound from '../../assets/sound/keySound.mp3';
 import failSound from '../../assets/sound/tile_break.wav';
 import successSound from '../../assets/sound/successSound.mp3';
 import star from '../../assets/pic/star.png';
-import css from '../../assets/scss/animation.scss';
+import css from '../../assets/scss/Main.module.scss';
 import classNames from 'classnames'
 
 const colors = {
@@ -80,7 +80,7 @@ function Main(set) {
     setTimer(Date.now());
     setFailedKeys([]);
     setCountdown(countdownTime);
-  }, [setCountdown, amount, countdownTime, allowedKeys]);
+  }, [setCurrentKeyIndex, setKeys, setTimer, setFailedKeys, setCountdown, amount, countdownTime, allowedKeys]);
 
   function success() {
     setCountdown(10); // to prevent repeating countdown useEffect
@@ -182,7 +182,7 @@ function Main(set) {
   useEffect(() => {
     window.addEventListener('keydown', useKeyPress);
     return() => window.removeEventListener('keydown', useKeyPress);
-  }, [allowedKeys, currentKeyIndex, keys, failedKeys, reset]);
+  }, [currentKeyIndex, keys, failedKeys, allowedKeys, reset]);
 
   const useKeyPress = (e) => {
     // if (!allowedKeys.split('').includes(e.key.toUpperCase())) {

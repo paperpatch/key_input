@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import css from '../../assets/scss/animation.scss';
+import css from '../../assets/scss/Main.module.scss';
 import classNames from "classnames";
 
 const classes = classNames.bind(css);
