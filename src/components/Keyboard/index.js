@@ -41,6 +41,8 @@ function Keyboard(set) {
   const averageMode = set.averageMode;
   const countdownTime = Number(set.timer);
 
+  console.log("original timerMode state", timerMode)
+
   let allowedKeys = '';
   for (let o in allowed) {
     const regex = /^[A-Za-z]+$/;
@@ -73,17 +75,17 @@ function Keyboard(set) {
     }
 
     setCurrentKeyIndex(0);
-    setShowSuccessText(false)
+    setShowSuccessText(false);
     setShowFailureText(false);
     setKeys(newKeys);
     setAmountKeys(amount);
     setTimer(Date.now());
     setFailedKeys([]);
     setCountdown(countdownTime);
-  }, [setCurrentKeyIndex, setKeys, setTimer, setFailedKeys, setCountdown, countdownTime, amount, amountKeys, allowedKeys]);
+  }, [setCountdown, amount, countdownTime, allowedKeys]);
 
   function success() {
-    setCountdown(10); // to prevent repeating countdown messages
+    setCountdown(10); // to prevent repeating countdown useEffect
 
     const successSoundFx = new Audio(successSound);
     successSoundFx.playbackRate = 1.1;
@@ -106,7 +108,7 @@ function Keyboard(set) {
   }
 
   function failure() {
-    setCountdown(10); // to start countdown again when timerMode is turned off and on
+    setCountdown(10);
 
     const failSoundFx = new Audio(failSound);
     failSoundFx.playbackRate = 1.5;
@@ -135,7 +137,7 @@ function Keyboard(set) {
     reset();
   }, [allowedKeys, countdownTime, setCountdown, reset]);
 
-  // Initial Reset to Start the Game
+  // Button Game Reset
   useEffect(() => {
     if (callReset) {
       reset();
@@ -176,13 +178,13 @@ function Keyboard(set) {
     // clear interval on re-render to avoid memory leaks
     return () => clearInterval(timerId);
     // add countdown as a dependency to rerun the effect when updated
-  }, [countdown])
+  }, [countdown, timerMode])
 
   // 'Keydown' Listener
   useEffect(() => {
     window.addEventListener('keydown', useKeyPress);
     return() => window.removeEventListener('keydown', useKeyPress);
-  }, [allowedKeys, currentKeyIndex, showSuccessText, showFailureText, keys, amountKeys, countdown, countdownTime, timer, scores, failedKeys, reset]);
+  }, [allowedKeys, currentKeyIndex, keys, failedKeys, reset]);
 
   const useKeyPress = (e) => {
     // if (!allowedKeys.split('').includes(e.key.toUpperCase())) {
