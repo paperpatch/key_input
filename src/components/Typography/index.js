@@ -20,9 +20,6 @@ const SuccessText = () => {
         WebkitTextStroke: '2px rgba(111, 209, 255, 0.7)',
         WebkitTextFillColor: '#FFFFFF',
         zIndex: 'tooltip',
-        // boxShadow: '0px 0px 50px 20px rgba(111, 209, 255, 0.7)'
-        // textShadow:
-        //   '0 0 15px rgba(111, 209, 255, 0.7), 0 0 10px rgba(111, 209, 255, 0.7),0 0 21px rgba(111, 209, 255, 0.7),0 0 42px rgba(111, 209, 255, 0.7),0 0 82px rgba(111, 209, 255, 0.7),0 0 92px rgba(111, 209, 255, 0.7),0 0 102px rgba(111, 209, 255, 0.7),0 0 151px rgba(111, 209, 255, 0.7)',
       }}
     >
       SUCCESS
@@ -45,9 +42,6 @@ const FailureText = () => {
         WebkitTextStroke: '2px rgba(127, 25, 25, 0.7)',
         WebkitTextFillColor: '#FFFFFF',
         zIndex: 'tooltip',
-        // boxShadow: '0px 0px 50px 20px rgba(111, 209, 255, 0.7)'
-        // textShadow:
-        //   '0 0 15px rgba(111, 209, 255, 0.7), 0 0 10px rgba(111, 209, 255, 0.7),0 0 21px rgba(111, 209, 255, 0.7),0 0 42px rgba(111, 209, 255, 0.7),0 0 82px rgba(111, 209, 255, 0.7),0 0 92px rgba(111, 209, 255, 0.7),0 0 102px rgba(111, 209, 255, 0.7),0 0 151px rgba(111, 209, 255, 0.7)',
       }}
     >
       Failure

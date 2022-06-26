@@ -265,7 +265,6 @@ function Main(set) {
                   <Box // Key Input
                     sx={{
                       position: 'absolute',
-                      // top: '-3px',
                       width: '45px',
                       height: '45px',
                       // backgroundColor: failedKeys.includes(ix)
