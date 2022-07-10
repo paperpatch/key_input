@@ -80,7 +80,61 @@ function Main(set) {
     setTimer(Date.now());
     setFailedKeys([]);
     setCountdown(countdownTime);
-  }, [setCurrentKeyIndex, setKeys, setTimer, setFailedKeys, setCountdown, amount, countdownTime, allowedKeys]);
+  }, [setCurrentKeyIndex, setKeys, setTimer, setFailedKeys, countdownTime, setCountdown, amount, amountKeys, allowedKeys]);
+
+  // Initial Reset to Start the Game
+  useEffect(() => {
+    reset();
+  }, [reset]);
+
+  // Button Game Reset
+  useEffect(() => {
+    if (callReset) {
+      reset();
+    }
+    setCallReset(false);
+  }, [allowedKeys, callReset, reset]);
+
+  // Update Scores
+  useEffect(() => {
+    if (scores.length > 5) {
+      setScores((prev) => {
+        const newScores = [...prev];
+        newScores.shift();
+        return newScores;
+      })
+    }
+  }, [scores]);
+
+  // Update Countdown
+  useEffect(() => {
+    if (countdown <= 0) {
+      return failure();
+    };
+
+    const timerId = setInterval(() => {
+      try {
+        if (timerMode && countdown > 0) {
+          setCountdown((countdown - .1).toFixed(1));
+        } else {
+          setCountdown(countdownTime);
+        }
+      }
+      catch(err) {
+        console.log(err);
+      }
+    }, 100);
+
+    // clear interval on re-render to avoid memory leaks
+    return () => clearInterval(timerId);
+    // add countdown as a dependency to rerun the effect when updated
+  }, [countdown, timerMode])
+
+  // 'Keydown' Listener
+  useEffect(() => {
+    window.addEventListener('keydown', useKeyPress);
+    return() => window.removeEventListener('keydown', useKeyPress);
+  }, [currentKeyIndex, keys, failedKeys, allowedKeys, reset]);
 
   function success() {
     setCountdown(10); // to prevent repeating countdown useEffect
@@ -129,60 +183,6 @@ function Main(set) {
       reset();
     }, 800);
   }
-
-  // Initial Reset to Start the Game
-  useEffect(() => {
-    reset();
-  }, [allowedKeys, countdownTime, setCountdown, reset]);
-
-  // Button Game Reset
-  useEffect(() => {
-    if (callReset) {
-      reset();
-    }
-    setCallReset(false);
-  }, [allowedKeys, countdownTime, setCountdown, callReset, reset]);
-
-  // Update Scores
-  useEffect(() => {
-    if (scores.length > 5) {
-      setScores((prev) => {
-        const newScores = [...prev];
-        newScores.shift();
-        return newScores;
-      })
-    }
-  }, [scores]);
-
-  // Update Countdown
-  useEffect(() => {
-    if (countdown <= 0) {
-      return failure();
-    };
-
-    const timerId = setInterval(() => {
-      try {
-        if (timerMode && countdown > 0) {
-          setCountdown((countdown - .1).toFixed(1));
-        } else {
-          setCountdown(countdownTime);
-        }
-      }
-      catch(err) {
-        console.log(err);
-      }
-    }, 100);
-
-    // clear interval on re-render to avoid memory leaks
-    return () => clearInterval(timerId);
-    // add countdown as a dependency to rerun the effect when updated
-  }, [countdown, timerMode])
-
-  // 'Keydown' Listener
-  useEffect(() => {
-    window.addEventListener('keydown', useKeyPress);
-    return() => window.removeEventListener('keydown', useKeyPress);
-  }, [currentKeyIndex, keys, failedKeys, allowedKeys, reset]);
 
   const useKeyPress = (e) => {
     // if (!allowedKeys.split('').includes(e.key.toUpperCase())) {
