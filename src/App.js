@@ -5,6 +5,10 @@ import {
   TextField,
   Toolbar,
   Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
 } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useEffect } from 'react';
@@ -21,6 +25,7 @@ function App() {
   const [timer, setTimer] = useState(5.5);
   const [timerMode, setTimerMode] = useState(true);
   const [averageMode, setAverageMode] = useState(true);
+  const [theme, setTheme] = useState('');
 
   const handleScroll = useCallback(() => {
     if (window.scrollY >= 25) {
@@ -37,6 +42,13 @@ function App() {
       window.removeEventListener('scroll', handleScroll);
     }
   })
+
+  function changeTheme(e) {
+    if (e.target.value === "") {
+      setTheme("default")
+    }
+    this.setState({value: e.target.value});
+  }
 
   return (
     <BrowserRouter>
@@ -151,6 +163,23 @@ function App() {
             >
               {averageMode ? 'Average on' : 'Average off'}
             </Button>
+            <FormControl sx={{
+              width: '15rem'
+              
+              }}
+            >
+              <InputLabel id="select-label">Background Theme</InputLabel>
+              <Select
+                labelId="select-label"
+                id="select"
+                value={theme}
+                label="Theme"
+                onChange={changeTheme}
+              >
+                <MenuItem value={1}>Light</MenuItem>
+                <MenuItem value={2}>Dark</MenuItem>
+              </Select>
+            </FormControl>
           </Toolbar>
         </AppBar>
       </Slide>

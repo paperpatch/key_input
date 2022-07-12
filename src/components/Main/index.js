@@ -238,7 +238,13 @@ function Main(set) {
       >
         {!showSuccessText && !showFailureText && (
         <>
-        <KeyIndex keys={keys} css={css} failedKeys={failedKeys} currentKeyIndex={currentKeyIndex} colors={colors}/>
+        <KeyIndex
+          keys={keys}
+          css={css}
+          failedKeys={failedKeys}
+          currentKeyIndex={currentKeyIndex}
+          colors={colors}
+        />
         <ProgressBar
           bgcolor={colors.skyBlue}
           countdown={countdown}
