@@ -32,7 +32,9 @@ const colors = {
   blackSmoke: '#626262'
 }
 
-
+// const colors2 = {
+//   primary:
+// }
 
 function Main(set) {
   const allowed = set.allowedKeys;
@@ -40,6 +42,9 @@ function Main(set) {
   const timerMode = set.timerMode;
   const averageMode = set.averageMode;
   const countdownTime = Number(set.timer);
+  const theme = set.theme;
+
+  // console.log(theme);
 
   let allowedKeys = '';
   for (let o in allowed) {

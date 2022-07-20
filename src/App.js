@@ -8,7 +8,8 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem
+  Box,
+  MenuItem,
 } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useEffect } from 'react';
@@ -43,11 +44,8 @@ function App() {
     }
   })
 
-  function changeTheme(e) {
-    if (e.target.value === "") {
-      setTheme("default")
-    }
-    this.setState({value: e.target.value});
+  const changeTheme = (event) => {
+    setTheme(event.target.value);
   }
 
   return (
@@ -163,27 +161,26 @@ function App() {
             >
               {averageMode ? 'Average on' : 'Average off'}
             </Button>
-            <FormControl sx={{
-              width: '15rem'
-              
-              }}
-            >
-              <InputLabel id="select-label">Background Theme</InputLabel>
-              <Select
-                labelId="select-label"
-                id="select"
-                value={theme}
-                label="Theme"
-                onChange={changeTheme}
-              >
-                <MenuItem value={1}>Light</MenuItem>
-                <MenuItem value={2}>Dark</MenuItem>
-              </Select>
-            </FormControl>
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="theme-label">Theme</InputLabel>
+                <Select
+                  labelId="theme-label-id"
+                  id="theme-id"
+                  value={theme}
+                  label="Theme"
+                  onChange={changeTheme}
+                >
+                  <MenuItem value={'Light'}>Light</MenuItem>
+                  <MenuItem value={'Dark'}>Dark</MenuItem>
+                  <MenuItem value={'Blue'}>Blue</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
           </Toolbar>
         </AppBar>
       </Slide>
-      <Main allowedKeys={allowedKeys} amountKeys={amountKeys} timer={timer} timerMode={timerMode} averageMode={averageMode}/>
+      <Main allowedKeys={allowedKeys} amountKeys={amountKeys} timer={timer} timerMode={timerMode} averageMode={averageMode} theme={theme}/>
     </BrowserRouter>
   )
 };
