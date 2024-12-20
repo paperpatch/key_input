@@ -1,79 +1,94 @@
 // import packages
-import { useCallback, useEffect, useState } from 'react';
-import { Button, Box } from '@mui/material';
+import { useCallback, useEffect, useState } from "react";
+import { Button, Box } from "@mui/material";
 
 // import components
-import ProgressBar from '../ProgressBar';
-import KeyIndex from '../KeyIndex';
-import { Average } from '../Average';
-import { SuccessText, FailureText } from '../Typography'
-import { SuccessLongHorizontal, SuccessMidHorizontal, SuccessShortHorizontal, SuccessCenter, SuccessPeakHorizontal, FailureLong, FailureCenter } from '../FadeStyle'
+import ProgressBar from "../ProgressBar";
+import KeyIndex from "../KeyIndex";
+import { Average } from "../Average";
+import { SuccessText, FailureText } from "../Typography";
+import {
+  SuccessLongHorizontal,
+  SuccessMidHorizontal,
+  SuccessShortHorizontal,
+  SuccessCenter,
+  SuccessPeakHorizontal,
+  FailureLong,
+  FailureCenter,
+} from "../FadeStyle";
 
 // import utils
-import keySound from '../../assets/sound/keySound.mp3';
-import failSound from '../../assets/sound/tile_break.wav';
-import successSound from '../../assets/sound/successSound.mp3';
-import css from '../../assets/scss/Main.module.scss';
+// import keySoundSrc from "../../assets/sound/keySound.mp3";
+// import failSoundSrc from "../../assets/sound/tile_break.wav";
+// import successSoundSrc from "../../assets/sound/successSound.mp3";
+import css from "../../assets/scss/Main.module.scss";
 
+// Preload sounds
+// const keySound = new Audio(keySoundSrc);
+// const failSound = new Audio(failSoundSrc);
+// const successSound = new Audio(successSoundSrc);
+
+// Set playback rates and volume
+// keySound.playbackRate = 2;
+// failSound.playbackRate = 1.5;
+// failSound.volume = 0.2;
+// successSound.playbackRate = 1.1;
+
+// const playSound = (audio) => {
+//   try {
+//     audio.currentTime = 0; // Reset to start
+//     audio.play();
+//   } catch (err) {
+//     console.error("Audio playback failed:", err);
+//   }
+// };
 
 const colors = {
-  white: 'white',
-  red: '#7F1919',
-  green: 'green',
-  lighterGrey: '#C8C8C8',
-  lightGrey: '#979797',
-  dimGrey: '#696969',
-  darkGrey: '#3F3F3F',
-  gold: '#B9A954',
-  yellow: '#FFEF00',
-  black: 'black',
-  skyBlue: 'rgb(37, 150, 190)',
-  whiteSmoke: 'whitesmoke',
-  blackSmoke: '#626262'
-}
+  white: "white",
+  red: "#7F1919",
+  green: "green",
+  lighterGrey: "#C8C8C8",
+  lightGrey: "#979797",
+  dimGrey: "#696969",
+  darkGrey: "#3F3F3F",
+  gold: "#B9A954",
+  yellow: "#FFEF00",
+  black: "black",
+  skyBlue: "rgb(37, 150, 190)",
+  whiteSmoke: "whitesmoke",
+  blackSmoke: "#626262",
+};
 
 // const colors2 = {
 //   primary:
 // }
 
 function Main(set) {
-  const allowed = set.allowedKeys;
-  const amount = set.amountKeys;
-  const timerMode = set.timerMode;
-  const averageMode = set.averageMode;
-  const countdownTime = Number(set.timer);
-  const theme = set.theme;
-
-  // console.log(theme);
-
-  let allowedKeys = '';
-  for (let o in allowed) {
-    const regex = /^[A-Za-z]+$/;
-    if (regex.test(allowed[o])) {
-      allowedKeys += allowed[o];
-    };
-  }
+  const {
+    allowedKeys,
+    amountKeys,
+    timerMode,
+    averageMode,
+    timer: countdownTime,
+    theme,
+  } = set;
 
   const [callReset, setCallReset] = useState(false);
   const [currentKeyIndex, setCurrentKeyIndex] = useState(0);
   const [showSuccessText, setShowSuccessText] = useState(false);
   const [showFailureText, setShowFailureText] = useState(false);
-  const [keys, setKeys] = useState('');
-  const [amountKeys, setAmountKeys] = useState(amount);
+  const [keys, setKeys] = useState("");
   const [countdown, setCountdown] = useState(countdownTime);
   const [timer, setTimer] = useState(Date.now());
   const [scores, setScores] = useState([]);
   const [failedKeys, setFailedKeys] = useState([]);
 
   const reset = useCallback(() => {
-    if(!allowedKeys || allowedKeys.length === 0) return;
-    let newKeys = '';
+    if (!allowedKeys || allowedKeys.length === 0) return;
 
-    if (amountKeys > 15) {
-      setAmountKeys(15);;
-    }
-
-    for (let i=0; i < amountKeys; i++) {
+    let newKeys = "";
+    const maxKeys = Math.min(amountKeys, 15);
+    for (let i = 0; i < maxKeys; i++) {
       newKeys += allowedKeys[Math.floor(Math.random() * allowedKeys.length)];
     }
 
@@ -81,11 +96,10 @@ function Main(set) {
     setShowSuccessText(false);
     setShowFailureText(false);
     setKeys(newKeys);
-    setAmountKeys(amount);
     setTimer(Date.now());
     setFailedKeys([]);
     setCountdown(countdownTime);
-  }, [setCurrentKeyIndex, setKeys, setTimer, setFailedKeys, countdownTime, setCountdown, amount, amountKeys, allowedKeys]);
+  }, [allowedKeys, amountKeys, countdownTime]);
 
   // Initial Reset to Start the Game
   useEffect(() => {
@@ -103,209 +117,147 @@ function Main(set) {
   // Update Scores
   useEffect(() => {
     if (scores.length > 5) {
-      setScores((prev) => {
-        const newScores = [...prev];
-        newScores.shift();
-        return newScores;
-      })
+      setScores((prev) => prev.slice(1));
     }
   }, [scores]);
 
   // Update Countdown
   useEffect(() => {
     if (countdown <= 0) {
-      return failure();
-    };
+      failure();
+      return;
+    }
 
     const timerId = setInterval(() => {
-      try {
-        if (timerMode && countdown > 0) {
-          setCountdown((countdown - .1).toFixed(1));
-        } else {
-          setCountdown(countdownTime);
-        }
-      }
-      catch(err) {
-        console.log(err);
+      if (timerMode) {
+        setCountdown((prev) => parseFloat((prev - 0.1).toFixed(1)));
       }
     }, 100);
 
     // clear interval on re-render to avoid memory leaks
     return () => clearInterval(timerId);
     // add countdown as a dependency to rerun the effect when updated
-  }, [countdown, timerMode])
+  }, [countdown, timerMode]);
 
-  // 'Keydown' Listener
-  useEffect(() => {
-    window.addEventListener('keydown', useKeyPress);
-    return() => window.removeEventListener('keydown', useKeyPress);
-  }, [currentKeyIndex, keys, failedKeys, allowedKeys, reset]);
-
-  function success() {
-    setCountdown(10); // to prevent repeating countdown useEffect
-
-    const successSoundFx = new Audio(successSound);
-    successSoundFx.playbackRate = 1.1;
-    successSoundFx.play();
-
-    setScores((prev) => {
-      return [
-        ...prev,
-        {
-          time: Date.now() - timer,
-          success: true,
-        },
-      ];
-    });
-
-    setShowSuccessText(true);
-    setTimeout(() => {
-      reset(); 
-    }, 800);
-  }
-
-  function failure() {
+  const success = useCallback(() => {
     setCountdown(10);
+    // playSound(successSound);
+    setScores((prev) => [...prev, { time: Date.now() - timer, success: true }]);
+    setShowSuccessText(true);
+    setTimeout(reset, 800);
+  }, [timer, reset]);
 
-    const failSoundFx = new Audio(failSound);
-    failSoundFx.playbackRate = 1.5;
-    failSoundFx.volume = 0.2;
-    failSoundFx.play();
-
-    setFailedKeys([...failedKeys, currentKeyIndex]);
-    setScores((prev) => {
-      return [
-        ...prev,
-        {
-          time: Date.now() - timer,
-          success: false
-        },
-      ];
-    });
-
+  const failure = useCallback(() => {
+    setCountdown(10);
+    // playSound(failSound);
+    setFailedKeys((prev) => [...prev, currentKeyIndex]);
+    setScores((prev) => [
+      ...prev,
+      { time: Date.now() - timer, success: false },
+    ]);
     setShowFailureText(true);
-    setTimeout(() => {
-      reset();
-    }, 800);
-  }
+    setTimeout(reset, 800);
+  }, [currentKeyIndex, timer, reset]);
 
-  const useKeyPress = (e) => {
-    // if (!allowedKeys.split('').includes(e.key.toUpperCase())) {
-    //   console.log('!allowedKeys');
-    //   return;
-    // }
-    if (typeof e === 'string') {
-      // console.log('typeof e === string');
-      return;
-    }
-    if (!isNaN(e.key)) {
-      // console.log('typeof e === number');
-      return;
-    }
-    if (currentKeyIndex > keys.length - 1) {
-      // console.log('currentKeyIndex > keys.length -1');
-      return
-    };
-    if (failedKeys.length > 0) {
-      // prevents further inputs when failure is true
-      return
-    };
-    if (e.key.toUpperCase() === keys[currentKeyIndex].toUpperCase()) {
-      setCurrentKeyIndex((prev) => prev + 1);
-      if (currentKeyIndex < keys.length - 1) {
-        const keySoundFx = new Audio(keySound);
-        keySoundFx.playbackRate = 2;
-        keySoundFx.play();
-      } else {
-        success();
+  const useKeyPress = useCallback(
+    (e) => {
+      if (
+        !allowedKeys.includes(e.key.toUpperCase()) ||
+        failedKeys.length ||
+        currentKeyIndex >= keys.length
+      ) {
+        failure();
+        return;
       }
-    } else {
-      return failure();
-    }
 
-    if (currentKeyIndex === keys.length - 1) {
+      if (e.key.toUpperCase() === keys[currentKeyIndex].toUpperCase()) {
+        setCurrentKeyIndex((prev) => prev + 1);
+        if (currentKeyIndex < keys.length - 1) {
+          // playSound(keySound);
+        } else {
+          success();
+        }
+      } else {
+        failure();
+      }
+    },
+    [allowedKeys, currentKeyIndex, failedKeys, keys, success, failure]
+  );
 
-      setTimeout(() => {
-        reset();
-      }, 800);
-    }
-  };
+  useEffect(() => {
+    window.addEventListener("keydown", useKeyPress);
+    return () => window.removeEventListener("keydown", useKeyPress);
+  }, [useKeyPress]);
 
   return (
     <>
       <Box
         sx={{
-          display: 'flex',
-          position: 'relative',
-          flexDirection: 'column',
+          display: "flex",
+          position: "relative",
+          flexDirection: "column",
           gap: 1,
         }}
       >
         {!showSuccessText && !showFailureText && (
-        <>
-        <KeyIndex
-          keys={keys}
-          css={css}
-          failedKeys={failedKeys}
-          currentKeyIndex={currentKeyIndex}
-          colors={colors}
-        />
-        <ProgressBar
-          bgcolor={colors.skyBlue}
-          countdown={countdown}
-          countdownTime={countdownTime}
-          height={30}
-          blackSmoke={colors.blackSmoke}
-        />
-        <Button
-          variant="contained"
-          sx={{
-            background: 'black',
-            '&:hover': { background: 'blue'},
-            '&:active': { background: 'blue'},
-            width: '90px',
-            margin: '0 auto',
-            marginTop: '50px',
-          }}
-          onClick={() => setCallReset(true)}
-        >
-          Reset
-        </Button>
-      </>
+          <>
+            <KeyIndex
+              keys={keys}
+              css={css}
+              failedKeys={failedKeys}
+              currentKeyIndex={currentKeyIndex}
+              colors={colors}
+            />
+            <ProgressBar
+              bgcolor={colors.skyBlue}
+              countdown={countdown}
+              countdownTime={countdownTime}
+              height={30}
+              blackSmoke={colors.blackSmoke}
+            />
+            <Button
+              variant="contained"
+              sx={{
+                background: "black",
+                "&:hover": { background: "blue" },
+                "&:active": { background: "blue" },
+                width: "90px",
+                margin: "0 auto",
+                marginTop: "50px",
+              }}
+              onClick={() => setCallReset(true)}
+            >
+              Reset
+            </Button>
+          </>
         )}
         {showSuccessText && (
           <>
-          {/* Typography */}
-          <SuccessText />
+            {/* Typography */}
+            <SuccessText />
 
-          {/* CSS Fades */}
-          <SuccessLongHorizontal />
-          <SuccessMidHorizontal />
-          <SuccessShortHorizontal />
-          <SuccessCenter />
-          <SuccessPeakHorizontal />
-
+            {/* CSS Fades */}
+            <SuccessLongHorizontal />
+            <SuccessMidHorizontal />
+            <SuccessShortHorizontal />
+            <SuccessCenter />
+            <SuccessPeakHorizontal />
           </>
         )}
         {showFailureText && (
           <>
-          {/* Typography */}
-          <FailureText />
+            {/* Typography */}
+            <FailureText />
 
-          {/* CSS Fades */}
-          <FailureLong />
-          <FailureCenter />
+            {/* CSS Fades */}
+            <FailureLong />
+            <FailureCenter />
           </>
         )}
-
-        {averageMode && (
-          <Average
-            scores={scores}
-          />
-        )}
+        {averageMode && <Average scores={scores} />}
       </Box>
     </>
-  )
+  );
 }
 
-export default Main
+export default Main;

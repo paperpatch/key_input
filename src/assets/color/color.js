@@ -1,5 +1,5 @@
 export const colors = (theme) => {
-  if (theme === 'Light') {
-    return '';
+  if (theme === "Light") {
+    return "";
   }
-}
+};

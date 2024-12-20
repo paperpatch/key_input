@@ -10,23 +10,23 @@ import {
   Select,
   Box,
   MenuItem,
-} from '@mui/material';
-import { useCallback, useState } from 'react';
-import { useEffect } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import Main from './components/Main';
+} from "@mui/material";
+import { useCallback, useState } from "react";
+import { useEffect } from "react";
+import { BrowserRouter } from "react-router-dom";
+import Main from "./components/Main";
 
 // import css in order
-import './App.css';
+import "./App.css";
 
 function App() {
   const [showAppBar, setShowAppBar] = useState(true);
-  const [allowedKeys, setAllowedKeys] = useState('WASDQE');
+  const [allowedKeys, setAllowedKeys] = useState("WASDQE");
   const [amountKeys, setAmountKeys] = useState(7);
   const [timer, setTimer] = useState(5.5);
   const [timerMode, setTimerMode] = useState(true);
   const [averageMode, setAverageMode] = useState(true);
-  const [theme, setTheme] = useState('');
+  const [theme, setTheme] = useState("");
 
   const handleScroll = useCallback(() => {
     if (window.scrollY >= 25) {
@@ -37,24 +37,24 @@ function App() {
   }, [setShowAppBar]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-    }
-  })
+      window.removeEventListener("scroll", handleScroll);
+    };
+  });
 
   const changeTheme = (event) => {
     setTheme(event.target.value);
-  }
+  };
 
   return (
     <BrowserRouter>
       <Slide appear={false} direction="down" in={showAppBar}>
         <AppBar
           sx={{
-            background: 'rgba(0,0,0,0.5)',
-            position: 'fixed',
+            background: "rgba(0,0,0,0.5)",
+            position: "fixed",
             borderBottom: (t) => `1px solid ${t.palette.divider}`,
           }}
         >
@@ -66,17 +66,17 @@ function App() {
               label="Allowed keys pool"
               InputLabelProps={{
                 sx: {
-                  color: 'white',
-                  '&.Mui-focused': {
-                    color: 'white',
+                  color: "white",
+                  "&.Mui-focused": {
+                    color: "white",
                   },
                 },
               }}
               inputProps={{
                 sx: {
-                  color: 'white',
-                  background: 'rgba(255,255,255,0.5)',
-                  padding: '5px',
+                  color: "white",
+                  background: "rgba(255,255,255,0.5)",
+                  padding: "5px",
                 },
               }}
               type="text"
@@ -89,17 +89,17 @@ function App() {
               label="Amount of Keys"
               InputLabelProps={{
                 sx: {
-                  color: 'white',
-                  '&.Mui-focused': {
-                    color: 'white',
+                  color: "white",
+                  "&.Mui-focused": {
+                    color: "white",
                   },
                 },
               }}
               inputProps={{
                 sx: {
-                  color: 'white',
-                  background: 'rgba(255,255,255,0.5)',
-                  padding: '5px',
+                  color: "white",
+                  background: "rgba(255,255,255,0.5)",
+                  padding: "5px",
                 },
               }}
               type="text"
@@ -112,17 +112,17 @@ function App() {
               label="Set Timer (seconds)"
               InputLabelProps={{
                 sx: {
-                  color: 'white',
-                  '&.Mui-focused': {
-                    color: 'white',
+                  color: "white",
+                  "&.Mui-focused": {
+                    color: "white",
                   },
                 },
               }}
               inputProps={{
                 sx: {
-                  color: 'white',
-                  background: 'rgba(255,255,255,0.5)',
-                  padding: '5px',
+                  color: "white",
+                  background: "rgba(255,255,255,0.5)",
+                  padding: "5px",
                 },
               }}
               type="text"
@@ -134,32 +134,32 @@ function App() {
             <Button
               variant="contained"
               sx={{
-                background: timerMode ? 'blue' : 'black',
-                '&:hover': {
-                  background: timerMode ? 'blue' : 'black',
+                background: timerMode ? "blue" : "black",
+                "&:hover": {
+                  background: timerMode ? "blue" : "black",
                 },
-                '&:active': {
-                  background: timerMode ? 'blue' : 'black',
+                "&:active": {
+                  background: timerMode ? "blue" : "black",
                 },
               }}
               onClick={() => setTimerMode((prev) => !prev)}
             >
-              {timerMode ? 'Timer on' : 'Timer off'}
+              {timerMode ? "Timer on" : "Timer off"}
             </Button>
             <Button
               variant="contained"
               sx={{
-                background: averageMode ? 'blue' : 'black',
-                '&:hover': {
-                  background: averageMode ? 'blue' : 'black',
+                background: averageMode ? "blue" : "black",
+                "&:hover": {
+                  background: averageMode ? "blue" : "black",
                 },
-                '&:active': {
-                  background: averageMode ? 'blue' : 'black',
+                "&:active": {
+                  background: averageMode ? "blue" : "black",
                 },
               }}
               onClick={() => setAverageMode((prev) => !prev)}
             >
-              {averageMode ? 'Average on' : 'Average off'}
+              {averageMode ? "Average on" : "Average off"}
             </Button>
             <Box sx={{ minWidth: 120 }}>
               <FormControl fullWidth>
@@ -171,18 +171,25 @@ function App() {
                   label="Theme"
                   onChange={changeTheme}
                 >
-                  <MenuItem value={'Light'}>Light</MenuItem>
-                  <MenuItem value={'Dark'}>Dark</MenuItem>
-                  <MenuItem value={'Blue'}>Blue</MenuItem>
+                  <MenuItem value={"Light"}>Light</MenuItem>
+                  <MenuItem value={"Dark"}>Dark</MenuItem>
+                  <MenuItem value={"Blue"}>Blue</MenuItem>
                 </Select>
               </FormControl>
             </Box>
           </Toolbar>
         </AppBar>
       </Slide>
-      <Main allowedKeys={allowedKeys} amountKeys={amountKeys} timer={timer} timerMode={timerMode} averageMode={averageMode} theme={theme}/>
+      <Main
+        allowedKeys={allowedKeys}
+        amountKeys={amountKeys}
+        timer={timer}
+        timerMode={timerMode}
+        averageMode={averageMode}
+        theme={theme}
+      />
     </BrowserRouter>
-  )
-};
+  );
+}
 
 export default App;
