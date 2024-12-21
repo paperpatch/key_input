@@ -1,13 +1,13 @@
 import { Box, Typography } from "@mui/material";
 
-const Average = ({ scores }) => {
+const Stats = ({ scores }) => {
   return (
     <Box
       textAlign="center"
       marginTop={10}
       sx={{ background: "white", borderRadius: "10px" }}
     >
-      <Typography variant="h6">Last 5 scores</Typography>
+      <Typography variant="h6">Last 5 results</Typography>
       <Typography variant="h6">
         {scores.length > 0 && scores.some((s) => s.success)
           ? `Average time: ${(
@@ -36,4 +36,4 @@ const Average = ({ scores }) => {
   );
 };
 
-export { Average };
+export { Stats };
