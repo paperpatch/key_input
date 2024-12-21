@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 // import components
 import ProgressBar from "../ProgressBar";
 import KeyIndex from "../KeyIndex";
-import { Average } from "../Average";
+import { Stats } from "../Stats";
 import { SuccessText, FailureText } from "../Typography";
 import {
   SuccessLongHorizontal,
@@ -62,8 +62,8 @@ function Keyboard(set) {
   const {
     allowedKeys,
     amountKeys,
-    timerMode,
-    averageMode,
+    timerSwitch,
+    statsSwitch,
     timer: countdownTime,
     theme,
   } = set;
@@ -124,14 +124,14 @@ function Keyboard(set) {
     }
 
     const timerId = setInterval(() => {
-      if (timerMode) {
+      if (timerSwitch) {
         setCountdown((prev) => parseFloat((prev - 0.1).toFixed(1)));
       }
     }, 100);
 
     // clear interval on re-render to avoid memory leaks
     return () => clearInterval(timerId);
-  }, [countdown, timerMode]);
+  }, [countdown, timerSwitch]);
 
   const success = useCallback(() => {
     setCountdown(10);
@@ -235,7 +235,7 @@ function Keyboard(set) {
             <FailureCenter />
           </>
         )}
-        {averageMode && <Average scores={scores} />}
+        {statsSwitch && <Stats scores={scores} />}
       </div>
     </>
   );
