@@ -18,30 +18,30 @@ import {
 } from "../FadeStyle";
 
 // import utils
-// import keySoundSrc from "../../assets/sound/keySound.mp3";
-// import failSoundSrc from "../../assets/sound/tile_break.wav";
-// import successSoundSrc from "../../assets/sound/successSound.mp3";
+import keySoundSrc from "../../assets/sound/keySound.mp3";
+import failSoundSrc from "../../assets/sound/tile_break.wav";
+import successSoundSrc from "../../assets/sound/successSound.mp3";
 import css from "../../assets/scss/Main.module.scss";
 
 // Preload sounds
-// const keySound = new Audio(keySoundSrc);
-// const failSound = new Audio(failSoundSrc);
-// const successSound = new Audio(successSoundSrc);
+const keySound = new Audio(keySoundSrc);
+const failSound = new Audio(failSoundSrc);
+const successSound = new Audio(successSoundSrc);
 
 // Set playback rates and volume
-// keySound.playbackRate = 2;
-// failSound.playbackRate = 1.5;
-// failSound.volume = 0.2;
-// successSound.playbackRate = 1.1;
+keySound.playbackRate = 2;
+failSound.playbackRate = 1.5;
+failSound.volume = 0.2;
+successSound.playbackRate = 1.1;
 
-// const playSound = (audio) => {
-//   try {
-//     audio.currentTime = 0; // Reset to start
-//     audio.play();
-//   } catch (err) {
-//     console.error("Audio playback failed:", err);
-//   }
-// };
+const playSound = (audio) => {
+  try {
+    audio.currentTime = 0; // Reset to start
+    audio.play();
+  } catch (err) {
+    console.error("Audio playback failed:", err);
+  }
+};
 
 const colors = {
   white: "white",
@@ -141,7 +141,7 @@ function Main(set) {
 
   const success = useCallback(() => {
     setCountdown(10);
-    // playSound(successSound);
+    playSound(successSound);
     setScores((prev) => [...prev, { time: Date.now() - timer, success: true }]);
     setShowSuccessText(true);
     setTimeout(reset, 800);
@@ -149,7 +149,7 @@ function Main(set) {
 
   const failure = useCallback(() => {
     setCountdown(10);
-    // playSound(failSound);
+    playSound(failSound);
     setFailedKeys((prev) => [...prev, currentKeyIndex]);
     setScores((prev) => [
       ...prev,
@@ -173,7 +173,7 @@ function Main(set) {
       if (e.key.toUpperCase() === keys[currentKeyIndex].toUpperCase()) {
         setCurrentKeyIndex((prev) => prev + 1);
         if (currentKeyIndex < keys.length - 1) {
-          // playSound(keySound);
+          playSound(keySound);
         } else {
           success();
         }
