@@ -1,20 +1,7 @@
-import {
-  AppBar,
-  Button,
-  Slide,
-  TextField,
-  Toolbar,
-  Typography,
-  FormControl,
-  InputLabel,
-  Select,
-  Box,
-  MenuItem,
-} from "@mui/material";
-import { useCallback, useState } from "react";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
-import Main from "./components/Main";
+import Keyboard from "./components/Keyboard";
+import "./App.css";
 
 // import css in order
 import "./App.css";
@@ -24,25 +11,18 @@ function App() {
   const [allowedKeys, setAllowedKeys] = useState("WASDQE");
   const [amountKeys, setAmountKeys] = useState(7);
   const [timer, setTimer] = useState(5.5);
-  const [timerMode, setTimerMode] = useState(true);
-  const [averageMode, setAverageMode] = useState(true);
+  const [timerSwitch, setTimerSwitch] = useState(false);
+  const [statsSwitch, setStatsSwitch] = useState(true);
   const [theme, setTheme] = useState("");
 
   const handleScroll = useCallback(() => {
-    if (window.scrollY >= 25) {
-      setShowAppBar(false);
-    } else {
-      setShowAppBar(true);
-    }
-  }, [setShowAppBar]);
+    setShowAppBar(window.scrollY < 25);
+  }, []);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  });
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   const changeTheme = (event) => {
     setTheme(event.target.value);
@@ -50,142 +30,61 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Slide appear={false} direction="down" in={showAppBar}>
-        <AppBar
-          sx={{
-            background: "rgba(0,0,0,0.5)",
-            position: "fixed",
-            borderBottom: (t) => `1px solid ${t.palette.divider}`,
-          }}
-        >
-          <Toolbar sx={{ gap: 4 }}>
-            <Typography variant="h5" noWrap>
-              Key Input
-            </Typography>
-            <TextField
-              label="Allowed keys pool"
-              InputLabelProps={{
-                sx: {
-                  color: "white",
-                  "&.Mui-focused": {
-                    color: "white",
-                  },
-                },
-              }}
-              inputProps={{
-                sx: {
-                  color: "white",
-                  background: "rgba(255,255,255,0.5)",
-                  padding: "5px",
-                },
-              }}
+      {showAppBar && (
+        <header className="app-bar">
+          <nav className="toolbar">
+            <h1 className="title">Key Input</h1>
+            <input
               type="text"
+              className="text-field"
+              placeholder="Allowed keys pool"
               value={allowedKeys}
-              onChange={(e) => {
-                setAllowedKeys(e.target.value);
-              }}
+              onChange={(e) => setAllowedKeys(e.target.value)}
             />
-            <TextField
-              label="Amount of Keys"
-              InputLabelProps={{
-                sx: {
-                  color: "white",
-                  "&.Mui-focused": {
-                    color: "white",
-                  },
-                },
-              }}
-              inputProps={{
-                sx: {
-                  color: "white",
-                  background: "rgba(255,255,255,0.5)",
-                  padding: "5px",
-                },
-              }}
-              type="text"
+            <input
+              type="number"
+              className="text-field"
+              placeholder="Amount of Keys"
               value={amountKeys}
-              onChange={(e) => {
-                setAmountKeys(e.target.value);
-              }}
+              onChange={(e) => setAmountKeys(e.target.value)}
             />
-            <TextField
-              label="Set Timer (seconds)"
-              InputLabelProps={{
-                sx: {
-                  color: "white",
-                  "&.Mui-focused": {
-                    color: "white",
-                  },
-                },
-              }}
-              inputProps={{
-                sx: {
-                  color: "white",
-                  background: "rgba(255,255,255,0.5)",
-                  padding: "5px",
-                },
-              }}
-              type="text"
+            <input
+              type="number"
+              className="text-field"
+              placeholder="Set Timer (seconds)"
               value={timer}
-              onChange={(e) => {
-                setTimer(e.target.value);
-              }}
+              onChange={(e) => setTimer(e.target.value)}
             />
-            <Button
-              variant="contained"
-              sx={{
-                background: timerMode ? "blue" : "black",
-                "&:hover": {
-                  background: timerMode ? "blue" : "black",
-                },
-                "&:active": {
-                  background: timerMode ? "blue" : "black",
-                },
-              }}
-              onClick={() => setTimerMode((prev) => !prev)}
+            <button
+              className={`toggle-button ${timerSwitch ? "active" : ""}`}
+              onClick={() => setTimerSwitch((prev) => !prev)}
             >
-              {timerMode ? "Timer on" : "Timer off"}
-            </Button>
-            <Button
-              variant="contained"
-              sx={{
-                background: averageMode ? "blue" : "black",
-                "&:hover": {
-                  background: averageMode ? "blue" : "black",
-                },
-                "&:active": {
-                  background: averageMode ? "blue" : "black",
-                },
-              }}
-              onClick={() => setAverageMode((prev) => !prev)}
+              {timerSwitch ? "TIMER ON" : "TIMER OFF"}
+            </button>
+            <button
+              className={`toggle-button ${statsSwitch ? "active" : ""}`}
+              onClick={() => setStatsSwitch((prev) => !prev)}
             >
-              {averageMode ? "Average on" : "Average off"}
-            </Button>
-            <Box sx={{ minWidth: 120 }}>
-              <FormControl fullWidth>
-                <InputLabel id="theme-label">Theme</InputLabel>
-                <Select
-                  labelId="theme-label-id"
-                  id="theme-id"
-                  value={theme}
-                  label="Theme"
-                  onChange={changeTheme}
-                >
-                  <MenuItem value={"Light"}>Light</MenuItem>
-                  <MenuItem value={"Dark"}>Dark</MenuItem>
-                  <MenuItem value={"Blue"}>Blue</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-          </Toolbar>
-        </AppBar>
-      </Slide>
-      <Main
+              {statsSwitch ? "Stats" : "Stats"}
+            </button>
+            <select
+              className="select-field"
+              value={theme}
+              onChange={changeTheme}
+            >
+              <option value="Light">Light</option>
+              <option value="Dark">Dark</option>
+              <option value="Blue">Blue</option>
+            </select>
+          </nav>
+        </header>
+      )}
+      <Keyboard
         allowedKeys={allowedKeys}
         amountKeys={amountKeys}
         timer={timer}
-        timerMode={timerMode}
-        averageMode={averageMode}
+        timerSwitch={timerSwitch}
+        statsSwitch={statsSwitch}
         theme={theme}
       />
     </BrowserRouter>

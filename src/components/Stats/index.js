@@ -1,14 +1,16 @@
-import { Box, Typography } from "@mui/material";
-
 const Stats = ({ scores }) => {
   return (
-    <Box
-      textAlign="center"
-      marginTop={10}
-      sx={{ background: "white", borderRadius: "10px" }}
+    <div
+      style={{
+        textAlign: "center",
+        marginTop: "10rem",
+        background: "white",
+        borderRadius: "10px",
+        padding: "1rem",
+      }}
     >
-      <Typography variant="h6">Last 5 results</Typography>
-      <Typography variant="h6">
+      <h6>Last 10 results</h6>
+      <h6>
         {scores.length > 0 && scores.some((s) => s.success)
           ? `Average time: ${(
               scores
@@ -17,22 +19,23 @@ const Stats = ({ scores }) => {
               1000
             ).toFixed(2)}s`
           : "No successful attempts yet"}
-      </Typography>
-      {/* <Typography variant="h6">
+      </h6>
+      <h6>
         {scores.length > 0 &&
           `Fail rate: ${(
             (scores.filter((s) => !s.success).length / scores.length) *
             100
           ).toFixed(1)}%`}
-      </Typography> */}
-      {scores.map((scores, ix) => {
-        return (
-          <Typography key={ix} sx={{ color: scores.success ? "green" : "red" }}>
-            {(scores.time / 1000).toFixed(2)}s
-          </Typography>
-        );
-      })}
-    </Box>
+      </h6>
+      {scores.map((score, ix) => (
+        <p
+          key={ix}
+          style={{ color: score.success ? "green" : "red", margin: "5px 0" }}
+        >
+          {(score.time / 1000).toFixed(2)}s
+        </p>
+      ))}
+    </div>
   );
 };
 

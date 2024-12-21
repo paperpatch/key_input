@@ -1,5 +1,4 @@
 import React from "react";
-import { Box } from "@mui/material";
 
 const width = "275px";
 
@@ -10,48 +9,50 @@ const ProgressBar = ({
   height,
   blackSmoke,
 }) => {
-  const Parentdiv = {
-    height: height,
-    width: width,
-    backgroundColor: blackSmoke,
-    borderRadius: 40,
-    margin: 20,
-  };
-
-  const Childdiv = {
-    height: "100%",
-    width: `${(countdown / countdownTime) * 100}%`,
-    backgroundColor: bgcolor,
-    borderRadius: 40,
-  };
-
-  const progressText = {
-    padding: 10,
-    color: "gold",
-    fontWeight: 500,
-    padding: "0px",
-    paddingLeft: "125px",
-    position: "absolute",
-  };
-
   return (
-    <Box
-      sx={{
+    <div
+      style={{
         top: "20px",
-        mx: "auto",
+        margin: "0 auto",
         display: "flex",
         position: "relative",
         flexDirection: "column",
-        gap: 1,
-        zIndex: "tooltip",
+        gap: "1rem",
+        zIndex: 1,
       }}
     >
-      <div style={Parentdiv}>
-        <div style={Childdiv}>
-          <span style={progressText}>{`${countdown}s`}</span>
+      <div
+        style={{
+          height,
+          width,
+          backgroundColor: blackSmoke,
+          borderRadius: "40px",
+          margin: "20px",
+        }}
+      >
+        <div
+          style={{
+            height: "100%",
+            width: `${(countdown / countdownTime) * 100}%`,
+            backgroundColor: bgcolor,
+            borderRadius: "40px",
+          }}
+        >
+          <span
+            style={{
+              padding: "0px",
+              color: "gold",
+              fontWeight: 500,
+              position: "absolute",
+              left: "50%",
+              transform: "translateX(-50%)",
+            }}
+          >
+            {`${countdown}s`}
+          </span>
         </div>
       </div>
-    </Box>
+    </div>
   );
 };
 
