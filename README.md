@@ -1,6 +1,6 @@
 # Key Input
 
-Mini-game inspired by Lost Ark. A simple key input where typing the correct sequence succeeds and any other key will result in a failure. Uses React for components and @mui for stylization. Content is deployed through gh-pages.
+Mini-game inspired by Lost Ark. A simple key input where typing the correct sequence succeeds and any other key will result in a failure. Built with React components.
 
 [Play the game here](https://paperpatch.github.io/key_input/)
 
@@ -17,13 +17,9 @@ Mini-game inspired by Lost Ark. A simple key input where typing the correct sequ
 ## Setup
 :floppy_disk:
 
-The database uses the following npm:
-- [mui](https://mui.com/)
-  - Intuitive React UI tools
-- [gh-pages](https://www.npmjs.com/package/gh-pages)
-  - Publish software development deployment.
-- [Classnames](https://www.npmjs.com/package/classnames)
-  - A simple JavaScript utility for conditionally joining classNames together.
+The database uses the following package(s):
+- [React](https://react.dev/)
+  - The library for web and native user interfaces
 
 ## Usage
 
