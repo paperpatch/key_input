@@ -1,6 +1,5 @@
 // import packages
 import { useCallback, useEffect, useState } from "react";
-import { Button, Box } from "@mui/material";
 
 // import components
 import ProgressBar from "../ProgressBar";
@@ -59,11 +58,7 @@ const colors = {
   blackSmoke: "#626262",
 };
 
-// const colors2 = {
-//   primary:
-// }
-
-function Main(set) {
+function Keyboard(set) {
   const {
     allowedKeys,
     amountKeys,
@@ -116,7 +111,7 @@ function Main(set) {
 
   // Update Scores
   useEffect(() => {
-    if (scores.length > 5) {
+    if (scores.length > 10) {
       setScores((prev) => prev.slice(1));
     }
   }, [scores]);
@@ -136,7 +131,6 @@ function Main(set) {
 
     // clear interval on re-render to avoid memory leaks
     return () => clearInterval(timerId);
-    // add countdown as a dependency to rerun the effect when updated
   }, [countdown, timerMode]);
 
   const success = useCallback(() => {
@@ -191,14 +185,7 @@ function Main(set) {
 
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          position: "relative",
-          flexDirection: "column",
-          gap: 1,
-        }}
-      >
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
         {!showSuccessText && !showFailureText && (
           <>
             <KeyIndex
@@ -215,28 +202,25 @@ function Main(set) {
               height={30}
               blackSmoke={colors.blackSmoke}
             />
-            <Button
-              variant="contained"
-              sx={{
+            <button
+              style={{
                 background: "black",
-                "&:hover": { background: "blue" },
-                "&:active": { background: "blue" },
-                width: "90px",
+                color: "white",
+                padding: "10px 20px",
+                border: "none",
+                cursor: "pointer",
                 margin: "0 auto",
                 marginTop: "50px",
               }}
               onClick={() => setCallReset(true)}
             >
               Reset
-            </Button>
+            </button>
           </>
         )}
         {showSuccessText && (
           <>
-            {/* Typography */}
             <SuccessText />
-
-            {/* CSS Fades */}
             <SuccessLongHorizontal />
             <SuccessMidHorizontal />
             <SuccessShortHorizontal />
@@ -246,18 +230,15 @@ function Main(set) {
         )}
         {showFailureText && (
           <>
-            {/* Typography */}
             <FailureText />
-
-            {/* CSS Fades */}
             <FailureLong />
             <FailureCenter />
           </>
         )}
         {averageMode && <Average scores={scores} />}
-      </Box>
+      </div>
     </>
   );
 }
 
-export default Main;
+export default Keyboard;
