@@ -1,7 +1,20 @@
 import css from "../../assets/scss/Main.module.scss";
 import star from "../../assets/pic/star.png";
 
-const KeyIndex = ({ keys, failedKeys, currentKeyIndex, colors }) => (
+const colors = {
+  white: "#FFFFFF",
+  red: "#7F1919",
+  lighterGrey: "#C8C8C8",
+  lightGrey: "#979797",
+  dimGrey: "#696969",
+  gold: "#B9A954",
+  yellow: "#FFEF00",
+  black: "black",
+  skyBlue: "rgb(37, 150, 190)",
+  blackSmoke: "#626262",
+};
+
+const KeyIndex = ({ keys, failedKeys, currentKeyIndex }) => (
   <div style={{ display: "flex", flexDirection: "row", gap: "6px" }}>
     {keys.split("").map((key, ix) => {
       const isFailed = failedKeys.includes(ix);

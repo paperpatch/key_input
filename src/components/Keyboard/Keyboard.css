@@ -47,6 +47,39 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2)
 }
 
+.progress-bar-container {
+  display: flex;
+  position: relative;
+  top: 20px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.progress-bar-background {
+  margin: 20px;
+  height: 30px;
+  width: 100%;
+  background-color: #626262;
+  border-radius: 40px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: rgb(37, 150, 190);
+  border-radius: 40px;
+  transition: width 0.1s ease-in-out;
+}
+
+.progress-bar-text {
+  position: absolute;
+  padding: 0px;
+  left: 50%;
+  font-weight: 500;
+  color: gold;
+  transform: translateX(-50%);
+}
+
 .reset-button:hover {
   transform: scale(1.1);
 }

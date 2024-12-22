@@ -1,6 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-
-import ProgressBar from "../ProgressBar";
 import KeyIndex from "../KeyIndex";
 import { Stats } from "../Stats";
 import { SuccessText, FailureText } from "../Typography";
@@ -39,22 +37,6 @@ const playSound = (audio) => {
   } catch (err) {
     console.error("Audio playback failed:", err);
   }
-};
-
-const colors = {
-  white: "white",
-  red: "#7F1919",
-  green: "green",
-  lighterGrey: "#C8C8C8",
-  lightGrey: "#979797",
-  dimGrey: "#696969",
-  darkGrey: "#3F3F3F",
-  gold: "#B9A954",
-  yellow: "#FFEF00",
-  black: "black",
-  skyBlue: "rgb(37, 150, 190)",
-  whiteSmoke: "whitesmoke",
-  blackSmoke: "#626262",
 };
 
 function Keyboard(set) {
@@ -177,6 +159,8 @@ function Keyboard(set) {
     [allowedKeys, currentKeyIndex, failedKeys, keys, success, failure]
   );
 
+  const progressWidth = `${Math.min((countdown / countdownTime) * 100, 100)}%`;
+
   useEffect(() => {
     window.addEventListener("keydown", useKeyPress);
     return () => window.removeEventListener("keydown", useKeyPress);
@@ -190,15 +174,16 @@ function Keyboard(set) {
           css={css}
           failedKeys={failedKeys}
           currentKeyIndex={currentKeyIndex}
-          colors={colors}
         />
-        <ProgressBar
-          bgcolor={colors.skyBlue}
-          countdown={countdown}
-          countdownTime={countdownTime}
-          height={30}
-          blackSmoke={colors.blackSmoke}
-        />
+        {/* Progress Bar */}
+        <div className="progress-bar-container">
+          <div className="progress-bar-background">
+            <div className="progress-bar-fill" style={{ width: progressWidth }}>
+              <span className="progress-bar-text">{`${countdown}s`}</span>
+            </div>
+          </div>
+        </div>
+        {/* Reset Button */}
         <button className="reset-button" onClick={() => setCallReset(true)}>
           Reset
         </button>
