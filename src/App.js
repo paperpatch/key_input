@@ -3,9 +3,6 @@ import { BrowserRouter } from "react-router-dom";
 import Keyboard from "./components/Keyboard";
 import "./App.css";
 
-// import css in order
-import "./App.css";
-
 function App() {
   const [showAppBar, setShowAppBar] = useState(true);
   const [allowedKeys, setAllowedKeys] = useState("WASDQE");
@@ -59,7 +56,7 @@ function App() {
               className={`toggle-button ${timerSwitch ? "active" : ""}`}
               onClick={() => setTimerSwitch((prev) => !prev)}
             >
-              {timerSwitch ? "TIMER ON" : "TIMER OFF"}
+              {timerSwitch ? "Timer" : "Timer"}
             </button>
             <button
               className={`toggle-button ${statsSwitch ? "active" : ""}`}

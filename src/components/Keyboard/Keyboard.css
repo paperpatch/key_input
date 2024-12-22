@@ -1,0 +1,43 @@
+.keyboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.keyboard-content {
+  position: absolute;
+  top: 20%;
+  transform: translateX(-0%);
+  transition: transform 0.5s ease-in-out;
+}
+
+.stats-content {
+  position: absolute;
+  top: 15%;
+  right: 0%;
+  opacity: 0;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.keyboard-container.show-stats .keyboard-content {
+  transform: translateX(-50%);
+}
+.keyboard-container.show-stats .stats-content {
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}
+
+.reset-button {
+  background: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin-left: 0 auto;
+  margin-top: 50px;
+}

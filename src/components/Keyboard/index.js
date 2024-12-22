@@ -1,7 +1,5 @@
-// import packages
 import { useCallback, useEffect, useState } from "react";
 
-// import components
 import ProgressBar from "../ProgressBar";
 import KeyIndex from "../KeyIndex";
 import { Stats } from "../Stats";
@@ -21,6 +19,7 @@ import keySoundSrc from "../../assets/sound/keySound.mp3";
 import failSoundSrc from "../../assets/sound/tile_break.wav";
 import successSoundSrc from "../../assets/sound/successSound.mp3";
 import css from "../../assets/scss/Main.module.scss";
+import "./Keyboard.css";
 
 // Preload sounds
 const keySound = new Audio(keySoundSrc);
@@ -184,60 +183,49 @@ function Keyboard(set) {
   }, [useKeyPress]);
 
   return (
-    <>
-      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-        {!showSuccessText && !showFailureText && (
-          <>
-            <KeyIndex
-              keys={keys}
-              css={css}
-              failedKeys={failedKeys}
-              currentKeyIndex={currentKeyIndex}
-              colors={colors}
-            />
-            <ProgressBar
-              bgcolor={colors.skyBlue}
-              countdown={countdown}
-              countdownTime={countdownTime}
-              height={30}
-              blackSmoke={colors.blackSmoke}
-            />
-            <button
-              style={{
-                background: "black",
-                color: "white",
-                padding: "10px 20px",
-                border: "none",
-                cursor: "pointer",
-                margin: "0 auto",
-                marginTop: "50px",
-              }}
-              onClick={() => setCallReset(true)}
-            >
-              Reset
-            </button>
-          </>
-        )}
-        {showSuccessText && (
-          <>
-            <SuccessText />
-            <SuccessLongHorizontal />
-            <SuccessMidHorizontal />
-            <SuccessShortHorizontal />
-            <SuccessCenter />
-            <SuccessPeakHorizontal />
-          </>
-        )}
-        {showFailureText && (
-          <>
-            <FailureText />
-            <FailureLong />
-            <FailureCenter />
-          </>
-        )}
-        {statsSwitch && <Stats scores={scores} />}
+    <div className={`keyboard-container ${statsSwitch ? "show-stats" : ""}`}>
+      <div className="keyboard-content">
+        <KeyIndex
+          keys={keys}
+          css={css}
+          failedKeys={failedKeys}
+          currentKeyIndex={currentKeyIndex}
+          colors={colors}
+        />
+        <ProgressBar
+          bgcolor={colors.skyBlue}
+          countdown={countdown}
+          countdownTime={countdownTime}
+          height={30}
+          blackSmoke={colors.blackSmoke}
+        />
+        <button className="reset-button" onClick={() => setCallReset(true)}>
+          Reset
+        </button>
       </div>
-    </>
+      {showSuccessText && (
+        <>
+          <SuccessText />
+          <SuccessLongHorizontal />
+          <SuccessMidHorizontal />
+          <SuccessShortHorizontal />
+          <SuccessCenter />
+          <SuccessPeakHorizontal />
+        </>
+      )}
+      {showFailureText && (
+        <>
+          <FailureText />
+          <FailureLong />
+          <FailureCenter />
+        </>
+      )}
+      {statsSwitch && (
+        <div className="stats-content">
+          <Stats scores={scores} />
+        </div>
+      )}
+    </div>
   );
 }
 
