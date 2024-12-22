@@ -118,6 +118,7 @@ function Keyboard(set) {
   // Update Countdown
   useEffect(() => {
     if (countdown <= 0) {
+      setCountdown(0.0);
       failure();
       return;
     }
@@ -127,13 +128,13 @@ function Keyboard(set) {
         setCountdown((prev) => parseFloat((prev - 0.1).toFixed(1)));
       }
     }, 100);
+    console.log(timerId);
 
-    // clear interval on re-render to avoid memory leaks
+    // Clear interval to avoid memory leaks
     return () => clearInterval(timerId);
   }, [countdown, timerSwitch]);
 
   const success = useCallback(() => {
-    setCountdown(10);
     playSound(successSound);
     setScores((prev) => [...prev, { time: Date.now() - timer, success: true }]);
     setShowSuccessText(true);
@@ -141,7 +142,6 @@ function Keyboard(set) {
   }, [timer, reset]);
 
   const failure = useCallback(() => {
-    setCountdown(10);
     playSound(failSound);
     setFailedKeys((prev) => [...prev, currentKeyIndex]);
     setScores((prev) => [

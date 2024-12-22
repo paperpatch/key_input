@@ -1,7 +1,3 @@
-import React from "react";
-
-const width = "275px";
-
 const ProgressBar = ({
   bgcolor,
   countdown,
@@ -9,6 +5,8 @@ const ProgressBar = ({
   height,
   blackSmoke,
 }) => {
+  const progressWidth = `${Math.min((countdown / countdownTime) * 100, 100)}%`;
+
   return (
     <div
       style={{
@@ -16,26 +14,26 @@ const ProgressBar = ({
         margin: "0 auto",
         display: "flex",
         position: "relative",
-        flexDirection: "column",
-        gap: "1rem",
-        zIndex: 1,
+        overflow: "hidden",
       }}
     >
       <div
         style={{
           height,
-          width,
+          width: "100%",
           backgroundColor: blackSmoke,
           borderRadius: "40px",
           margin: "20px",
+          overflow: "hidden", 
         }}
       >
         <div
           style={{
             height: "100%",
-            width: `${(countdown / countdownTime) * 100}%`,
+            width: progressWidth,
             backgroundColor: bgcolor,
             borderRadius: "40px",
+            transition: "width 0.1s ease-in-out",
           }}
         >
           <span
