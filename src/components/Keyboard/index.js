@@ -138,7 +138,7 @@ function Keyboard(set) {
     playSound(successSound);
     setScores((prev) => [...prev, { time: Date.now() - timer, success: true }]);
     setShowSuccessText(true);
-    setTimeout(reset, 800);
+    setTimeout(reset, 1000);
   }, [timer, reset]);
 
   const failure = useCallback(() => {
@@ -149,7 +149,7 @@ function Keyboard(set) {
       { time: Date.now() - timer, success: false },
     ]);
     setShowFailureText(true);
-    setTimeout(reset, 800);
+    setTimeout(reset, 1000);
   }, [currentKeyIndex, timer, reset]);
 
   const useKeyPress = useCallback(

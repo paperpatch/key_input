@@ -33,11 +33,25 @@
 }
 
 .reset-button {
+  display: block;
+  position: relative;
   background: black;
   color: white;
   padding: 10px 20px;
   border: none;
   cursor: pointer;
-  margin-left: 0 auto;
-  margin-top: 50px;
+  margin-left: 8.6em;
+  margin-top: 2em;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2)
+}
+
+.reset-button:hover {
+  transform: scale(1.1);
+}
+
+.reset-button:active {
+  transform: scale(1.01) translateY(1px); /* Indent the button */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Reduce shadow for pressed effect */
 }
