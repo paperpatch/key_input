@@ -1,16 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import KeyIndex from "../KeyIndex";
 import { Stats } from "../Stats";
-import { SuccessText, FailureText } from "../Typography";
-import {
-  SuccessLongHorizontal,
-  SuccessMidHorizontal,
-  SuccessShortHorizontal,
-  SuccessCenter,
-  SuccessPeakHorizontal,
-  FailureLong,
-  FailureCenter,
-} from "../FadeStyle";
 
 // import utils
 import keySoundSrc from "../../assets/sound/keySound.mp3";
@@ -110,7 +100,6 @@ function Keyboard(set) {
         setCountdown((prev) => parseFloat((prev - 0.1).toFixed(1)));
       }
     }, 100);
-    console.log(timerId);
 
     // Clear interval to avoid memory leaks
     return () => clearInterval(timerId);
@@ -167,44 +156,46 @@ function Keyboard(set) {
   }, [useKeyPress]);
 
   return (
-    <div className={`keyboard-container ${statsSwitch ? "show-stats" : ""}`}>
-      <div className="keyboard-content">
-        <KeyIndex
-          keys={keys}
-          css={css}
-          failedKeys={failedKeys}
-          currentKeyIndex={currentKeyIndex}
-        />
-        {/* Progress Bar */}
-        <div className="progress-bar-container">
-          <div className="progress-bar-background">
-            <div className="progress-bar-fill" style={{ width: progressWidth }}>
-              <span className="progress-bar-text">{`${countdown}s`}</span>
+    <div className={`main-container ${statsSwitch ? "show-stats" : ""}`}>
+      <div className="keyboard-wrapper">
+        {showSuccessText && (
+          <>
+            <div className="text-glow success-text">SUCCESS</div>
+            <div className="success-glow"></div>
+          </>
+        )}
+        {showFailureText && (
+          <>
+            <div className="text-glow failure-text">FAILURE</div>
+            <div className="failure-glow"></div>
+          </>
+        )}
+        <div className="keyboard-content">
+          <KeyIndex
+            keys={keys}
+            css={css}
+            failedKeys={failedKeys}
+            currentKeyIndex={currentKeyIndex}
+          />
+          {/* Progress Bar */}
+          <div className="progress-bar-container">
+            <div className="progress-bar-background">
+              <div
+                className="progress-bar-fill"
+                style={{ width: progressWidth }}
+              >
+                <span className="progress-bar-text">{`${countdown}s`}</span>
+              </div>
             </div>
           </div>
+          {/* Reset Button */}
+          <div className="reset-button-container">
+            <button className="reset-button" onClick={() => setCallReset(true)}>
+              Reset
+            </button>
+          </div>
         </div>
-        {/* Reset Button */}
-        <button className="reset-button" onClick={() => setCallReset(true)}>
-          Reset
-        </button>
       </div>
-      {showSuccessText && (
-        <>
-          <SuccessText />
-          <SuccessLongHorizontal />
-          <SuccessMidHorizontal />
-          <SuccessShortHorizontal />
-          <SuccessCenter />
-          <SuccessPeakHorizontal />
-        </>
-      )}
-      {showFailureText && (
-        <>
-          <FailureText />
-          <FailureLong />
-          <FailureCenter />
-        </>
-      )}
       {statsSwitch && (
         <div className="stats-content">
           <Stats scores={scores} />

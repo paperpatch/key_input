@@ -126,10 +126,10 @@ const KeyIndex = ({ keys, failedKeys, currentKeyIndex }) => (
             <div
               style={{
                 position: "absolute",
-                width: "50rem",
+                width: "30rem",
                 height: "50px",
                 top: "5rem",
-                left: "-30rem",
+                left: "-20rem",
                 backgroundColor: "white",
                 zIndex: "tooltip",
               }}
