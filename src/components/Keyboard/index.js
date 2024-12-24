@@ -41,13 +41,13 @@ function Keyboard(set) {
 
   const [callReset, setCallReset] = useState(false);
   const [currentKeyIndex, setCurrentKeyIndex] = useState(0);
+  const [keys, setKeys] = useState("");
+  const [failedKeys, setFailedKeys] = useState([]);
+  const [locked, setLocked] = useState(false);
   const [showSuccessText, setShowSuccessText] = useState(false);
   const [showFailureText, setShowFailureText] = useState(false);
-  const [keys, setKeys] = useState("");
   const [countdown, setCountdown] = useState(countdownTime);
-  const [timer, setTimer] = useState(Date.now());
   const [scores, setScores] = useState([]);
-  const [failedKeys, setFailedKeys] = useState([]);
 
   const reset = useCallback(() => {
     if (!allowedKeys || allowedKeys.length === 0) return;
@@ -62,7 +62,6 @@ function Keyboard(set) {
     setShowSuccessText(false);
     setShowFailureText(false);
     setKeys(newKeys);
-    setTimer(Date.now());
     setFailedKeys([]);
     setCountdown(countdownTime);
   }, [allowedKeys, amountKeys, countdownTime]);
@@ -82,6 +81,7 @@ function Keyboard(set) {
 
   // Update Countdown
   useEffect(() => {
+    if (showSuccessText || showFailureText) return;
     if (countdown <= 0) {
       setCountdown(0.0);
       failure();
@@ -103,7 +103,11 @@ function Keyboard(set) {
     const elapsedTime = countdownTime - countdown;
     setScores((prev) => [...prev, { time: elapsedTime * 1000, success: true }]);
     setShowSuccessText(true);
-    setTimeout(reset, 1000);
+    setLocked(true);
+    setTimeout(() => {
+      reset();
+      setLocked(false);
+    }, 1000);
   }, [countdown, countdownTime, reset]);
 
   const failure = useCallback(() => {
@@ -115,11 +119,17 @@ function Keyboard(set) {
       { time: elapsedTime * 1000, success: false },
     ]);
     setShowFailureText(true);
-    setTimeout(reset, 1000);
+    setLocked(true);
+    setTimeout(() => {
+      reset();
+      setLocked(false);
+    }, 1000);
   }, [currentKeyIndex, countdown, countdownTime, reset]);
 
   const useKeyPress = useCallback(
     (e) => {
+      if (locked) return;
+
       if (
         !allowedKeys.includes(e.key.toUpperCase()) ||
         failedKeys.length ||
