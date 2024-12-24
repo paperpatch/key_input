@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import Keyboard from "./components/Keyboard";
+import iconGithub from "./assets/pic/icon-github.svg";
 import "./App.css";
 
 function App() {
@@ -82,6 +83,17 @@ function App() {
               <option value="Dark">Dark</option>
               <option value="Blue">Blue</option>
             </select>
+            <a
+              href="https://www.github.com/paperpatch/key_input"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img
+                className="icon icon-github"
+                src={iconGithub}
+                alt="icon-github"
+              />
+            </a>
           </nav>
         </header>
       )}
