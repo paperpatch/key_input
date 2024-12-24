@@ -33,9 +33,9 @@ function Keyboard(set) {
   const {
     allowedKeys,
     amountKeys,
+    timer: initialTime,
     timerSwitch,
     statsSwitch,
-    timer: countdownTime,
     theme,
   } = set;
 
@@ -46,7 +46,7 @@ function Keyboard(set) {
   const [locked, setLocked] = useState(false);
   const [showSuccessText, setShowSuccessText] = useState(false);
   const [showFailureText, setShowFailureText] = useState(false);
-  const [countdown, setCountdown] = useState(countdownTime);
+  const [countdown, setCountdown] = useState(initialTime);
   const [scores, setScores] = useState([]);
 
   const reset = useCallback(() => {
@@ -63,8 +63,9 @@ function Keyboard(set) {
     setShowFailureText(false);
     setKeys(newKeys);
     setFailedKeys([]);
-    setCountdown(countdownTime);
-  }, [allowedKeys, amountKeys, countdownTime]);
+    setCountdown(initialTime);
+    setLocked(false);
+  }, [allowedKeys, amountKeys, initialTime]);
 
   // Initial Reset to Start the Game
   useEffect(() => {
@@ -100,23 +101,42 @@ function Keyboard(set) {
 
   const success = useCallback(() => {
     playSound(successSound);
-    const elapsedTime = countdownTime - countdown;
-    setScores((prev) => [...prev, { time: elapsedTime * 1000, success: true }]);
+    const elapsedTime = initialTime - countdown;
+    const timeInSeconds = elapsedTime.toFixed(1);
+    setScores((prev) => [
+      ...prev,
+      {
+        time: timeInSeconds,
+        success: true,
+        keysPressed: currentKeyIndex + 1,
+        amountKeys: amountKeys,
+        initialTime: initialTime,
+        countdown: countdown,
+      },
+    ]);
     setShowSuccessText(true);
     setLocked(true);
     setTimeout(() => {
       reset();
       setLocked(false);
     }, 1000);
-  }, [countdown, countdownTime, reset]);
+  }, [currentKeyIndex, countdown, initialTime, reset]);
 
   const failure = useCallback(() => {
     playSound(failSound);
-    const elapsedTime = countdownTime - countdown;
+    const elapsedTime = initialTime - countdown;
+    const timeInSeconds = elapsedTime.toFixed(1);
     setFailedKeys((prev) => [...prev, currentKeyIndex]);
     setScores((prev) => [
       ...prev,
-      { time: elapsedTime * 1000, success: false },
+      {
+        time: timeInSeconds,
+        success: false,
+        keysPressed: currentKeyIndex + 1,
+        amountKeys: amountKeys,
+        initialTime: initialTime,
+        countdown: countdown,
+      },
     ]);
     setShowFailureText(true);
     setLocked(true);
@@ -124,7 +144,7 @@ function Keyboard(set) {
       reset();
       setLocked(false);
     }, 1000);
-  }, [currentKeyIndex, countdown, countdownTime, reset]);
+  }, [currentKeyIndex, countdown, initialTime, reset]);
 
   const useKeyPress = useCallback(
     (e) => {
@@ -150,10 +170,10 @@ function Keyboard(set) {
         failure();
       }
     },
-    [allowedKeys, currentKeyIndex, failedKeys, keys, success, failure]
+    [allowedKeys, currentKeyIndex, failedKeys, keys, locked, success, failure]
   );
 
-  const progressWidth = `${Math.min((countdown / countdownTime) * 100, 100)}%`;
+  const progressWidth = `${Math.min((countdown / initialTime) * 100, 100)}%`;
 
   useEffect(() => {
     window.addEventListener("keydown", useKeyPress);
@@ -203,11 +223,7 @@ function Keyboard(set) {
       </div>
       {statsSwitch && (
         <div className="stats-content">
-          <Stats
-            scores={scores}
-            amountKeys={amountKeys}
-            countdownTime={countdownTime}
-          />
+          <Stats scores={scores} />
         </div>
       )}
     </div>

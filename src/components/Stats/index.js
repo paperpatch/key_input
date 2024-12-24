@@ -1,30 +1,28 @@
 import "./Stats.css";
 
-const Stats = ({ scores, amountKeys, countdownTime }) => {
+const Stats = ({ scores }) => {
   const totalGames = scores.length;
-
-  const validScores = scores.filter((s) => s.time && s.success);
-  const totalTime = validScores.reduce((acc, cur) => acc + cur.time, 0);
-
+  const totalTime = scores.reduce((acc, cur) => acc + parseFloat(cur.time), 0);
   const totalWins = scores.filter((s) => s.success).length;
   const winRate = totalGames
     ? ((totalWins / totalGames) * 100).toFixed(2)
     : "0.00";
-
   const averageTime =
-    validScores.length > 0
-      ? (totalTime / validScores.length / 1000).toFixed(2)
-      : "N/A";
-
+    totalGames > 0 ? (totalTime / totalGames).toFixed(2) : "N/A";
+  const totalKeysPressed = scores.reduce(
+    (acc, cur) => acc + cur.keysPressed,
+    0
+  );
   const averageKeyPressedPerSecond =
-    validScores.length > 0 && totalTime > 0
-      ? (amountKeys / (totalTime / 1000)).toFixed(2)
-      : "N/A";
+    totalTime > 0 ? (totalKeysPressed / totalTime).toFixed(2) : "N/A";
 
-  const bestTimes = validScores.sort((a, b) => a.time - b.time).slice(0, 5);
+  const bestTimes = scores
+    .filter((s) => s.success)
+    .sort((a, b) => a.time - b.time)
+    .slice(0, 5);
+  const lastTenResults = scores.slice(-10).reverse();
 
-  const lastTenResults = scores.slice(-10);
-
+  // console.log(scores);
   return (
     <div className="stats-container">
       <h3>Game Stats</h3>
@@ -54,9 +52,7 @@ const Stats = ({ scores, amountKeys, countdownTime }) => {
             <th>#</th>
             <th>Result</th>
             <th>Time Taken (s)</th>
-            <th>Amount of Keys</th>
-            <th>Initial Time</th>
-            <th>Actions per second</th>
+            <th>Keys Pressed</th>
           </tr>
         </thead>
         <tbody>
@@ -67,14 +63,8 @@ const Stats = ({ scores, amountKeys, countdownTime }) => {
             >
               <td>{ix + 1}</td>
               <td>{score.success ? "Success" : "Failure"}</td>
-              <td>{(score.time / 1000).toFixed(2)}</td>
-              <td>{amountKeys || "N/A"}</td>
-              <td>{countdownTime || "N/A"}</td>
-              <td>
-                {score.time && amountKeys
-                  ? (amountKeys / (score.time / 1000)).toFixed(2)
-                  : "N/A"}
-              </td>
+              <td>{parseFloat(score.time).toFixed(2)}</td>
+              <td>{score.keysPressed}</td>
             </tr>
           ))}
         </tbody>
@@ -86,17 +76,15 @@ const Stats = ({ scores, amountKeys, countdownTime }) => {
           <tr>
             <th>#</th>
             <th>Time Taken (s)</th>
-            <th>Amount of Keys</th>
+            <th>Keys Pressed</th>
           </tr>
         </thead>
         <tbody>
           {bestTimes.map((score, ix) => (
             <tr key={ix}>
               <td>{ix === 0 ? <span className="star">⭐</span> : ix + 1}</td>
-              <td style={{ fontWeight: ix === 0 ? "bold" : "normal" }}>
-                {(score.time / 1000).toFixed(2)}
-              </td>
-              <td>{amountKeys || "N/A"}</td>
+              <td>{parseFloat(score.time).toFixed(2)}</td>
+              <td>{score.keysPressed}</td>
             </tr>
           ))}
         </tbody>
