@@ -31,27 +31,36 @@ function App() {
         <header className="app-bar">
           <nav className="toolbar">
             <h1 className="title">Key Input</h1>
-            <input
-              type="text"
-              className="text-field"
-              placeholder="Allowed keys pool"
-              value={allowedKeys}
-              onChange={(e) => setAllowedKeys(e.target.value)}
-            />
-            <input
-              type="number"
-              className="text-field"
-              placeholder="Amount of Keys"
-              value={amountKeys}
-              onChange={(e) => setAmountKeys(e.target.value)}
-            />
-            <input
-              type="number"
-              className="text-field"
-              placeholder="Set Timer (seconds)"
-              value={timer}
-              onChange={(e) => setTimer(e.target.value)}
-            />
+            <div className="input-group">
+              <label htmlFor="allowed-keys">Allowed Keys Pool</label>
+              <input
+                type="text"
+                className="text-field"
+                placeholder="Allowed keys pool"
+                value={allowedKeys}
+                onChange={(e) => setAllowedKeys(e.target.value)}
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="amount-keys">Amount of Keys</label>
+              <input
+                type="number"
+                className="text-field"
+                placeholder="Amount of Keys"
+                value={amountKeys}
+                onChange={(e) => setAmountKeys(e.target.value)}
+              />
+            </div>
+            <div className="input-group">
+              <input
+                type="number"
+                className="text-field"
+                placeholder="Set Timer (seconds)"
+                value={timer}
+                onChange={(e) => setTimer(e.target.value)}
+              />
+              <label htmlFor="timer">Set Timer (seconds)</label>
+            </div>
             <button
               className={`toggle-button ${timerSwitch ? "active" : ""}`}
               onClick={() => setTimerSwitch((prev) => !prev)}
