@@ -80,13 +80,6 @@ function Keyboard(set) {
     setCallReset(false);
   }, [allowedKeys, callReset, reset]);
 
-  // Update Scores
-  useEffect(() => {
-    if (scores.length > 10) {
-      setScores((prev) => prev.slice(1));
-    }
-  }, [scores]);
-
   // Update Countdown
   useEffect(() => {
     if (countdown <= 0) {
@@ -107,21 +100,23 @@ function Keyboard(set) {
 
   const success = useCallback(() => {
     playSound(successSound);
-    setScores((prev) => [...prev, { time: Date.now() - timer, success: true }]);
+    const elapsedTime = countdownTime - countdown;
+    setScores((prev) => [...prev, { time: elapsedTime * 1000, success: true }]);
     setShowSuccessText(true);
     setTimeout(reset, 1000);
-  }, [timer, reset]);
+  }, [countdown, countdownTime, reset]);
 
   const failure = useCallback(() => {
     playSound(failSound);
+    const elapsedTime = countdownTime - countdown;
     setFailedKeys((prev) => [...prev, currentKeyIndex]);
     setScores((prev) => [
       ...prev,
-      { time: Date.now() - timer, success: false },
+      { time: elapsedTime * 1000, success: false },
     ]);
     setShowFailureText(true);
     setTimeout(reset, 1000);
-  }, [currentKeyIndex, timer, reset]);
+  }, [currentKeyIndex, countdown, countdownTime, reset]);
 
   const useKeyPress = useCallback(
     (e) => {
@@ -198,7 +193,11 @@ function Keyboard(set) {
       </div>
       {statsSwitch && (
         <div className="stats-content">
-          <Stats scores={scores} />
+          <Stats
+            scores={scores}
+            amountKeys={amountKeys}
+            countdownTime={countdownTime}
+          />
         </div>
       )}
     </div>
