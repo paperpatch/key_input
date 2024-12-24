@@ -6,15 +6,15 @@ const Stats = ({ scores, amountKeys, countdownTime }) => {
   const validScores = scores.filter((s) => s.time && s.success);
   const totalTime = validScores.reduce((acc, cur) => acc + cur.time, 0);
 
+  const totalWins = scores.filter((s) => s.success).length;
+  const winRate = totalGames
+    ? ((totalWins / totalGames) * 100).toFixed(2)
+    : "0.00";
+
   const averageTime =
     validScores.length > 0
       ? (totalTime / validScores.length / 1000).toFixed(2)
       : "N/A";
-
-  const totalFailures = scores.filter((s) => !s.success).length;
-  const failRate = totalGames
-    ? ((totalFailures / totalGames) * 100).toFixed(2)
-    : "0.00";
 
   const averageKeyPressedPerSecond =
     validScores.length > 0 && totalTime > 0
@@ -34,12 +34,12 @@ const Stats = ({ scores, amountKeys, countdownTime }) => {
           <p>{totalGames}</p>
         </div>
         <div className="stat-bubble">
-          <strong>Average Time:</strong>
-          <p>{averageTime}s</p>
+          <strong>Pass Rate:</strong>
+          <p>{winRate}%</p>
         </div>
         <div className="stat-bubble">
-          <strong>Fail Rate:</strong>
-          <p>{failRate}%</p>
+          <strong>Average Time:</strong>
+          <p>{averageTime}s</p>
         </div>
         <div className="stat-bubble">
           <strong>Average Keys Pressed Per Second:</strong>
@@ -92,7 +92,7 @@ const Stats = ({ scores, amountKeys, countdownTime }) => {
         <tbody>
           {bestTimes.map((score, ix) => (
             <tr key={ix}>
-              <td>{ix === 0 ? "⭐" : ix + 1}</td>
+              <td>{ix === 0 ? <span className="star">⭐</span> : ix + 1}</td>
               <td style={{ fontWeight: ix === 0 ? "bold" : "normal" }}>
                 {(score.time / 1000).toFixed(2)}
               </td>

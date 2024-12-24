@@ -24,7 +24,6 @@
                0 0 40px rgba(255, 255, 255, 0.4);
   pointer-events: none;
   z-index: 10;
-  animation: glow-pulse 1.5s infinite alternate ease-in-out;
 }
 
 .success-text {
@@ -55,7 +54,7 @@
 .success-glow {
   background: linear-gradient(
     to right,
-    rgba(241, 8, 8, 0) 0%,
+    rgba(255, 255, 255, 0) 0%,
     rgba(64, 210, 255, 0.8) 50%,
     rgba(255, 255, 255, 0) 100%
   );
@@ -77,7 +76,6 @@
   position: absolute;
   top: 20%;
   margin-top: 0;
-  /* transform: translateX(-0%); */
   transition: transform 0.5s ease-in-out;
   z-index: 20;
 }
@@ -88,7 +86,7 @@
   top: 10%;
   right: 5%;
   opacity: 0;
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
   z-index: 10;
 }
 
@@ -160,6 +158,36 @@
 }
 
 .reset-button:active {
-  transform: scale(1.01) translateY(1px); /* Indent the button */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Reduce shadow for pressed effect */
+  transform: scale(1.01) translateY(1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Media Queries */
+@media (max-width: 1400px) {
+  .main-container.show-stats .keyboard-wrapper {
+    transform: translateX(0);
+  }
+
+  .keyboard-wrapper {
+    height: 25em;
+    margin-top: 5em;
+  }
+
+  .text-glow {
+    position: absolute;
+    top: -0.7em;
+  }
+
+  .success-glow,
+  .failure-glow {
+    top: 0;
+  }
+
+  .stats-content {
+    position: relative;    
+    top: auto;
+    right: auto;
+    margin-top: 5em;
+    opacity: 1;
+  }
 }

@@ -73,3 +73,27 @@
 .stats-table tr:hover {
   background-color: #fff09d;
 }
+
+.star {
+  display: inline-block;
+  color: gold;
+  text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.8), 
+               5px 5px 20px rgba(4, 4, 4, 0.6),
+               10px 10px 30px rgba(0, 0, 0, 0.4);
+  font-size: 1.5em;
+  -webkit-text-stroke: 15px black; /* Black outline */
+  animation: glow-pulse 3s infinite alternate ease-in-out;
+}
+
+@keyframes glow-pulse {
+  0% {
+    text-shadow: 0 0 20px rgba(248, 39, 39, 0.8), 
+                 0 0 20px rgba(86, 160, 1, 0.6),
+                 0 0 30px rgba(85, 218, 251, 0.4);
+  }
+  100% {
+    text-shadow: 0 0 20px rgb(255, 115, 0), 
+                 0 0 30px rgba(64, 255, 0, 0.8),
+                 0 0 40px rgb(0, 30, 197);
+  }
+}
