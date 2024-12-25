@@ -29,6 +29,31 @@ const playSound = (audio) => {
   }
 };
 
+const restrictedKeys = [
+  "Escape",
+  "CapsLock",
+  "Shift",
+  "Control",
+  "Alt",
+  "Meta",
+  "Tab",
+  "ArrowUp",
+  "ArrowDown",
+  "ArrowLeft",
+  "ArrowRight",
+  "PageUp",
+  "PageDown",
+  "Backspace",
+  "Enter",
+  "Space",
+  "Delete",
+  "Insert",
+  "Home",
+  "End",
+  "PrintScreen",
+  ...Array.from({ length: 12 }, (_, i) => `F${i + 1}`),
+];
+
 function Keyboard(set) {
   const {
     allowedKeys,
@@ -149,6 +174,10 @@ function Keyboard(set) {
   const useKeyPress = useCallback(
     (e) => {
       if (locked) return;
+
+      if (restrictedKeys.includes(e.key)) {
+        return;
+      }
 
       if (
         !allowedKeys.includes(e.key.toUpperCase()) ||
