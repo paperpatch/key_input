@@ -10,7 +10,7 @@ function App() {
   const [amountKeys, setAmountKeys] = useState(7);
   const [timer, setTimer] = useState(5.5);
   const [timerSwitch, setTimerSwitch] = useState(false);
-  const [statsSwitch, setStatsSwitch] = useState(true);
+  const [statsSwitch, setStatsSwitch] = useState(false);
   const [theme, setTheme] = useState("");
 
   const handleScroll = useCallback(() => {

@@ -185,8 +185,10 @@
   }
 
   .stats-content {
-    position: relative;    
+    position: relative; 
+    padding: 10px;   
     top: auto;
+    width: 100%;
     right: auto;
     margin-top: 5em;
     opacity: 1;
