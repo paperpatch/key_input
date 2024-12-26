@@ -4,25 +4,43 @@ const Stats = ({ scores }) => {
   const totalGames = scores.length;
   const totalTime = scores.reduce((acc, cur) => acc + parseFloat(cur.time), 0);
   const totalWins = scores.filter((s) => s.success).length;
+  const totalCorrectKeys = scores.reduce(
+    (acc, cur) =>
+      acc +
+      cur.keysPressed.reduce((sum, key) => sum + (cur.success ? 1 : 0), 0),
+    0
+  );
+  const totalIncorrectKeys = scores.reduce(
+    (acc, cur) => acc + (cur.failedKey ? 1 : 0),
+    0
+  );
+  const totalKeys = totalCorrectKeys + totalIncorrectKeys;
   const winRate = totalGames
     ? ((totalWins / totalGames) * 100).toFixed(2)
     : "0.00";
-  const averageTime =
-    totalGames > 0 ? (totalTime / totalGames).toFixed(2) : "N/A";
-  const totalKeysPressed = scores.reduce(
-    (acc, cur) => acc + cur.keysPressed,
-    0
-  );
   const averageKeyPressedPerSecond =
-    totalTime > 0 ? (totalKeysPressed / totalTime).toFixed(2) : "N/A";
-
-  const bestTimes = scores
-    .filter((s) => s.success)
-    .sort((a, b) => a.time - b.time)
-    .slice(0, 5);
+    totalTime > 0 ? (totalKeys / totalTime).toFixed(2) : "N/A";
   const lastTenResults = scores.slice(-10).reverse();
 
-  // console.log(scores);
+  const keyStats = {};
+  scores.forEach(({ keysPressed, failedKey }) => {
+    keysPressed.forEach((key) => {
+      if (!keyStats[key]) {
+        keyStats[key] = { correct: 0, incorrect: 0 };
+      }
+
+      if (failedKey === key) {
+        keyStats[key].incorrect++;
+      } else {
+        keyStats[key].correct++;
+      }
+    });
+  });
+
+  const sortedKeys = Object.entries(keyStats).sort(
+    ([, a], [, b]) => b.correct - a.correct
+  );
+
   return (
     <div className="stats-container">
       <h3>Game Stats</h3>
@@ -34,10 +52,6 @@ const Stats = ({ scores }) => {
         <div className="stat-bubble">
           <strong>Pass Rate:</strong>
           <p>{winRate}%</p>
-        </div>
-        <div className="stat-bubble">
-          <strong>Average Time:</strong>
-          <p>{averageTime}s</p>
         </div>
         <div className="stat-bubble">
           <strong>Average Keys Pressed Per Second:</strong>
@@ -53,6 +67,7 @@ const Stats = ({ scores }) => {
             <th>Result</th>
             <th>Time Taken (s)</th>
             <th>Keys Pressed</th>
+            <th>Failed Key</th>
           </tr>
         </thead>
         <tbody>
@@ -65,30 +80,37 @@ const Stats = ({ scores }) => {
               <td>{score.success ? "Success" : "Failure"}</td>
               <td>{parseFloat(score.time).toFixed(2)}</td>
               <td>{score.keysPressed}</td>
+              <td>{score.failedKey}</td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      <h4>Top Times</h4>
-      <table className="stats-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Time Taken (s)</th>
-            <th>Keys Pressed</th>
-          </tr>
-        </thead>
-        <tbody>
-          {bestTimes.map((score, ix) => (
-            <tr key={ix}>
-              <td>{ix === 0 ? <span className="star">⭐</span> : ix + 1}</td>
-              <td>{parseFloat(score.time).toFixed(2)}</td>
-              <td>{score.keysPressed}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <h4>Key Press Graph</h4>
+      <div className="key-graph">
+        {sortedKeys.map(([key, { correct, incorrect }]) => {
+          const total = correct + incorrect;
+          const correctPercentage = (correct / total) * 100;
+          const incorrectPercentage = (incorrect / total) * 100;
+
+          return (
+            <div className="key-bar" key={key}>
+              <span className="key-label">{key}</span>
+              <div className="bar">
+                <div
+                  className="bar-correct"
+                  style={{ width: `${correctPercentage}%` }}
+                />
+                <div
+                  className="bar-incorrect"
+                  style={{ width: `${incorrectPercentage}%` }}
+                />
+              </div>
+              <span className="key-count">{total}</span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
