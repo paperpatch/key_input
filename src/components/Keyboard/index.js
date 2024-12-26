@@ -68,6 +68,7 @@ function Keyboard(set) {
   const [currentKeyIndex, setCurrentKeyIndex] = useState(0);
   const [keys, setKeys] = useState("");
   const [failedKeys, setFailedKeys] = useState([]);
+  const [keysPressed, setKeysPressed] = useState([]);
   const [locked, setLocked] = useState(false);
   const [showSuccessText, setShowSuccessText] = useState(false);
   const [showFailureText, setShowFailureText] = useState(false);
@@ -77,33 +78,30 @@ function Keyboard(set) {
   const reset = useCallback(() => {
     if (!allowedKeys || allowedKeys.length === 0) return;
 
-    let newKeys = "";
     const maxKeys = Math.min(amountKeys, 15);
-    for (let i = 0; i < maxKeys; i++) {
-      newKeys += allowedKeys[Math.floor(Math.random() * allowedKeys.length)];
-    }
+    const newKeys = Array.from(
+      { length: maxKeys },
+      () => allowedKeys[Math.floor(Math.random() * allowedKeys.length)]
+    ).join("");
 
     setCurrentKeyIndex(0);
     setShowSuccessText(false);
     setShowFailureText(false);
     setKeys(newKeys);
     setFailedKeys([]);
+    setKeysPressed([]);
     setCountdown(initialTime);
     setLocked(false);
   }, [allowedKeys, amountKeys, initialTime]);
 
   // Initial Reset to Start the Game
-  useEffect(() => {
-    reset();
-  }, [reset]);
+  useEffect(() => reset(), [reset]);
 
   // Button Game Reset
   useEffect(() => {
-    if (callReset) {
-      reset();
-    }
+    if (callReset) reset();
     setCallReset(false);
-  }, [allowedKeys, callReset, reset]);
+  }, [callReset, reset]);
 
   // Update Countdown
   useEffect(() => {
@@ -124,90 +122,79 @@ function Keyboard(set) {
     return () => clearInterval(timerId);
   }, [countdown, timerSwitch]);
 
+  const recordScore = (success, failedKey = null) => {
+    const elapsedTime = (initialTime - countdown).toFixed(1);
+    setScores((prev) => [
+      ...prev,
+      {
+        time: elapsedTime,
+        success,
+        keysPressed: [...keysPressed],
+        amountKeys,
+        initialTime,
+        countdown,
+        failedKey,
+      },
+    ]);
+  };
+
   const success = useCallback(() => {
     playSound(successSound);
-    const elapsedTime = initialTime - countdown;
-    const timeInSeconds = elapsedTime.toFixed(1);
-    setScores((prev) => [
-      ...prev,
-      {
-        time: timeInSeconds,
-        success: true,
-        keysPressed: currentKeyIndex + 1,
-        amountKeys: amountKeys,
-        initialTime: initialTime,
-        countdown: countdown,
-      },
-    ]);
+    recordScore(true);
     setShowSuccessText(true);
     setLocked(true);
-    setTimeout(() => {
-      reset();
-      setLocked(false);
-    }, 1000);
-  }, [currentKeyIndex, countdown, initialTime, reset]);
 
-  const failure = useCallback(() => {
-    playSound(failSound);
-    const elapsedTime = initialTime - countdown;
-    const timeInSeconds = elapsedTime.toFixed(1);
-    setFailedKeys((prev) => [...prev, currentKeyIndex]);
-    setScores((prev) => [
-      ...prev,
-      {
-        time: timeInSeconds,
-        success: false,
-        keysPressed: currentKeyIndex + 1,
-        amountKeys: amountKeys,
-        initialTime: initialTime,
-        countdown: countdown,
-      },
-    ]);
-    setShowFailureText(true);
-    setLocked(true);
     setTimeout(() => {
       reset();
       setLocked(false);
     }, 1000);
-  }, [currentKeyIndex, countdown, initialTime, reset]);
+  }, [countdown, initialTime, keysPressed, reset]);
+
+  const failure = useCallback(
+    (failedKey) => {
+      playSound(failSound);
+      recordScore(false, failedKey);
+      setFailedKeys((prev) => [...prev, currentKeyIndex]);
+      setShowFailureText(true);
+      setLocked(true);
+
+      setTimeout(() => {
+        reset();
+        setLocked(false);
+      }, 1000);
+    },
+    [countdown, currentKeyIndex, initialTime, keysPressed, reset]
+  );
 
   const useKeyPress = useCallback(
     (e) => {
-      if (locked) return;
+      if (locked || restrictedKeys.includes(e.key)) return;
 
-      if (restrictedKeys.includes(e.key)) {
+      const key = e.key.toUpperCase();
+      setKeysPressed((prev) => [...prev, key]);
+
+      if (currentKeyIndex >= keys.length || !allowedKeys.includes(key)) {
+        failure(key);
         return;
       }
 
-      if (
-        !allowedKeys.includes(e.key.toUpperCase()) ||
-        failedKeys.length ||
-        currentKeyIndex >= keys.length
-      ) {
-        failure();
-        return;
-      }
-
-      if (e.key.toUpperCase() === keys[currentKeyIndex].toUpperCase()) {
+      if (key === keys[currentKeyIndex].toUpperCase()) {
         setCurrentKeyIndex((prev) => prev + 1);
-        if (currentKeyIndex < keys.length - 1) {
-          playSound(keySound);
-        } else {
-          success();
-        }
+        playSound(keySound);
+        if (currentKeyIndex === keys.length - 1) success(key);
       } else {
-        failure();
+        failure(key);
       }
     },
-    [allowedKeys, currentKeyIndex, failedKeys, keys, locked, success, failure]
+    [allowedKeys, currentKeyIndex, keys, locked, success, failure]
   );
-
-  const progressWidth = `${Math.min((countdown / initialTime) * 100, 100)}%`;
 
   useEffect(() => {
     window.addEventListener("keydown", useKeyPress);
     return () => window.removeEventListener("keydown", useKeyPress);
   }, [useKeyPress]);
+
+  const progressWidth = `${Math.min((countdown / initialTime) * 100, 100)}%`;
 
   return (
     <div className={`main-container ${statsSwitch ? "show-stats" : ""}`}>
