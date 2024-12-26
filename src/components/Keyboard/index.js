@@ -124,6 +124,8 @@ function Keyboard(set) {
 
   const recordScore = (success, failedKey = null) => {
     const elapsedTime = (initialTime - countdown).toFixed(1);
+    console.log([...keysPressed]);
+    console.log(failedKey);
     setScores((prev) => [
       ...prev,
       {
@@ -150,40 +152,40 @@ function Keyboard(set) {
     }, 1000);
   }, [countdown, initialTime, keysPressed, reset]);
 
-  const failure = useCallback(
-    (failedKey) => {
-      playSound(failSound);
-      recordScore(false, failedKey);
-      setFailedKeys((prev) => [...prev, currentKeyIndex]);
-      setShowFailureText(true);
-      setLocked(true);
+  const failure = useCallback(() => {
+    const failedKey = keys[currentKeyIndex].toUpperCase();
+    playSound(failSound);
+    recordScore(false, failedKey);
+    setFailedKeys((prev) => [...prev, currentKeyIndex]);
+    setShowFailureText(true);
+    setLocked(true);
 
-      setTimeout(() => {
-        reset();
-        setLocked(false);
-      }, 1000);
-    },
-    [countdown, currentKeyIndex, initialTime, keysPressed, reset]
-  );
+    setTimeout(() => {
+      reset();
+      setLocked(false);
+    }, 1000);
+  }, [currentKeyIndex, keys, reset]);
 
   const useKeyPress = useCallback(
     (e) => {
       if (locked || restrictedKeys.includes(e.key)) return;
 
       const key = e.key.toUpperCase();
-      setKeysPressed((prev) => [...prev, key]);
 
       if (currentKeyIndex >= keys.length || !allowedKeys.includes(key)) {
-        failure(key);
+        failure();
         return;
       }
+
+      setKeysPressed((prev) => [...prev, key]);
 
       if (key === keys[currentKeyIndex].toUpperCase()) {
         setCurrentKeyIndex((prev) => prev + 1);
         playSound(keySound);
-        if (currentKeyIndex === keys.length - 1) success(key);
+
+        if (currentKeyIndex === keys.length - 1) success();
       } else {
-        failure(key);
+        failure();
       }
     },
     [allowedKeys, currentKeyIndex, keys, locked, success, failure]
