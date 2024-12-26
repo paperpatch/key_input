@@ -122,16 +122,14 @@ function Keyboard(set) {
     return () => clearInterval(timerId);
   }, [countdown, timerSwitch]);
 
-  const recordScore = (success, failedKey = null) => {
+  const recordScore = (success, failedKey = null, key) => {
     const elapsedTime = (initialTime - countdown).toFixed(1);
-    console.log([...keysPressed]);
-    console.log(failedKey);
     setScores((prev) => [
       ...prev,
       {
         time: elapsedTime,
         success,
-        keysPressed: [...keysPressed],
+        keysPressed: [...keysPressed, key],
         amountKeys,
         initialTime,
         countdown,
@@ -140,31 +138,38 @@ function Keyboard(set) {
     ]);
   };
 
-  const success = useCallback(() => {
-    playSound(successSound);
-    recordScore(true);
-    setShowSuccessText(true);
-    setLocked(true);
+  const success = useCallback(
+    (key) => {
+      console.log("success key", key);
+      playSound(successSound);
+      recordScore(true, null, key);
+      setShowSuccessText(true);
+      setLocked(true);
 
-    setTimeout(() => {
-      reset();
-      setLocked(false);
-    }, 1000);
-  }, [countdown, initialTime, keysPressed, reset]);
+      setTimeout(() => {
+        reset();
+        setLocked(false);
+      }, 1000);
+    },
+    [countdown, initialTime, keysPressed, reset]
+  );
 
-  const failure = useCallback(() => {
-    const failedKey = keys[currentKeyIndex].toUpperCase();
-    playSound(failSound);
-    recordScore(false, failedKey);
-    setFailedKeys((prev) => [...prev, currentKeyIndex]);
-    setShowFailureText(true);
-    setLocked(true);
+  const failure = useCallback(
+    (key) => {
+      const failedKey = keys[currentKeyIndex].toUpperCase();
+      playSound(failSound);
+      recordScore(false, failedKey, key);
+      setFailedKeys((prev) => [...prev, currentKeyIndex]);
+      setShowFailureText(true);
+      setLocked(true);
 
-    setTimeout(() => {
-      reset();
-      setLocked(false);
-    }, 1000);
-  }, [currentKeyIndex, keys, reset]);
+      setTimeout(() => {
+        reset();
+        setLocked(false);
+      }, 1000);
+    },
+    [currentKeyIndex, keys, keysPressed, reset]
+  );
 
   const useKeyPress = useCallback(
     (e) => {
@@ -173,19 +178,19 @@ function Keyboard(set) {
       const key = e.key.toUpperCase();
 
       if (currentKeyIndex >= keys.length || !allowedKeys.includes(key)) {
-        failure();
+        failure(key);
         return;
       }
 
       setKeysPressed((prev) => [...prev, key]);
 
-      if (key === keys[currentKeyIndex].toUpperCase()) {
+      if (key === keys[currentKeyIndex].toUpperCase(key)) {
         setCurrentKeyIndex((prev) => prev + 1);
         playSound(keySound);
 
-        if (currentKeyIndex === keys.length - 1) success();
+        if (currentKeyIndex === keys.length - 1) success(key);
       } else {
-        failure();
+        failure(key);
       }
     },
     [allowedKeys, currentKeyIndex, keys, locked, success, failure]
