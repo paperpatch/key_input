@@ -45,7 +45,7 @@ const restrictedKeys = [
   "PageDown",
   "Backspace",
   "Enter",
-  "Space",
+  " ",
   "Delete",
   "Insert",
   "Home",
