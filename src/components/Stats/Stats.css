@@ -14,32 +14,137 @@
   color: #333;
 }
 
+/* Summary */
+
 .stats-summary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem;
+  background: #2e3a4a;
+  color: #fff;
+  border-radius: 1rem;
+}
+
+.stats-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  gap: 2rem;
+}
+
+.win-ratio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  gap: 20px;
+}
+
+.circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #dee2e6;
+  position: relative;
+}
+
+.circle-background {
+  fill: none;
+  stroke: #ddd;
+  stroke-width: 4;
+}
+
+.circle-progress {
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+  transform: rotate(-90deg); /* Ensure the progress starts from the top */
+  transform-origin: center;
+  transition: stroke-dasharray 0.6s ease;
+  stroke: url(#gradient); /* Use gradient for combined progress */
+}
+
+.ratio-text {
+  font-size: 0.3rem; /* Adjusted font size to fit within the circle */
+  font-weight: bold;
+  fill: #ffffff;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.win-ratio-label {
+  font-size: 0.3rem; /* Adjusted font size to fit within the circle */
+  fill: #ffffff;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+/* Stats Grid */
+.stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.stat-bubble {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  flex-direction: column;
   text-align: center;
+  gap: 10px;
 }
 
-.stat-bubble strong {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #333;
+.stat-item-left, .stat-item-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.stat-bubble p {
+.stat-item-left {
+  justify-content: end;
+}
+
+.stat-item-right {
+  justify-content: start;
+}
+
+.stat-left {
+  text-align: right;
+  max-width: 10em;
+}
+
+.stat-right {
+  text-align: left;
+  max-width: 10em;
+}
+
+.icon {
   font-size: 1.5rem;
-  color: #555;
-  margin: 0;
+  color: #fff;
 }
+
+.trophy-icon::before {
+  content: "🏆";
+}
+
+.thumbs-down-icon::before {
+  content: "👎";
+}
+
+.timer-icon::before {
+  content: "⏱️";
+}
+
+.apm-icon::before {
+  content: "⌨️";
+}
+
+.failed-key-icon::before {
+  content: "🔑";
+}
+
+/* Table */
 
 .stats-table {
   width: 100%;
