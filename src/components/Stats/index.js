@@ -33,12 +33,13 @@ const Stats = ({ scores }) => {
     });
   });
 
-  const mostFailedKey = scores
-    .reduce((mostFailed, { failedKey }) => {
+  const mostFailedKey = scores.reduce((mostFailed, { failedKey, success }) => {
+    if (!success && failedKey !== null) {
       if (!mostFailed[failedKey]) mostFailed[failedKey] = 0;
       mostFailed[failedKey]++;
-      return mostFailed;
-    }, {});
+    }
+    return mostFailed;
+  }, {});
 
   const mostFailedKeyEntry = Object.entries(mostFailedKey).reduce(
     (max, [key, count]) => (count > max.count ? { key, count } : max),
