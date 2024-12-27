@@ -140,7 +140,6 @@ function Keyboard(set) {
 
   const success = useCallback(
     (key) => {
-      console.log("success key", key);
       playSound(successSound);
       recordScore(true, null, key);
       setShowSuccessText(true);
