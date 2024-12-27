@@ -66,10 +66,17 @@
   fill: none;
   stroke-width: 4;
   stroke-linecap: round;
-  transform: rotate(-90deg); /* Ensure the progress starts from the top */
+  transform: rotate(-90deg);
   transform-origin: center;
-  transition: stroke-dasharray 0.6s ease;
-  stroke: url(#gradient); /* Use gradient for combined progress */
+  transition: stroke-dasharray 0.6s ease, stroke-dashoffset 0.6s ease;
+}
+
+.circle-progress.wins {
+  stroke: #007bff; /* Blue for wins */
+}
+
+.circle-progress.losses {
+  stroke: #ff4136; /* Red for losses */
 }
 
 .ratio-text {

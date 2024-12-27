@@ -89,39 +89,24 @@ const Stats = ({ scores }) => {
           {/* Win Ratio Circle */}
           <div className="win-ratio">
             <svg className="circle" viewBox="0 0 36 36">
-              <defs>
-                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop
-                    offset="0%"
-                    style={{ stopColor: "#007bff", stopOpacity: 1 }}
-                  />
-                  <stop
-                    offset="50%"
-                    style={{ stopColor: "#007bff", stopOpacity: 1 }}
-                  />
-                  <stop
-                    offset="50%"
-                    style={{ stopColor: "#ff4136", stopOpacity: 1 }}
-                  />
-                  <stop
-                    offset="100%"
-                    style={{ stopColor: "#ff4136", stopOpacity: 1 }}
-                  />
-                </linearGradient>
-              </defs>
               <path
                 className="circle-background"
                 d="M18 2.0845 a 15.9155 15.9155 0 1 0 0 31.831 a 15.9155 15.9155 0 1 0 0 -31.831"
               />
               {totalGames > 0 && (
                 <>
+                  {/* Wins */}
                   <path
-                    className="circle-progress"
-                    strokeDasharray={`${(totalWins / totalGames) * 100}, ${
-                      (totalLosses / totalGames) * 100
-                    }`}
+                    className="circle-progress wins"
+                    strokeDasharray={`${(totalWins / totalGames) * 100}, 100`}
                     d="M18 2.0845 a 15.9155 15.9155 0 1 0 0 31.831 a 15.9155 15.9155 0 1 0 0 -31.831"
-                    stroke="url(#gradient)" // Use gradient for combined progress
+                  />
+                  {/* Losses */}
+                  <path
+                    className="circle-progress losses"
+                    strokeDasharray={`${(totalLosses / totalGames) * 100}, 100`}
+                    d="M18 2.0845 a 15.9155 15.9155 0 1 0 0 31.831 a 15.9155 15.9155 0 1 0 0 -31.831"
+                    strokeDashoffset={`-${(totalWins / totalGames) * 100}`}
                   />
                 </>
               )}
