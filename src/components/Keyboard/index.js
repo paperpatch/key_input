@@ -122,6 +122,10 @@ function Keyboard(set) {
     return () => clearInterval(timerId);
   }, [countdown, timerSwitch]);
 
+  /*
+  Key being a parameter circumvents the state timing issues. Only solution I've found so far.
+  "key != undefined" avoids stats graph page passing through undefined values.
+  */
   const recordScore = (success, failedKey = null, key) => {
     const elapsedTime = (initialTime - countdown).toFixed(1);
     setScores((prev) => [
@@ -129,7 +133,8 @@ function Keyboard(set) {
       {
         time: elapsedTime,
         success,
-        keysPressed: [...keysPressed, key],
+        keysPressed:
+          key != undefined ? [...keysPressed, key] : [...keysPressed],
         amountKeys,
         initialTime,
         countdown,

@@ -20,6 +20,7 @@ const Stats = ({ scores }) => {
 
   const keyStats = {};
   scores.forEach(({ keysPressed, success }) => {
+    if (!keysPressed) return;
     keysPressed.forEach((key) => {
       if (!keyStats[key]) {
         keyStats[key] = { correct: 0, incorrect: 0 };
@@ -33,7 +34,6 @@ const Stats = ({ scores }) => {
   });
 
   const mostFailedKey = scores
-    .filter((s) => !s.success && s.failedKey) // Only consider failed games with a failed key
     .reduce((mostFailed, { failedKey }) => {
       if (!mostFailed[failedKey]) mostFailed[failedKey] = 0;
       mostFailed[failedKey]++;
@@ -177,7 +177,7 @@ const Stats = ({ scores }) => {
             >
               <td>{ix + 1}</td>
               <td>{score.success ? "Success" : "Failure"}</td>
-              <td>{parseFloat(score.time).toFixed(2)}</td>
+              <td>{parseFloat(score.time).toFixed(1)}</td>
               <td>{score.keysPressed}</td>
               <td>{score.failedKey}</td>
             </tr>
