@@ -60,6 +60,7 @@ function Keyboard(set) {
     amountKeys,
     timer: initialTime,
     timerSwitch,
+    setTimerSwitch,
     statsSwitch,
     theme,
   } = set;
@@ -241,7 +242,13 @@ function Keyboard(set) {
             </div>
           </div>
           {/* Reset Button */}
-          <div className="reset-button-container">
+          <div className="button-container">
+            <button
+              className={`timer-button ${timerSwitch ? "active" : ""}`}
+              onClick={() => setTimerSwitch((prev) => !prev)}
+            >
+              {timerSwitch ? "Timer" : "Timer"}
+            </button>
             <button className="reset-button" onClick={() => setCallReset(true)}>
               Reset
             </button>

@@ -52,12 +52,6 @@ function App() {
             <label htmlFor="timer">Set Timer (seconds)</label>
           </div>
           <button
-            className={`toggle-button ${timerSwitch ? "active" : ""}`}
-            onClick={() => setTimerSwitch((prev) => !prev)}
-          >
-            {timerSwitch ? "Timer" : "Timer"}
-          </button>
-          <button
             className={`toggle-button ${statsSwitch ? "active" : ""}`}
             onClick={() => setStatsSwitch((prev) => !prev)}
           >
@@ -86,6 +80,7 @@ function App() {
         amountKeys={amountKeys}
         timer={timer}
         timerSwitch={timerSwitch}
+        setTimerSwitch={setTimerSwitch}
         statsSwitch={statsSwitch}
         theme={theme}
       />
