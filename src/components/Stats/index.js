@@ -89,27 +89,38 @@ const Stats = ({ scores }) => {
           {/* Win Ratio Circle */}
           <div className="win-ratio">
             <svg className="circle" viewBox="0 0 36 36">
-              <path
-                className="circle-background"
-                d="M18 2.0845 a 15.9155 15.9155 0 1 0 0 31.831 a 15.9155 15.9155 0 1 0 0 -31.831"
-              />
-              {totalGames > 0 && (
-                <>
-                  {/* Losses */}
-                  <path
-                    className="circle-progress losses"
-                    strokeDasharray={`${(totalLosses / totalGames) * 100}, 100`}
-                    d="M18 2.0845 a 15.9155 15.9155 0 1 0 0 31.831 a 15.9155 15.9155 0 1 0 0 -31.831"
-                    strokeDashoffset={`-${(totalWins / totalGames) * 100}`}
-                  />
-                  {/* Wins */}
-                  <path
-                    className="circle-progress wins"
-                    strokeDasharray={`${(totalWins / totalGames) * 100}, 100`}
-                    d="M18 2.0845 a 15.9155 15.9155 0 1 0 0 31.831 a 15.9155 15.9155 0 1 0 0 -31.831"
-                  />
-                </>
-              )}
+              <g transform="rotate(90 18 18)">
+                <path
+                  className="circle-background"
+                  d="M18 2.0845 a 15.9155 15.9155 0 1 0 0 31.831 a 15.9155 15.9155 0 1 0 0 -31.831"
+                />
+                {totalGames > 0 && (
+                  <>
+                    {/* Losses */}
+                    {totalLosses > 0 && (
+                      <path
+                        className="circle-progress losses"
+                        strokeDasharray={`${
+                          -(totalLosses / totalGames) * 100
+                        }, 100`}
+                        d="M18 2.0845 a 15.9155 15.9155 0 1 0 0 31.831 a 15.9155 15.9155 0 1 0 0 -31.831"
+                        strokeDashoffset={`${(totalWins / totalGames) * 100}`}
+                      />
+                    )}
+                    {/* Wins */}
+                    {totalWins > 0 && (
+                      <path
+                        className="circle-progress wins"
+                        strokeDasharray={`${
+                          (totalWins / totalGames) * 100
+                        }, 100`}
+                        d="M18 2.0845 a 15.9155 15.9155 0 1 0 0 31.831 a 15.9155 15.9155 0 1 0 0 -31.831"
+                        style={{ strokeDashoffset: 0 }}
+                      />
+                    )}
+                  </>
+                )}
+              </g>
               <text x="18" y="15" className="ratio-text">{`${winRate}%`}</text>
               <text x="18" y="21" className="win-ratio-label">
                 Win Ratio
