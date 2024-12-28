@@ -100,7 +100,10 @@ function Keyboard(set) {
 
   // Button Game Reset
   useEffect(() => {
-    if (callReset) reset();
+    if (callReset) {
+      setScores([]);
+      reset();
+    }
     setCallReset(false);
   }, [callReset, reset]);
 
