@@ -10,6 +10,7 @@
 
 .stats-container h3,
 .stats-container h4 {
+  margin-top: 1rem;
   margin-bottom: 1rem;
   color: #333;
 }
@@ -22,9 +23,12 @@
   align-items: center;
   flex-direction: column;
   padding: 2rem;
-  background: #2e3a4a;
-  color: #fff;
+  background: #f5f5f5;
+  color: #333;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.20);
   border-radius: 1rem;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .stats-main {
@@ -32,7 +36,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .win-ratio {
@@ -44,8 +48,8 @@
 }
 
 .circle {
-  width: 100px;
-  height: 100px;
+  width: 190px;
+  height: 190px;
   border-radius: 50%;
   background-color: transparent;
   display: flex;
@@ -72,24 +76,24 @@
 }
 
 .circle-progress.wins {
-  stroke: #007bff; /* Blue for wins */
+  stroke: #007bff;
 }
 
 .circle-progress.losses {
-  stroke: #ff4136; /* Red for losses */
+  stroke: #ff4136;
 }
 
 .ratio-text {
-  font-size: 0.3rem; /* Adjusted font size to fit within the circle */
+  font-size: 0.3rem;
   font-weight: bold;
-  fill: #ffffff;
+  fill: #000000;
   text-anchor: middle;
   dominant-baseline: middle;
 }
 
 .win-ratio-label {
-  font-size: 0.3rem; /* Adjusted font size to fit within the circle */
-  fill: #ffffff;
+  font-size: 0.3rem;
+  fill: #000000;
   text-anchor: middle;
   dominant-baseline: middle;
 }
@@ -103,6 +107,9 @@
 }
 
 .stat-item-left, .stat-item-right {
+  white-space: nowrap;
+  font-weight: bold;
+  font-size: 1rem;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -129,6 +136,10 @@
 .icon {
   font-size: 1.5rem;
   color: #fff;
+}
+
+.games-played-icon::before {
+  content: "🎮";
 }
 
 .trophy-icon::before {
@@ -239,4 +250,10 @@
   position: absolute;
   z-index: 1;
   white-space: nowrap;
+}
+
+@media (max-width: 1000px) {
+  .stat-item-left, .stat-item-right {
+    white-space: normal;
+  }
 }

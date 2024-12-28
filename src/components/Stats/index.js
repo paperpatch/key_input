@@ -68,7 +68,7 @@ const Stats = ({ scores }) => {
                 <p>GAMES PLAYED</p>
                 <p>{totalGames}</p>
               </div>
-              <i className="icon trophy-icon" />
+              <i className="icon games-played-icon" />
             </div>
             <div className="stat-item-left">
               <div className="stat-left">
@@ -95,12 +95,6 @@ const Stats = ({ scores }) => {
               />
               {totalGames > 0 && (
                 <>
-                  {/* Wins */}
-                  <path
-                    className="circle-progress wins"
-                    strokeDasharray={`${(totalWins / totalGames) * 100}, 100`}
-                    d="M18 2.0845 a 15.9155 15.9155 0 1 0 0 31.831 a 15.9155 15.9155 0 1 0 0 -31.831"
-                  />
                   {/* Losses */}
                   <path
                     className="circle-progress losses"
@@ -108,10 +102,16 @@ const Stats = ({ scores }) => {
                     d="M18 2.0845 a 15.9155 15.9155 0 1 0 0 31.831 a 15.9155 15.9155 0 1 0 0 -31.831"
                     strokeDashoffset={`-${(totalWins / totalGames) * 100}`}
                   />
+                  {/* Wins */}
+                  <path
+                    className="circle-progress wins"
+                    strokeDasharray={`${(totalWins / totalGames) * 100}, 100`}
+                    d="M18 2.0845 a 15.9155 15.9155 0 1 0 0 31.831 a 15.9155 15.9155 0 1 0 0 -31.831"
+                  />
                 </>
               )}
-              <text x="18" y="12" className="ratio-text">{`${winRate}%`}</text>
-              <text x="18" y="20" className="win-ratio-label">
+              <text x="18" y="15" className="ratio-text">{`${winRate}%`}</text>
+              <text x="18" y="21" className="win-ratio-label">
                 Win Ratio
               </text>
             </svg>
