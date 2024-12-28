@@ -244,7 +244,7 @@ function Keyboard(set) {
               </div>
             </div>
           </div>
-          {/* Reset Button */}
+          {/* Buttons */}
           <div className="button-container">
             <button
               className={`timer-button ${timerSwitch ? "active" : ""}`}
