@@ -11,8 +11,91 @@ body {
   margin: 0;
 }
 
+/* Light Theme */
+.light-mode {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.light-mode .app-bar {
+  background-color: #f0f0f0;
+  color: #000000;
+}
+
+.light-mode .toolbar {
+  background-color: #f0f0f0;
+  color: #000000;
+}
+
+.light-mode .title {
+  color: #000000;
+}
+
+.light-mode .input-group label {
+  color: #000000;
+}
+
+.light-mode .text-field {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+}
+
+.light-mode .toggle-button.active {
+  background: blue;
+  color: #ffffff;
+}
+
+.light-mode .select-field {
+  background: #ffffff;
+  border: 1px solid #000000;
+  color: #000000;
+}
+
+/* Dark Theme */
+.dark-mode {
+  background-color: #2e2e2e;
+  color: #ffffff;
+}
+
+.dark-mode .app-bar {
+  background-color: #3e3e3e;
+  color: #ffffff;
+}
+
+.dark-mode .toolbar {
+  background-color: #3e3e3e;
+  color: #ffffff;
+}
+
+.dark-mode .title {
+  color: #ffffff;
+}
+
+.dark-mode .input-group label {
+  color: #ffffff;
+}
+
+.dark-mode .text-field {
+  background-color: #4e4e4e;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+}
+
+.dark-mode .toggle-button.active {
+  background: #4444ff;
+  color: #ffffff;
+}
+
+.dark-mode .select-field {
+  background: #4e4e4e;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+}
+
+/* Common Styles */
+
 .app-bar {
-  background: rgba(0, 0, 0, 0.5);
   top: 0;
   width: 100%;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
@@ -40,7 +123,6 @@ body {
 }
 
 .title {
-  color: white;
   font-size: 1.5rem;
 }
 
@@ -54,8 +136,7 @@ body {
   left: 0.5rem;
   padding: 0 0.25rem;
   font-size: 0.85rem;
-  text-shadow: rgb(0, 0, 0) 1px 0 5px;
-  color: white;
+  text-shadow: rgb(0, 0, 0) 1px 0 1px;
   transition: all 0.3s ease;
 }
 
@@ -63,9 +144,6 @@ body {
   width: 100%;
   padding: 0.5rem;
   border-radius: 4px;
-  border: 1px solid white;
-  background: rgba(255, 255, 255, 0.5);
-  color: white;
 }
 
 .toggle-button {
@@ -77,13 +155,8 @@ body {
   cursor: pointer;
 }
 
-.toggle-button.active {
-  background: blue;
-}
-
 .select-field {
   padding: 0.5rem;
-  background: white;
   border: 1px solid black;
   border-radius: 4px;
 }
