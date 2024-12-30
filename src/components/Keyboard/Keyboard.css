@@ -156,17 +156,17 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2)
 }
 
+.timer-button.hover {
+  transform: scale(1.1);
+}
+
 .timer-button.active {
   background: green;
 }
 
 .reset-button:hover {
   transform: scale(1.1);
-}
-
-.reset-button:active {
-  transform: scale(1.01) translateY(1px);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 70, 146, 0.88);
 }
 
 /* Media Queries */
