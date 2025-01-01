@@ -1,6 +1,6 @@
 # Key Input
 
-Mini-game inspired by Lost Ark. A simple key input where typing the correct sequence succeeds and any other key will result in a failure. Built with React components.
+A mini-game inspired by Lost Ark, Key Input challenges your reaction time and precision. Input the correct sequence of keys to succeed—pressing the wrong key results in failure. Built with reusable and customizable React components.
 
 [Play the game here](https://paperpatch.github.io/key_input/)
 
@@ -9,7 +9,7 @@ Mini-game inspired by Lost Ark. A simple key input where typing the correct sequ
 ## Table of Contents
 
 * [Setup](#setup)
-* [Usage](#usage)
+* [Features](#features)
 * [Deployment](#deployment)
 * [Contributing](#contributing)
 * [License](#license)
@@ -17,17 +17,23 @@ Mini-game inspired by Lost Ark. A simple key input where typing the correct sequ
 ## Setup
 :floppy_disk:
 
-The database uses the following package(s):
 - [React](https://react.dev/)
   - The library for web and native user interfaces
+- [Node.js](https://nodejs.org/en)
+  - Node.js® is a free, open-source, cross-platform JavaScript runtime environment that lets developers create servers, web apps, command line tools and scripts.
+- [gh-pages](https://www.npmjs.com/package/gh-pages)
+  - Publish files to a gh-pages branch on GitHub (or any other branch anywhere else).
 
-## Usage
+## Features
 
 :computer:
 
-If you cloned or copied the repository, ensure that you `npm install` to download the packages.
+Key Input offers several customizable features to enhance your gameplay experience:
 
-Start the server by typing `npm start`.
+- Stats Page: Track detailed statistics about your gameplay, including successes, failures, and overall performance.
+- Timer Feature: Use the built-in timer to challenge yourself with time-based goals. You can manually set the timer to suit your preferences.
+- Customizable Inputs: Adjust the number of keys to input and define your own allowed key pool (up to a maximum of 15 keys). This lets you fine-tune the difficulty level.
+- Light/Dark Mode: Switch between light and dark themes to suit your environment and preferences.
 
 ## Deployment
 
@@ -39,10 +45,10 @@ Server is deployed on github-pages. See deployed link to experience Key Input.
 
 :octocat:
 
-[paperpatch](https://github.com/paperpatch) </br>
+Project by [paperpatch](https://github.com/paperpatch) </br>
 
 ## License
 
 :receipt:
 
-No license available as of yet.
+This project is currently unlicensed. Stay tuned for updates.
