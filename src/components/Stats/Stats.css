@@ -165,7 +165,6 @@
 }
 
 /* Table */
-
 .stats-table {
   width: 100%;
   border-collapse: collapse;
@@ -196,7 +195,6 @@
 }
 
 /* Graph Styles */
-
 .key-graph {
   margin-top: 2rem;
   text-align: left;
@@ -252,6 +250,132 @@
   position: absolute;
   z-index: 1;
   white-space: nowrap;
+}
+
+/* Light Theme */
+.light-mode .stats-container {
+  background: #ffffff;
+  color: #000000;
+}
+
+.light-mode .stats-summary {
+  background: #f5f5f5;
+  color: #333;
+}
+
+.light-mode .circle {
+  border: 2px solid #dee2e6;
+}
+
+.light-mode .circle-background {
+  stroke: #e6e6e6;
+}
+
+.light-mode .circle-progress.wins {
+  stroke: #007bff;
+}
+
+.light-mode .circle-progress.losses {
+  stroke: #f44336;
+}
+
+.light-mode .ratio-text,
+.light-mode .win-ratio-label {
+  fill: #000000;
+}
+
+.light-mode .stats-table th {
+  background: #f5f5f5;
+}
+
+.light-mode .success-row {
+  background-color: #e0f7fa;
+  color: #00796b;
+}
+
+.light-mode .failure-row {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.light-mode .key-label,
+.light-mode .key-count {
+  color: #333;
+}
+
+.light-mode .bar {
+  background-color: #eee;
+}
+
+.light-mode .bar-correct {
+  background-color: #007bff;
+}
+
+.light-mode .bar-incorrect {
+  background-color: #ff4136;
+}
+
+/* Dark Theme */
+.dark-mode .stats-container {
+  background: #2e2e2e;
+  color: #ffffff;
+}
+
+.dark-mode .stats-summary {
+  background: #3e3e3e;
+  color: #ffffff;
+}
+
+.dark-mode .circle {
+  border: 2px solid #4e4e4e;
+}
+
+.dark-mode .circle-background {
+  stroke: #4e4e4e;
+}
+
+.dark-mode .circle-progress.wins {
+  stroke: #1e90ff;
+}
+
+.dark-mode .circle-progress.losses {
+  stroke: #ff4136;
+}
+
+.dark-mode .ratio-text,
+.dark-mode .win-ratio-label {
+  fill: #ffffff;
+}
+
+.dark-mode .stats-table th {
+  background: #4e4e4e;
+}
+
+.dark-mode .success-row {
+  background-color: #00796b;
+  color: #ffffff;
+}
+
+.dark-mode .failure-row {
+  background-color: #c62828;
+  color: #ffffff;
+}
+
+.dark-mode .key-label,
+.dark-mode .key-count {
+  color: #ffffff;
+}
+
+.dark-mode .bar {
+  background-color: #4e4e4e;
+}
+
+.dark-mode .bar-correct {
+  background-color: #1e90ff;
+}
+
+.dark-mode .bar-incorrect {
+  background-color: #ff4136;
 }
 
 @media (max-width: 1000px) {

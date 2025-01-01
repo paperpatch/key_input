@@ -169,6 +169,60 @@
   background-color: rgba(0, 70, 146, 0.88);
 }
 
+/* Light Theme */
+.light-mode .keyboard-wrapper {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.light-mode .progress-bar-background {
+  background-color: #e0e0e0;
+}
+
+.light-mode .progress-bar-fill {
+  background-color: #007bff;
+}
+
+.light-mode .timer-button, .light-mode .reset-button {
+  background: #f0f0f0;
+  color: #000000;
+}
+
+.light-mode .timer-button.active {
+  background: #007bff;
+}
+
+.light-mode .reset-button:hover {
+  background-color: #0056b3;
+}
+
+/* Dark Theme */
+.dark-mode .keyboard-wrapper {
+  background-color: #2e2e2e;
+  color: #ffffff;
+}
+
+.dark-mode .progress-bar-background {
+  background-color: #4e4e4e;
+}
+
+.dark-mode .progress-bar-fill {
+  background-color: #1e90ff;
+}
+
+.dark-mode .timer-button, .dark-mode .reset-button {
+  background: #4e4e4e;
+  color: #ffffff;
+}
+
+.dark-mode .timer-button.active {
+  background: #1e90ff;
+}
+
+.dark-mode .reset-button:hover {
+  background-color: #0056b3;
+}
+
 /* Media Queries */
 @media (max-width: 1400px) {
   .main-container.show-stats .keyboard-wrapper {
