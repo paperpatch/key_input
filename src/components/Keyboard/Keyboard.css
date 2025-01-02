@@ -27,12 +27,14 @@
 }
 
 .success-text {
+  top: 2rem;
   text-shadow: 0 0 10px rgba(0, 183, 255, 0.8), 
                0 0 20px rgba(0, 183, 255, 0.6),
                0 0 40px rgba(0, 183, 255, 0.4);
 }
 
 .failure-text {
+  top: 2rem;
   text-shadow: 0 0 10px rgba(255, 60, 60, 0.8), 
                0 0 20px rgba(255, 60, 60, 0.6),
                0 0 40px rgba(255, 60, 60, 0.4);
@@ -42,7 +44,7 @@
 .failure-glow {
   position: absolute;
   left: 50%;
-  top: 7em;
+  top: 4em;
   width: 65%;
   height: 4px;
   transform: translateX(-50%);
