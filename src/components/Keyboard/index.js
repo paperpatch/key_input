@@ -181,7 +181,11 @@ function Keyboard(set) {
 
   const useKeyPress = useCallback(
     (e) => {
-      if (locked || restrictedKeys.includes(e.key)) return;
+      const isEditableElement =
+        e.target.tagName === "INPUT" ||
+        e.target.tagName === "TEXTAREA" ||
+        e.target.isContentEditable;
+      if (locked || restrictedKeys.includes(e.key) || isEditableElement) return;
 
       const key = e.key.toUpperCase();
 
