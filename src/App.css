@@ -11,6 +11,14 @@ body {
   margin: 0;
 }
 
+body.light-mode {
+  background-color: #ffffff;
+}
+
+body.dark-mode {
+  background-color: #2e2e2e;
+}
+
 /* Light Theme */
 .light-mode {
   background-color: #ffffff;

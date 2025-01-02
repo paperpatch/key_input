@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import Keyboard from "./components/Keyboard";
 import iconGithub from "./assets/pic/icon-github.svg";
@@ -15,6 +15,10 @@ function App() {
   const changeTheme = (event) => {
     setTheme(event.target.value);
   };
+
+  useEffect(() => {
+    document.body.className = theme === "Light" ? "light-mode" : "dark-mode";
+  }, [theme]);
 
   return (
     <BrowserRouter>
