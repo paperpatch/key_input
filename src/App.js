@@ -47,6 +47,7 @@ function App() {
               />
             </div>
             <div className="input-group">
+              <label htmlFor="timer">Set Timer (seconds)</label>
               <input
                 type="number"
                 className="text-field"
@@ -54,7 +55,17 @@ function App() {
                 value={timer}
                 onChange={(e) => setTimer(e.target.value)}
               />
-              <label htmlFor="timer">Set Timer (seconds)</label>
+            </div>
+            <div className="input-group">
+              <label htmlFor="theme">Theme</label>
+              <select
+                className="select-field"
+                value={theme}
+                onChange={changeTheme}
+              >
+                <option value="Light">Light</option>
+                <option value="Dark">Dark</option>
+              </select>
             </div>
             <button
               className={`toggle-button ${statsSwitch ? "active" : ""}`}
@@ -62,14 +73,6 @@ function App() {
             >
               {statsSwitch ? "Stats" : "Stats"}
             </button>
-            <select
-              className="select-field"
-              value={theme}
-              onChange={changeTheme}
-            >
-              <option value="Light">Light</option>
-              <option value="Dark">Dark</option>
-            </select>
             <a
               href="https://www.github.com/paperpatch/key_input"
               target="_blank"
