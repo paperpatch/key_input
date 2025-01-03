@@ -225,6 +225,7 @@
   background-color: #0056b3;
 }
 
+/* Media Queries */
 @media (min-width: 1400px) {
   .text-glow {
     top: 3em;
@@ -236,7 +237,6 @@
   }
 }
 
-/* Media Queries */
 @media (max-width: 1400px) {
   .main-container.show-stats .keyboard-wrapper {
     transform: translateX(0);
