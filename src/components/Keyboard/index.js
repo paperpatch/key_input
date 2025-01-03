@@ -54,6 +54,14 @@ const restrictedKeys = [
   ...Array.from({ length: 12 }, (_, i) => `F${i + 1}`),
 ];
 
+const saveScoresToLocalStorage = (scores) => {
+  localStorage.setItem("stats", JSON.stringify(scores));
+};
+
+const getSavedScores = () => {
+  return JSON.parse(localStorage.getItem("stats")) || [];
+};
+
 function Keyboard(set) {
   const {
     allowedKeys,
@@ -62,7 +70,6 @@ function Keyboard(set) {
     timerSwitch,
     setTimerSwitch,
     statsSwitch,
-    theme,
   } = set;
 
   const [callReset, setCallReset] = useState(false);
@@ -74,7 +81,7 @@ function Keyboard(set) {
   const [showSuccessText, setShowSuccessText] = useState(false);
   const [showFailureText, setShowFailureText] = useState(false);
   const [countdown, setCountdown] = useState(initialTime);
-  const [scores, setScores] = useState([]);
+  const [scores, setScores] = useState(getSavedScores());
 
   const reset = useCallback(() => {
     if (!allowedKeys || allowedKeys.length === 0) return;
@@ -132,19 +139,21 @@ function Keyboard(set) {
   */
   const recordScore = (success, failedKey = null, key) => {
     const elapsedTime = (initialTime - countdown).toFixed(1);
-    setScores((prev) => [
-      ...prev,
-      {
-        time: elapsedTime,
-        success,
-        keysPressed:
-          key != undefined ? [...keysPressed, key] : [...keysPressed],
-        amountKeys,
-        initialTime,
-        countdown,
-        failedKey,
-      },
-    ]);
+    const newScore = {
+      time: elapsedTime,
+      success,
+      keysPressed: key != undefined ? [...keysPressed, key] : [...keysPressed],
+      amountKeys,
+      initialTime,
+      countdown,
+      failedKey,
+    };
+
+    setScores((prev) => {
+      const updatedScores = [...prev, newScore];
+      saveScoresToLocalStorage(updatedScores);
+      return updatedScores;
+    });
   };
 
   const success = useCallback(

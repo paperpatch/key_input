@@ -5,12 +5,35 @@ import iconGithub from "./assets/pic/icon-github.svg";
 import "./App.css";
 
 function App() {
-  const [allowedKeys, setAllowedKeys] = useState("WASDQE");
-  const [amountKeys, setAmountKeys] = useState(7);
-  const [timer, setTimer] = useState(5.5);
-  const [timerSwitch, setTimerSwitch] = useState(false);
-  const [statsSwitch, setStatsSwitch] = useState(false);
-  const [theme, setTheme] = useState("Light");
+  const [allowedKeys, setAllowedKeys] = useState(
+    localStorage.getItem("allowedKeys") || "WASDQE"
+  );
+  const [amountKeys, setAmountKeys] = useState(
+    parseInt(localStorage.getItem("amountKeys")) || 7
+  );
+  const [timer, setTimer] = useState(
+    parseFloat(localStorage.getItem("timer")) || 5.5
+  );
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "Light");
+  const [statsSwitch, setStatsSwitch] = useState(
+    JSON.parse(localStorage.getItem("statsSwitch")) || false
+  );
+  const [timerSwitch, setTimerSwitch] = useState(
+    JSON.parse(localStorage.getItem("timerSwitch")) || false
+  );
+
+  const saveSettings = () => {
+    localStorage.setItem("allowedKeys", allowedKeys);
+    localStorage.setItem("amountKeys", amountKeys);
+    localStorage.setItem("timer", timer);
+    localStorage.setItem("theme", theme);
+    localStorage.setItem("statsSwitch", JSON.stringify(statsSwitch));
+    localStorage.setItem("timerSwitch", JSON.stringify(timerSwitch));
+  };
+
+  useEffect(() => {
+    saveSettings();
+  }, [allowedKeys, amountKeys, timer, theme, statsSwitch, timerSwitch]);
 
   const changeTheme = (event) => {
     setTheme(event.target.value);
@@ -93,7 +116,6 @@ function App() {
           timerSwitch={timerSwitch}
           setTimerSwitch={setTimerSwitch}
           statsSwitch={statsSwitch}
-          theme={theme}
         />
       </div>
     </BrowserRouter>
