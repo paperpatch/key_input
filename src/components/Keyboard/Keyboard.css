@@ -225,6 +225,17 @@
   background-color: #0056b3;
 }
 
+@media (min-width: 1400px) {
+  .text-glow {
+    top: 3em;
+  }
+
+  .success-glow,
+  .failure-glow {
+    top: 9.5em;
+  }
+}
+
 /* Media Queries */
 @media (max-width: 1400px) {
   .main-container.show-stats .keyboard-wrapper {
