@@ -16,7 +16,7 @@ function App() {
   );
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "Light");
   const [statsSwitch, setStatsSwitch] = useState(
-    JSON.parse(localStorage.getItem("statsSwitch")) || false
+    JSON.parse(localStorage.getItem("statsSwitch")) || true
   );
   const [timerSwitch, setTimerSwitch] = useState(
     JSON.parse(localStorage.getItem("timerSwitch")) || false
