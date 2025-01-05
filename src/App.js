@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import Keyboard from "./components/Keyboard";
 import iconGithub from "./assets/pic/icon-github.svg";
+import iconGithubDark from "./assets/pic/icon-github-dark.svg";
 import "./App.css";
 
 function App() {
@@ -103,7 +104,7 @@ function App() {
             >
               <img
                 className="icon icon-github"
-                src={iconGithub}
+                src={theme === "Light" ? iconGithub : iconGithubDark}
                 alt="icon-github"
               />
             </a>
