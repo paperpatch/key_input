@@ -1,6 +1,6 @@
 # Key Input
 
-A mini-game inspired by Lost Ark, Key Input challenges your reaction time and precision. Input the correct sequence of keys to succeed—pressing the wrong key results in failure. Built with reusable and customizable React components.
+Key Input is a mini-game inspired by Lost Ark and it challenges your reaction time and precision. Input the correct sequence of keys to succeed—pressing the wrong key results in failure. Built with reusable and customizable React components.
 
 [Play the game here](https://paperpatch.github.io/key_input/)
 
