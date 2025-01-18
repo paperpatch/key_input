@@ -30,7 +30,7 @@ Key Input is a mini-game inspired by Lost Ark and it challenges your reaction ti
 
 Key Input offers several customizable features to enhance your gameplay experience:
 
-- Stats Page: Track detailed statistics about your gameplay, including successes, failures, and overall performance.
+- Stats Page: Track detailed statistics on your gameplay and overall performance.
 - Timer Feature: Use the built-in timer to challenge yourself with time-based goals. You can manually set the timer to suit your preferences.
 - Customizable Inputs: Adjust the number of keys to input and define your own allowed key pool (up to a maximum of 15 keys). This lets you fine-tune the difficulty level.
 - Light/Dark Mode: Switch between light and dark themes to suit your preferences.
